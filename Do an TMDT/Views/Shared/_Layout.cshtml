@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="~/css/1.css" rel="stylesheet" />
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <ul class="menu">
+        <a href=""><img src="image/logo.png" alt=""></a>
+        <li><a href="">Trang chủ</a></li>
+        <li><a href="">Giới Thiệu</a></li>
+        <li>
+            <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
+            <ul class="sub-nav">
+                <li><a href="">Adidas</a></li>
+                <li><a href="">Puma</a></li>
+                <li><a href="">Nike</a></li>
+                <li><a href="">Vans</a></li>
+                <li><a href="">Converse</a></li>
+                <li><a href="">FILA</a></li>
+                <li><a href="">MLB</a></li>
+                <li><a href="">New Balance</a></li>
+            </ul>
+        </li>
+        <li><a href="">Tin tức</a></li>
+        <li><a href="">Liên hệ</a></li>
+        <a href="">
+            <ul class="sub-icon">
+                <li>
+                    <a href="">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </a>
+                    <div class="search">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm">
+                    </div>
+                </li>
+                <li>
+                    <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                    <ul class="dangnhap">
+                        <li><a asp-controller="Users" asp-action="Index">Đăng nhập</a></li>
+                        <li><a href="">Đăng Ký</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">
+                        <ion-icon name="heart-outline"></ion-icon>
+                        <input class="after" id="trangyeuthich"></input>
+                    </a>
+
+                </li>
+                <li>
+                    <a href=""><ion-icon name="cart-outline"></ion-icon></a>
+                    <section class="giohang">
+                        <form action="">
+                            <table>
+                                <thead>
+
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Tên</th>
+                                        <th>Giá</th>
+                                        <th>SL</th>
+                                        <th>Chọn</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="image/sp2_1.webp" alt=""></td>
+                                        <td>LeBron 19</td>
+                                        <td><p><span>19000</span><sup>đ</sup></p></td>
+                                        <td><input type="number" value="1" min="0"></td>
+                                        <td>xóa</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="tong">
+                                <p>Tổng:<span>19000</span><sup>đ</sup></p>
+                            </div>
+                        </form>
+                    </section>
+                </li>
+                <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
+            </ul>
+        </a>
+
+    </ul>
+
+
+    @RenderBody()
+    @await Html.PartialAsync("Footer.cshtml")
+    <script src="js/giohang.js">
+
+    </script>
+</body>
+</html>

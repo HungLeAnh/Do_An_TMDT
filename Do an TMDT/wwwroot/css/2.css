@@ -1,0 +1,387 @@
+*
+{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.menu
+{
+    width: 100%;
+    height: 96px;
+    background-color: #120414;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    padding-left: 180px;
+    
+}
+.container {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    color: white;
+    display: flex;
+    margin-top: 70px;
+    border-bottom: 1px solid #b3a3a3;
+    padding-bottom: 100px;
+    margin-left: 180px;
+}
+.menu img{
+    padding-right: 180px;
+
+}
+.menu>li
+{
+    position: relative;
+    padding: 20px 20px;
+
+}
+.menu>li>a
+{
+    font-size: 17px;
+    color:white;
+    text-decoration: none;
+}
+.sub-nav
+{ 
+    position: absolute;
+    list-style: none;
+    background-color: white;
+    width: 250px;
+    margin-top: 10px;
+    display: none;
+    z-index: 2;
+}
+.xoay
+{
+    padding-left: 5px;
+    
+}
+.sub-nav>li
+{
+    padding:10px 15px;
+    border-bottom: 1px solid #E5E6EC;
+}
+
+.sub-nav>li>a
+{
+ color:black;
+ text-decoration: none;
+ font-weight: 50px;
+}
+.sub-nav>li:hover a{
+    color:#D92414;
+}
+.sub-icon
+{
+    display: flex;
+    margin-left: 100px;
+}
+.menu>li:hover>a{
+    color:#D92414;
+    
+}
+.menu>li:hover .sub-nav{
+display: block;
+}
+.menu>li:hover .xoay{
+    animation-name: xoaylen;
+    animation-duration: 0.5s;
+    transform: rotate(180deg);
+}
+@keyframes xoaylen
+{
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(45deg);}
+    50%{transform: rotate(90deg);}
+    75%{transform: rotate(135deg);}
+    100%{transform: rotate(180deg);}
+}
+.sub-icon>li
+{
+    padding: 0 10px;
+}
+.sub-icon>li ion-icon
+{
+font-size: 20px;
+color:white;
+padding:-3px 0
+}
+.search
+{
+    
+    position: absolute;
+    
+    transform: translateX(-90%);
+    display: none;
+    z-index: 2;
+}
+.search::before
+{
+    content: "";
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    position: absolute;
+    transform: rotate(-45deg);
+    right: 10px;
+    top: -5px;
+}
+.search>input
+{
+    width: 280px;
+    height: 40px;
+    padding: 10px;
+}
+.sub-icon>li:hover ion-icon
+{
+    color: #D92414;
+}
+.sub-icon>li:hover .search
+{
+ display: block;
+}
+.sub-icon>li:nth-child(4)::after
+{
+    content: "o";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #D92414;
+    color:white;
+    font-size: 10px;
+text-align: center;
+padding-right: 2px;
+padding-bottom: 1px;
+}
+.sub-icon>li:nth-child(5)::after
+{
+    content: "o";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #D92414;
+    color:white;
+    font-size: 10px;
+text-align: center;
+padding-right: 2px;
+padding-bottom: 1px;
+}
+.than
+{
+    width: 100%;
+    height: 650px;
+    position: relative;
+}
+.dangnhap
+{
+    width:150px ;
+    height: auto;
+    background-color: white;
+    padding: 10px 20px;
+    transform: translateX(-80%);
+    margin-top: 10px;
+    position: absolute;
+    list-style: none;
+    display: none;
+    z-index: 2;
+}
+.dangnhap>li>a{
+    text-decoration: none;
+    color:black;
+}
+.dangnhap>li{
+padding: 10px 0;
+}
+.dangnhap::before
+{
+    content: "";
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    position: absolute;
+    top:-10px;
+    right: 10px;
+    background-color: white;
+}
+.dangnhap>li:hover a{
+    color:#D92414
+}
+.sub-icon>li:hover .dangnhap{
+    display: block;
+}
+.than>img
+{  
+z-index: 0;
+}
+.xanh
+{
+    position: absolute;
+    width: 1250px;
+    height: 190px;
+    background-color:#3F3FDB;
+    bottom: -50px;
+    display: flex;
+    left: 150px;
+    padding: 15px;
+}
+.khoi{
+    color:white;
+    text-align: center;
+    padding: 0 10px;
+}
+.khoi>p{
+    font-size: 14px;
+    padding-top: 10px;
+}
+.khoi>ion-icon
+{
+    color: white;
+    font-size: 60px;
+}
+.section{
+    margin-top: 30px;
+    margin-left: 200px;
+    display: flex;
+}
+.anh_sp
+{
+    width: 620px;
+}
+.anh_sp>img{
+    padding: 10px;
+    width:300px;
+}
+.thongtin
+{
+    margin-left: 20px;
+    padding: 10px;
+}
+.thuonghieu1
+{
+    
+    margin-top: 10px;
+}
+.thuonghieu1 p
+{
+    padding-right: 20px;
+    display:inline;
+}
+.thongtin .gia
+{
+    font-size: 35px;
+    margin-top: 20px;
+    color:#D92414;
+    font-weight: bold;
+    display: flex;
+
+}
+
+.container
+{
+    position: relative;
+    width: 100%;
+    height:fit-content;
+}
+.diachi
+{
+    position: absolute;
+    top: 0;
+
+}
+.container>img{
+    position: absolute;
+}
+.mau .trang
+{
+ width: 20px;
+ height: 20px;
+ border-radius: 50%;
+ background-color: aliceblue;
+ border: 1px solid black;
+}
+.mau{
+    margin-top: 20px;
+}
+.mau>p
+{margin-bottom: 10px;}
+.soluong
+{
+    display: flex;
+
+    flex-direction: column;
+}
+.soluong>p{
+    margin-bottom: 10px;
+}
+.soluong input
+{
+   padding-left: 10px;
+    width: 50px;
+    text-align: center;
+}
+.soluong button
+{ background-color: white;
+    border: 1px solid black;
+    width: 50px;
+    font-size: 20px;
+
+}
+.mau .den
+{
+ width: 20px;
+ height: 20px;
+ border-radius: 50%;
+ background-color: black;
+ border: 1px solid black;
+}
+#mua{
+    background-color: #3F3FDB;
+    border: none; 
+    box-shadow:2px 2px 0 0 black;   
+}
+#mua:hover
+{
+ background-color: #4b4bfb;
+}
+#them:hover
+{
+ background-color: #ee6457;
+}
+#them{
+    background-color: #D92414;
+    border: none;   
+    box-shadow:2px 2px 0 0 black;  
+}
+.themgiohang button
+{
+    width: 150px;
+    height: 40px;
+    margin-top: 20px;
+    color: white;
+}
+.nhapdulieu
+{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+h3{
+    color: #1195bd;}
+.mota
+{
+    width: 500px;
+    margin-top: 20px;
+}
+.tong{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.tong>p{
+    font-weight: bold;
+    font-size: 20px;
+}
