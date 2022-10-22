@@ -6,13 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Users\**" />
-    <Content Remove="Views\Users\**" />
-    <EmbeddedResource Remove="Views\Users\**" />
-    <None Remove="Views\Users\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
+    <PackageReference Include="bootstrap" Version="5.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
@@ -24,15 +22,19 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\User\Controllers\" />
-    <Folder Include="Areas\User\Data\" />
-    <Folder Include="Areas\User\Models\" />
-    <Folder Include="Areas\User\Views\" />
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="DAO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\giohang.js" />
+    <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
 </Project>

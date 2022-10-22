@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Do_an_TMDT.Models.NguoiDung>
+
+@{
+    ViewData["Title"] = "Quản lí tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]</h2>
+    <br/>
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item">
+                <i class="anticon anticon-home m-r-5"></i>Home
+            </a>
+            <span class="breadcrumb-item active">Quản lí tài khoản</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <div class="col-lg-8">
+                <div class="d-md-flex">
+                    <div class="m-b-10 m-r-15">
+                        
+                        <select class="custom-select" style="min-width: 200px;" id="idloainguoidung" name="idloainguoidung" asp-items="ViewBag.LoaiNguoiDung">
+                            <option value="" disabled selected>Chọn loại người dùng</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-right">
+                <a class="btn btn-primary btn-tone" asp-action="Create">
+                    <i class="anticon anticon-plus"></i>
+                    Thêm
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th>Mã người dùng</th>
+                        <th>Tên người dùng</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Loại người dùng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MaNguoiDung
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                                        <h6 class="m-b-0 m-l-10">@item.TenNguoiDung</h6>
+                                    </div>
+                                </td>
+                                <td>@item.AnhDaiDien</td>
+                                <td>@item.Email</td>
+                                <td>@item.Sdt</td>
+                                <td>@item.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung</td>              
+
+                                <td>
+                                    <a >Chi tiết</a>
+                                    <a>Sửa</a>
+                                    <a >Xóa</a>
+
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm ">
+                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
+                                            <i class="fas fa-pen btn btn-primary "></i>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Details" asp-route-id="@item.MaNguoiDung">
+                                            <i class="fas fa-clipboard-list btn btn-warning "></i>
+                                        </a>
+                                        <!-- Button trigger modal -->
+                                        <a data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
+                                            <i class="fas fa-trash-alt btn btn-danger "></i>
+                                        </a>
+                                        <form asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
+
+                                            <div class="modal fade" id="deleteModal-@item.MaNguoiDung" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
+                                                            <button type="button" class="close" data-dismiss="modal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <div class="warning">Bạn muốn xóa người dùng này?</div>
+                                                            <div class="text-danger "> @item.MaNguoiDung : @item.TenNguoiDung</div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                            <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
