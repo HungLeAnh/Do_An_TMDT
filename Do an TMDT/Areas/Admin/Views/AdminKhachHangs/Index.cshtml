@@ -1,13 +1,14 @@
 ﻿@using PagedList.Core.Mvc
 @model PagedList.Core.IPagedList<Do_an_TMDT.Models.NguoiDung>
+
 @{
     int CurrentPage = ViewBag.CurrentPage;
-    ViewData["Title"] = "Quản lí tài khoản " + CurrentPage;
+    ViewData["Title"] = "Quản lí khách hàng " + CurrentPage;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="page-header">
     <h2 class="header-title">@ViewData["Title"]</h2>
-    <br/>
+    <br />
     <div class="header-sub-title">
         <nav class="breadcrumb breadcrumb-dash">
             <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
@@ -17,18 +18,6 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <div class="row m-b-30">
-            <div class="col-lg-8">
-                <div class="d-md-flex">
-                    <div class="m-b-10 m-r-15">
-                        
-                        <select class="custom-select" style="min-width: 200px;" id="idloainguoidung" name="idloainguoidung" asp-items="ViewBag.LoaiNguoiDung">
-                            <option value="" disabled selected>Chọn loại người dùng</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="table-responsive">
             <table class="table table-hover e-commerce-table">
                 <thead>
@@ -38,7 +27,7 @@
                         <th>Ảnh đại diện</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
-                        <th>Loại người dùng</th>
+                        <th>Địa Chỉ</th>
                         <th>
                             <a class="btn btn-primary btn-tone" asp-action="Create">
                                 <i class="anticon anticon-plus"></i>
@@ -65,20 +54,27 @@
                                 <td>@item.AnhDaiDien</td>
                                 <td>@item.Email</td>
                                 <td>@item.Sdt</td>
-                                <td>@item.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung</td>              
+                                <td>
+                                    @if (item.NguoiDungDiaChis.Count>0)
+                                    {
+                                        @item.NguoiDungDiaChis.FirstOrDefault().DiaChi
+                                    }
+                                    else{
+                                        <p>Không</p>
+                                    }
                                 <td>
                                     <div class="btn-group btn-group-sm ">
-                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
+                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-pen btn btn-primary "></i>
                                         </a>
-                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Details" asp-route-id="@item.MaNguoiDung">
+                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Details" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-clipboard-list btn btn-warning "></i>
                                         </a>
                                         <!-- Button trigger modal -->
                                         <a data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
                                             <i class="fas fa-trash-alt btn btn-danger "></i>
                                         </a>
-                                        <form asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
+                                        <form asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
 
                                             <div class="modal fade" id="deleteModal-@item.MaNguoiDung" role="dialog">
                                                 <div class="modal-dialog">
@@ -115,6 +111,6 @@
 </div>
 <div aria-label="Page navigation example">
     <ul class="pagination">
-        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminNguoiDung" asp-action="Index" />
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Index" />
     </ul>
 </div>

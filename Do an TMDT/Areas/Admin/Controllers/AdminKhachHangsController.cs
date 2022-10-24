@@ -6,33 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminNguoiDungsController : Controller
+    public class AdminKhachHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
 
-        public AdminNguoiDungsController(WEBBANGIAYContext context)
+        public AdminKhachHangsController(WEBBANGIAYContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/AdminNguoiDungs
+        // GET: Admin/AdminKhachHang
         public IActionResult Index(int? page)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
-            var lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung != "Khách hàng")
+            var pageSize = 10;
+            var lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung == "Khách hàng")
                 .AsNoTracking()
                 .OrderByDescending(x => x.MaNguoiDung)
-                .Include(n=>n.MaLoaiNguoiDungNavigation);
+                .Include(n => n.NguoiDungDiaChis);
             PagedList<NguoiDung> models = new PagedList<NguoiDung>(lsCustomers, pageNumber, pageSize);
-            
+
             ViewBag.CurrentPage = pageNumber;
 
             ViewData["LoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "TenLoaiNguoiDung");
@@ -42,7 +40,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(await wEBBANGIAYContext.ToListAsync());*/
         }
 
-        // GET: Admin/AdminNguoiDungs/Details/5
+        // GET: Admin/AdminKhachHang/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -61,14 +59,14 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Create
+        // GET: Admin/AdminKhachHang/Create
         public IActionResult Create()
         {
             ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung");
             return View();
         }
 
-        // POST: Admin/AdminNguoiDungs/Create
+        // POST: Admin/AdminKhachHang/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -85,7 +83,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Edit/5
+        // GET: Admin/AdminKhachHang/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,7 +100,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // POST: Admin/AdminNguoiDungs/Edit/5
+        // POST: Admin/AdminKhachHang/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -138,7 +136,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Delete/5
+        // GET: Admin/AdminKhachHang/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,7 +155,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // POST: Admin/AdminNguoiDungs/Delete/5
+        // POST: Admin/AdminKhachHang/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
