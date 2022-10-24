@@ -1,0 +1,99 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/css/2.css" rel="stylesheet" />
+
+<div class="anh"><img src="~/images/nen.webp" width="100%" alt=""></div>
+<div class="section">
+    <div class="anh_sp">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" width="300" />
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[1].Anh" width="300" alt="">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[2].Anh" width="300" alt="">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[3].Anh" width="300" alt="">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[4].Anh" width="300" alt="">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[5].Anh" width="300" alt="">
+        <img  src="~/@Model.MatHangs[0].MatHangAnhs[4].Anh" width="300" alt="">
+    </div>
+    <div class="thongtin">
+        <div class="name">
+            <h2>@Model.MatHangs[0].listSPs.TenMatHang</h2>
+        </div>
+        <span class="thuonghieu1">
+            <p>Thương hiệu: <b>@Model.MatHangs[0].thuonghieu[0].TenThuongHieu</b></p>
+
+            <p>Mã: <b>@Model.MatHangs[0].listSPs.MaMatHang</b></p>
+        </span>
+        <div class="gia"><p id="gia">@Model.MatHangs[0].listSPs.GiaBan</p><sup>đ</sup></div>
+        <div class="mau">
+            <p>Màu sắc: <b id="hienthi">Trắng</b></p>
+            <div class="chonmau">
+                <button onclick="document.getElementById('hienthi').innerHTML='Trắng'" class="trang"></button>
+                <button onclick="document.getElementById('hienthi').innerHTML='Đen'" class="den"></button>
+            </div>
+        </div>
+        <div class="nhapdulieu">
+            <div class="soluong">
+                <p>Số Lượng:<b id="soluong">1</b></p>
+                <button onclick="tru()">-</button>
+                <input onchange="nhap()" id="id1" type="number" value="1" min="0" max="500">
+                <button onclick="cong()">+</button>
+            </div>
+            <div class="themgiohang">
+                <button id="them">THÊM VÀO GIỎ HÀNG</button>
+                <button id="mua">MUA NGAY</button>
+            </div>
+
+        </div>
+        <div class="tong"><h3>Tổng tiền:</h3><p id="tong">0 <sup>đ</sup></p></div>
+        <div class="mota"><h3>Mô Tả</h3>LeBron phát triển mạnh khi tiền cược cao và áp lực gia tăng. LeBron 19 khai thác năng lượng đó với một bộ đồ vừa vặn có khóa và hệ thống đệm được cập nhật. Ống tay áo bên trong vừa khít được kéo lại với nhau bằng một lớp phủ điêu khắc mà các dây buộc xuyên qua để giúp ngăn bàn chân di chuyển vào bên trong giày.</div>
+    </div>
+</div>
+<script>
+
+    function chonmau1() {
+        let x = "Trang";
+        document.getElementById("hiennthi").innerText = x;
+
+    } function chonmau2() {
+        let x = "Đen"
+        document.getElementById("hiennthi").innerHTML = x;
+
+    }
+    function nhap() {
+        let x = document.getElementById("id1").value;
+        document.getElementById("soluong").innerHTML = x;
+        Tong();
+
+    }
+    function tru() {
+        let x = Number(document.getElementById("id1").value);
+        if (x <= 0) { return x; }
+        else {
+            x -= 1;
+            document.getElementById("id1").value = x;
+            document.getElementById("soluong").innerHTML = x;
+        }
+        Tong();
+    }
+    function cong() {
+        let x = Number(document.getElementById("id1").value);
+        x += 1;
+        document.getElementById("id1").value = x;
+        document.getElementById("soluong").innerHTML = x;
+        Tong();
+    }
+    function Tong() {
+        let x = Number(document.getElementById("id1").value);
+        let y = Number(document.getElementById("gia").innerHTML);
+        let z = x * y;
+        document.getElementById("tong").innerHTML = z + '<sup>đ</sup></p>';
+        console.log(z)
+
+
+    }
+</script>

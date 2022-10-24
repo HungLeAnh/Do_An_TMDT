@@ -76,7 +76,7 @@ namespace Do_an_TMDT
                 );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Loadsanpham}/{id?}"
                 );
             });
 

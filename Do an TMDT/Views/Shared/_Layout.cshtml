@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,14 +18,8 @@
         <li>
             <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
             <ul class="sub-nav">
-                <li><a href="">Adidas</a></li>
-                <li><a href="">Puma</a></li>
-                <li><a href="">Nike</a></li>
-                <li><a href="">Vans</a></li>
-                <li><a href="">Converse</a></li>
-                <li><a href="">FILA</a></li>
-                <li><a href="">MLB</a></li>
-                <li><a href="">New Balance</a></li>
+                
+                
             </ul>
         </li>
         <li><a href="">Tin tức</a></li>
@@ -42,7 +37,7 @@
                 <li>
                     <a href=""><ion-icon name="person-outline"></ion-icon></a>
                     <ul class="dangnhap">
-                        <li><a asp-controller="Users" asp-action="Index">Đăng nhập</a></li>
+                        <li><a asp-controller="NguoiDungs" asp-action="Login">Đăng nhập</a></li>
                         <li><a href="">Đăng Ký</a></li>
                     </ul>
                 </li>
@@ -71,7 +66,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><img src="images/sp2_1.webp" alt=""></td>
+                                        <td><img src="image/sp2_1.webp" alt=""></td>
                                         <td>LeBron 19</td>
                                         <td><p><span>19000</span><sup>đ</sup></p></td>
                                         <td><input type="number" value="1" min="0"></td>
@@ -90,9 +85,10 @@
         </a>
 
     </ul>
-    
+
 
     @RenderBody()
+
     @await Html.PartialAsync("Footer.cshtml")
     <script src="js/giohang.js">
 
