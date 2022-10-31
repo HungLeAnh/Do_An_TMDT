@@ -1,0 +1,116 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.NguoiDung>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Quản lí khách hàng " + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]</h2>
+    <br />
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <span class="breadcrumb-item active">Quản lí tài khoản : trang @CurrentPage</span>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th>Mã người dùng</th>
+                        <th>Tên người dùng</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa Chỉ</th>
+                        <th>
+                            <a class="btn btn-primary btn-tone" asp-action="Create">
+                                <i class="anticon anticon-plus"></i>
+                                Thêm
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MaNguoiDung
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                                        <h6 class="m-b-0 m-l-10">@item.TenNguoiDung</h6>
+                                    </div>
+                                </td>
+                                <td>@item.AnhDaiDien</td>
+                                <td>@item.Email</td>
+                                <td>@item.Sdt</td>
+                                <td>
+                                    @if (item.NguoiDungDiaChis.Count>0)
+                                    {
+                                        @item.NguoiDungDiaChis.FirstOrDefault().DiaChi
+                                    }
+                                    else{
+                                        <p>Không</p>
+                                    }
+                                <td>
+                                    <div class="btn-group btn-group-sm ">
+                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
+                                            <i class="fas fa-pen btn btn-primary "></i>
+                                        </a>
+                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Details" asp-route-id="@item.MaNguoiDung">
+                                            <i class="fas fa-clipboard-list btn btn-warning "></i>
+                                        </a>
+                                        <!-- Button trigger modal -->
+                                        <a data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
+                                            <i class="fas fa-trash-alt btn btn-danger "></i>
+                                        </a>
+                                        <form asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
+
+                                            <div class="modal fade" id="deleteModal-@item.MaNguoiDung" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
+                                                            <button type="button" class="close" data-dismiss="modal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <div class="warning">Bạn muốn xóa người dùng này?</div>
+                                                            <div class="text-danger "> @item.MaNguoiDung : @item.TenNguoiDung</div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                            <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div aria-label="Page navigation example">
+    <ul class="pagination">
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Index" />
+    </ul>
+</div>

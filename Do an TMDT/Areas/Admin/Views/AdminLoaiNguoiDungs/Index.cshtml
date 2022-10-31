@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Do_an_TMDT.Models.LoaiNguoiDung>
+
+@{
+    ViewData["Title"] = "Quản lý loại người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.MaLoaiNguoiDung)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.TenLoaiNguoiDung)
+                </th>
+                <th scope="col">
+                    <a class="btn btn-info" asp-action="Create">
+                        <i class="anticon anticon-plus"></i>
+                        Thêm
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model!=null){
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.MaLoaiNguoiDung)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenLoaiNguoiDung)
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm ">
+                                <a asp-action="Edit" asp-route-id="@item.MaLoaiNguoiDung">
+                                    <i class="fas fa-pen btn btn-primary "></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.MaLoaiNguoiDung">
+                                    <i class="fas fa-clipboard-list btn btn-warning "></i>
+                                </a>
+                                <!-- Button trigger modal -->
+                                <a data-toggle="modal" data-target="#deleteModal-@item.MaLoaiNguoiDung.Trim()">
+                                    <i class="fas fa-trash-alt btn btn-danger "></i>
+                                </a>                      
+                                <form  asp-action = "Delete" asp-route-id = "@item.MaLoaiNguoiDung.Trim()" >
+
+                                    <div class="modal fade" id="deleteModal-@item.MaLoaiNguoiDung.Trim()" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Xóa loại người dùng</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <div class="warning">Bạn muốn xóa loại người dùng này?</div>
+                                                    <div class="text-danger "> @item.MaLoaiNguoiDung : @item.TenLoaiNguoiDung</div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                    <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>

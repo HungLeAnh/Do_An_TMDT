@@ -1,7 +1,10 @@
+using AspNetCoreHero.ToastNotification;
+using Do_an_TMDT.Areas.Admin.Controllers;
 using Do_an_TMDT.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,16 +27,23 @@ namespace Do_an_TMDT
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var stringconn = Configuration.GetConnectionString("data");
             services.AddDbContext<WEBBANGIAYContext>(options => options.UseSqlServer(stringconn));
-            services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
-            services.AddRazorPages();
-            services.AddControllersWithViews();
-            services.AddSession();
 
+            services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddNotyf(config =>
+                {
+                    config.DurationInSeconds = 3;
+                    config.IsDismissable = true;
+                    config.Position = NotyfPosition.TopRight;
+                }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,25 +61,25 @@ namespace Do_an_TMDT
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
             app.UseAuthentication();
-            
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                      name: "Admin",
+                      areaName: "Admin",
+                      pattern: "Admin/{controller=Home}/{action=Index}"
+                );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}");
-            });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                  name: "areas",
-                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Loadsanpham}/{id?}"
                 );
             });
+
         }
     }
 }

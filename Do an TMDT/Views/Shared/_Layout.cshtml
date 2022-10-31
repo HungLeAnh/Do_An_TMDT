@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,20 +12,14 @@
 </head>
 <body>
     <ul class="menu">
-        <a href=""><img src="image/logo.png" alt=""></a>
+        <a href=""><img src="images/logo.png" alt=""></a>
         <li><a href="">Trang chủ</a></li>
         <li><a href="">Giới Thiệu</a></li>
         <li>
             <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
             <ul class="sub-nav">
-                <li><a href="">Adidas</a></li>
-                <li><a href="">Puma</a></li>
-                <li><a href="">Nike</a></li>
-                <li><a href="">Vans</a></li>
-                <li><a href="">Converse</a></li>
-                <li><a href="">FILA</a></li>
-                <li><a href="">MLB</a></li>
-                <li><a href="">New Balance</a></li>
+                
+                
             </ul>
         </li>
         <li><a href="">Tin tức</a></li>
@@ -42,7 +37,7 @@
                 <li>
                     <a href=""><ion-icon name="person-outline"></ion-icon></a>
                     <ul class="dangnhap">
-                        <li><a asp-controller="Users" asp-action="Index">Đăng nhập</a></li>
+                        <li><a asp-controller="NguoiDungs" asp-action="Login">Đăng nhập</a></li>
                         <li><a href="">Đăng Ký</a></li>
                     </ul>
                 </li>
@@ -93,6 +88,7 @@
 
 
     @RenderBody()
+
     @await Html.PartialAsync("Footer.cshtml")
     <script src="js/giohang.js">
 

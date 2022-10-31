@@ -1,0 +1,76 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="than">
+    <img src="images/Chinh.webp" width="100%" alt="">
+    <div class="xanh">
+        <div class="khoi">
+            <ion-icon name="airplane-outline"></ion-icon><br>
+            <span class="khoi_text">GIAO HÀNG TOÀN QUỐC </span>
+            <p>
+                Miễn phí vận chuyển với các đơn hàng trị giá trên 2.000.000Đ
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="call-outline"></ion-icon><br>
+            <span class="khoi_text">HỖ TRỢ ONLINE 24/24 </span>
+            <p>
+                Luôn hỗ trợ khách hàng 24/24 tất cả các ngày trong tuần
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="airplane-outline"></ion-icon><br>
+            <span class="khoi_text">
+                ĐỖI HÀNG DỄ DÀNG
+            </span>
+            <p>
+                Miễn phí đổi trả trong vòng 30 ngày đầu tiên cho tất cả các mặt hàng
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="gift-outline"></ion-icon><br>
+            <span class="khoi_text">QUÀ TẶNG HẤP DẪN </span>
+            <p>
+                Chương trình khuyễn mãi cực lớn và hấp dẫn hàng tháng
+
+            </p>
+        </div>
+    </div>
+</div>
+<div class="tieude">
+    <h1>SẢN PHẨM MỚI</h1>
+</div>
+<div class="menu_sp">
+    @{int i = 0;
+    }
+    @foreach (var item in Model.MatHangs)
+    {
+
+        <div class="menu_sp-item">
+
+            <img onerror="this.src='images/duphong.webp'" src="@item.MatHangAnhs[0].Anh" width="250px" alt="">
+            <div class="item_text">
+                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+            </div>
+            <div class="item_daban">
+                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+            </div>
+            <br>
+            <div class="item_gia">
+                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+            </div>
+
+            <div class="layer2">
+                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@item.MatHangAnhs[1].Anh" width="250px" alt=""></a>
+                <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+                <button><ion-icon name="cart-outline"></ion-icon></button>
+            </div>
+
+        </div>
+        i++;
+    }
+
+</div>
