@@ -32,6 +32,7 @@ namespace Do_an_TMDT
             services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
             services.AddRazorPages();
             services.AddControllersWithViews();
+            services.AddSession();
 
         }
 
@@ -50,7 +51,7 @@ namespace Do_an_TMDT
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
