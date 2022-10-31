@@ -1,30 +1,31 @@
-﻿@model Do_an_TMDT.Models.DanhMuc
+﻿@model Do_an_TMDT.Models.ThuongHieu
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
-<h4>DanhMuc</h4>
+<h4>ThuongHieu</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaThuongHieu" />
             <div class="form-group">
-                <label asp-for="TenDanhMuc" class="control-label"></label>
-                <input asp-for="TenDanhMuc" class="form-control" oninput="slugGenarate()" id="slug-source" type="text" />
-                <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+                <label asp-for="TenThuongHieu" class="control-label"></label>
+                <input asp-for="TenThuongHieu" class="form-control" />
+                <span asp-validation-for="TenThuongHieu" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Slug" class="control-label"></label>
-                <input readonly type="text" value="" id="slug-target" asp-for="Slug" class="form-control" />
+                <input asp-for="Slug" class="form-control" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

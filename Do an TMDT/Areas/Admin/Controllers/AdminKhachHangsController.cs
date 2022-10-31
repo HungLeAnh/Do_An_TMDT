@@ -35,9 +35,6 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
 
             ViewData["LoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "TenLoaiNguoiDung");
             return View(models);
-            /*
-            var wEBBANGIAYContext = _context.NguoiDungs.Include(n => n.MaLoaiNguoiDungNavigation);
-            return View(await wEBBANGIAYContext.ToListAsync());*/
         }
 
         // GET: Admin/AdminKhachHang/Details/5

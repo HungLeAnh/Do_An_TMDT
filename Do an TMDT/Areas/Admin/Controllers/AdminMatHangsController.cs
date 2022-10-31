@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -20,17 +22,35 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminMatHangs
-        public async Task<IActionResult> Index()
+        public ActionResult Index(int? page=1)
         {
-            var wEBBANGIAYContext = _context.MatHangs
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsMatHangs = _context.MatHangs
                 .Include(m => m.MaDanhMucNavigation)
                 .Include(m => m.MaKichCoNavigation)
                 .Include(m => m.MaMauSacNavigation)
                 .Include(m => m.MaNhaCungCapNavigation)
-                .Include(m => m.MaThuongHieuNavigation);
-            return View(await wEBBANGIAYContext.ToListAsync());
+                .Include(m => m.MaThuongHieuNavigation)
+                .Include(m => m.MatHangAnhs)
+                .AsNoTracking()
+                .OrderByDescending(x => x.MaMatHang);
+            PagedList<MatHang> models = new PagedList<MatHang>(lsMatHangs, pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewData[nameof(DanhMuc)] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
+            return View(models);
         }
 
+        public IActionResult Filtter(int _MaDanhMuc = 0)
+        {
+            var url = $"/Admin/AdminMatHangs?MaMatHang={_MaDanhMuc}";
+            if (_MaDanhMuc == 0)
+            {
+                url = $"/Admin/AdminMatHangs";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
         // GET: Admin/AdminMatHangs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -57,11 +77,11 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // GET: Admin/AdminMatHangs/Create
         public IActionResult Create()
         {
-            ViewData["MaDanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "Slug");
-            ViewData["MaKichCo"] = new SelectList(_context.KichCos, "MaKichCo", "MaKichCo");
-            ViewData["MaMauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "MaMauSac");
-            ViewData["MaNhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "Std");
-            ViewData["MaThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "Slug");
+            ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
+            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1");
+            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac");
+            ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap");
+            ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu");
             return View();
         }
 
