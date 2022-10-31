@@ -1,42 +1,89 @@
-﻿@model IEnumerable<Do_an_TMDT.Models.DanhMuc>
+﻿
+@model IEnumerable<Do_an_TMDT.Models.DanhMuc>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Quản lý danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]</h2>
+    <br />
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+            <span class="breadcrumb-item active">@ViewData["Title"]</span>
+        </nav>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">
+                    Tên danh mục
+                </th>
+                <th scope="col">Slug</th>
+                <th scope="col">
+                    <a class="btn btn-primary btn-tone" asp-action="Create">
+                        <i class="anticon anticon-plus"></i>
+                        Thêm
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(modelItem => item.MaDanhMuc)</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenDanhMuc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm ">
+                            <a asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Edit" asp-route-id="@item.MaDanhMuc">
+                                <i class="fas fa-pen btn btn-primary "></i>
+                            </a>
+                            <a asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Details" asp-route-id="@item.MaDanhMuc">
+                                <i class="fas fa-clipboard-list btn btn-warning "></i>
+                            </a>
+                            <!-- Button trigger modal -->
+                            <a data-toggle="modal" data-target="#deleteModal-@item.MaDanhMuc">
+                                <i class="fas fa-trash-alt btn btn-danger "></i>
+                            </a>
+                            <form asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Delete" asp-route-id="@item.MaDanhMuc">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenDanhMuc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenDanhMuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaDanhMuc">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaDanhMuc">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaDanhMuc">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                <div class="modal fade" id="deleteModal-@item.MaDanhMuc" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Xóa danh mục</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div class="warning">Bạn muốn xóa danh mục này?</div>
+                                                <div class="text-danger "> @item.MaDanhMuc : @item.MaDanhMuc</div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

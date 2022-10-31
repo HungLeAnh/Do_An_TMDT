@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,7 +17,9 @@ namespace Do_an_TMDT.Models
         }
 
         public int MaNguoiDung { get; set; }
+        [Required]
         public string MaLoaiNguoiDung { get; set; }
+        [Required]
         public string TenNguoiDung { get; set; }
         public string AnhDaiDien { get; set; }
         public string TenDangNhap { get; set; }

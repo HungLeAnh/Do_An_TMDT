@@ -373,17 +373,19 @@ margin-top: 20px;
 {
     position: absolute;
     width: fit-content;
-    height:fit-content;
+    height: fit-content;
     color:white;
     display: flex;
-    margin-top: 70px;
+    margin-top: 25px;
     border-bottom: 1px solid #b3a3a3;
-    padding-bottom: 100px;
-    margin-left: 180px;
+    padding-bottom: 20px;
+    margin-left: 160px;
 }
 .footer
-{position: relative;
-margin-top: 150px;}
+{
+    position: relative;
+    margin-top: 150px;
+}
 .diachi
 {
 
@@ -398,7 +400,7 @@ margin-top: 150px;}
 .ds_anh>img{
     padding: 10px 5px;
 }
-.footer>img{
+.footer > img {
     position: absolute;
 }
 
@@ -411,7 +413,7 @@ margin-top: 150px;}
 {
     margin-left: 100px;
     list-style: none;
-    margin-top: 80px;
+    margin-top: 35px;
 }
 .vechungtoi>li>a
 {
@@ -465,8 +467,8 @@ margin-top: 150px;}
 {
     position: absolute;
     color:white;
-   top:500px;
-    left: calc( 50% - 130px);
+   top:330px;
+    left: calc( 50% - 150px);
 }
 .tieude>img{
     margin-top: 10px;

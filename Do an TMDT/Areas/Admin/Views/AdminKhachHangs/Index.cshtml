@@ -3,7 +3,7 @@
 
 @{
     int CurrentPage = ViewBag.CurrentPage;
-    ViewData["Title"] = "Quản lí khách hàng " + CurrentPage;
+    ViewData["Title"] = "Quản lí khách hàng ";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="page-header">
@@ -29,7 +29,7 @@
                         <th>Số điện thoại</th>
                         <th>Địa Chỉ</th>
                         <th>
-                            <a class="btn btn-primary btn-tone" asp-action="Create">
+                            <a class="btn btn-primary btn-tone" asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Create">
                                 <i class="anticon anticon-plus"></i>
                                 Thêm
                             </a>
@@ -64,17 +64,17 @@
                                     }
                                 <td>
                                     <div class="btn-group btn-group-sm ">
-                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
+                                        <a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-pen btn btn-primary "></i>
                                         </a>
-                                        <a asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Details" asp-route-id="@item.MaNguoiDung">
+                                        <a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Details" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-clipboard-list btn btn-warning "></i>
                                         </a>
                                         <!-- Button trigger modal -->
                                         <a data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
                                             <i class="fas fa-trash-alt btn btn-danger "></i>
                                         </a>
-                                        <form asp-area="Admin" asp-controller="AdminKhachHang" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
+                                        <form asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Delete" asp-route-id="@item.MaNguoiDung">
 
                                             <div class="modal fade" id="deleteModal-@item.MaNguoiDung" role="dialog">
                                                 <div class="modal-dialog">
