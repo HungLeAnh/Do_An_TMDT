@@ -1,29 +1,26 @@
-﻿using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Do_an_TMDT.Models;
+using Do_an_TMDT.ViewModels;
 
 namespace Do_an_TMDT.Controllers
 {
-    public class HomeController : Controller
+    public class ChiTietController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly WEBBANGIAYContext _context;
 
-        public HomeController(ILogger<HomeController> logger,WEBBANGIAYContext context)
+        public ChiTietController(WEBBANGIAYContext context)
         {
-            _logger = logger;
             _context = context;
-
         }
-      
-        public IActionResult Loadsanpham()
+
+        // GET: ThuongHieux
+        public async Task<IActionResult> Chitiet(int MaSp)
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
@@ -36,18 +33,17 @@ namespace Do_an_TMDT.Controllers
             var listTH = _context.ThuongHieus
                 .AsNoTracking()
                 .ToList();
-            foreach (var item_TH in listTH)
-            {
-                model.TH = listTH.Where(x => x.MaThuongHieu != null).ToList();
-            }
+
             foreach (var item in listSP)
             {
-                
-                    MatHangHome mh = new MatHangHome();
-                    mh.listSPs = item;
-                foreach (var item_anh in listanh) {
+
+                MatHangHome mh = new MatHangHome();
+
+                mh.listSPs = item;
+                foreach (var item_anh in listanh)
+                {
                     mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
-                        }
+                }
                 foreach (var item_TH in listTH)
                 {
                     mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
@@ -55,20 +51,14 @@ namespace Do_an_TMDT.Controllers
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
                 ViewBag.AllProducts = listSP;
-
-
-
-     
+            }
+            foreach(var item2 in model.MatHangs.Where(x=>x.listSPs.MaMatHang==MaSp).ToList())
+            {
+                model.MatHangs[0] = item2;   
             }
             return View(model);
+
         }
 
-        
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View();//new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
-        }
     }
 }
