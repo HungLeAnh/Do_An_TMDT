@@ -1,0 +1,142 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.middle {
+    width: 100%;
+    height: 600px;
+    position: relative;
+}
+
+.layer {
+    position: absolute;
+    width: 100%;
+    height: 304px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+    .layer::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 304px;
+        top: 0px;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        bottom: 0;
+    }
+
+
+.mainTitle1 {
+    color: white
+}
+
+.subTitle1 {
+    display: flex;
+    color: white;
+}
+
+    .subTitle1 a {
+        color: white;
+    }
+
+    .subTitle1 p {
+        color: #D92414;
+    }
+
+.mainTitle1, .subTitle1 {
+    position: relative;
+    padding-left: 685px;
+    padding-top: 5px;
+    top: -190px;
+}
+
+.middle1 {
+    padding-top: 33px;
+    padding-left: 190px;
+    padding-right: 190px;
+    display: flex;
+    position: absolute;
+    top: 310px
+}
+
+.map {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+    .content > h1 {
+        font-weight: 700;
+        color: #5B5B5E;
+    }
+
+    .content > p {
+        color: #000;
+        margin: 10px 0;
+        margin-top: 10px;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        margin-left: 0px;
+        font-size: 14px;
+    }
+
+.row {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    padding-bottom: 10px;
+}
+
+.style_input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    margin: 5px 0px 5px;
+}
+
+.style_ND {
+    width: 100%;
+    height: 119px;
+    padding-top: 0;
+    padding: 10px;
+    margin: 5px 0px 5px;
+}
+
+.btn {
+    min-width: 165px;
+    height: 51px;
+    padding: 10px;
+    background-color: #3f3fdb;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background-color: #272728;
+    }
+
+input::placeholder {
+    font-size: 15px;
+    padding-top: 0px;
+}
