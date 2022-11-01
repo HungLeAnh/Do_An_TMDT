@@ -38,7 +38,7 @@ namespace Do_an_TMDT.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY; Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY;Trusted_Connection=True;");
             }
         }
 
@@ -201,9 +201,7 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("LoaiNguoiDung");
 
-                entity.Property(e => e.MaLoaiNguoiDung)
-                    .HasMaxLength(10)
-                    .IsFixedLength(true);
+                entity.Property(e => e.MaLoaiNguoiDung).HasMaxLength(50);
 
                 entity.Property(e => e.TenLoaiNguoiDung)
                     .IsRequired()
@@ -298,16 +296,13 @@ namespace Do_an_TMDT.Models
 
                 entity.Property(e => e.MaLoaiNguoiDung)
                     .IsRequired()
-                    .HasMaxLength(10)
-                    .IsFixedLength(true);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.MatKhauHash)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Salt)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

@@ -10,6 +10,7 @@ namespace Do_an_TMDT.Models
     {
         public int MaDiaChi { get; set; }
         public int MaNguoiDung { get; set; }
+        [Required]
         public string DiaChi { get; set; }
 
         public virtual NguoiDung MaNguoiDungNavigation { get; set; }

@@ -19,31 +19,22 @@ namespace Do_an_TMDT.Models
         }
 
         public int MaMatHang { get; set; }
-        [Required]
         public string TenMatHang { get; set; }
-        [Required]
         public decimal GiaBan { get; set; }
         [DefaultValue(true)]
         public bool DangDuocBan { get; set; }
         [DefaultValue(0)]
         public double SoSao { get; set; }
-        [Required]
         public int? SoLuong { get; set; }
         [DefaultValue(0)]
         public int? SoLuongDaBan { get; set; }
         [DefaultValue("")]
         public string MoTa { get; set; }
-        [DefaultValue(true)]
         public bool DangDuocHienThi { get; set; }
-        [Required]
         public int MaNhaCungCap { get; set; }
-        [Required]
         public int MaThuongHieu { get; set; }
-        [Required]
         public int MaDanhMuc { get; set; }
-        [Required]
         public int? MaKichCo { get; set; }
-        [Required]
         public int? MaMauSac { get; set; }
 
         public virtual DanhMuc MaDanhMucNavigation { get; set; }

@@ -212,7 +212,7 @@ namespace Do_an_TMDT.Migrations
                 {
                     b.Property<string>("MaLoaiNguoiDung")
                         .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
+                        .HasColumnType("nvarchar(10)")
                         .IsFixedLength(true);
 
                     b.Property<string>("TenLoaiNguoiDung")
@@ -346,7 +346,7 @@ namespace Do_an_TMDT.Migrations
                     b.Property<string>("MaLoaiNguoiDung")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
+                        .HasColumnType("nvarchar(10)")
                         .IsFixedLength(true);
 
                     b.Property<string>("MatKhauHash")
