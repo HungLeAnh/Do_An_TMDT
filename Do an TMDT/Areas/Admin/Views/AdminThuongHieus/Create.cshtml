@@ -15,12 +15,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TenThuongHieu" class="control-label"></label>
-                <input asp-for="TenThuongHieu" class="form-control" />
+                <input asp-for="TenThuongHieu" class="form-control" oninput="slugGenarate()" id="slug-source" type="text" />
                 <span asp-validation-for="TenThuongHieu" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
+                <input asp-for="Slug" class="form-control" readonly type="text" value="" id="slug-target" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,4 +33,27 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@section Scripts{
+    <script>
+        function slugGenarate() {
 
+            var slug = document.getElementById("slug-source").value;
+            slug = slug.toLowerCase().replace(/ /g, '-');
+
+            //Đổi ký tự có dấu thành không dấu
+            slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+            slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+            slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+            slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+            slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+            slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+            slug = slug.replace(/đ/gi, 'd');
+            //Xóa các ký tự đặt biệt
+            slug = slug.replace(/\`|\~|\!|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+
+            document.getElementById("slug-target").value = slug;
+
+            document.getElementById("slug-target-span").innerHTML = slug;
+        }
+    </script>
+}

@@ -37,7 +37,7 @@ namespace Do_an_TMDT.Migrations
                 name: "LoaiNguoiDung",
                 columns: table => new
                 {
-                    MaLoaiNguoiDung = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false),
+                    MaLoaiNguoiDung = table.Column<string>(type: "nvarchar(10)", fixedLength: true, maxLength: 10, nullable: false),
                     TenLoaiNguoiDung = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>

@@ -115,6 +115,54 @@
 </div>
 <div aria-label="Page navigation example">
     <ul class="pagination">
-        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Index" />
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-route-MaLoaiNguoiDung="@ViewBag.CurrentLoaiNguoiDung" asp-action="Index" />
     </ul>
 </div>
+@section Scripts{
+    <script>
+    $(document).ready(function () {
+        jQuery("#idloainguoidung").change(function () {
+            var idloainguoidung = jQuery(this).children(":selected").attr("value");
+
+            $('#idloainguoidung option')
+                .removeAttr('selected');
+            $("#idloainguoidung > [value=" + idloainguoidung + "]").attr("selected", "true");
+            $.ajax({
+                url: '/Admin/AdminNguoiDungs/Filtter',
+                datatype: "json",
+                type: "GET",
+                data: {
+                    loaiNguoiDung: idloainguoidung
+                },
+                async: true,
+                success: function (results) {
+                    if (results.status == "success") {
+                        window.location.href = results.redirectUrl;
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+
+        $("#keyword").keyup(function () {
+            var strkeyword = $('#keyword').val();
+            $.ajax({
+                url: '/Admin/Search/FindProduct/',
+                datatype: "json",
+                type: "POST",
+                data: { keyword: strkeyword },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    });
+</script>
+}
