@@ -6,14 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 using Do_an_TMDT.ViewModels;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Cryptography;
-using System.Text;
-using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Do_an_TMDT.Controllers
 {
@@ -21,42 +16,125 @@ namespace Do_an_TMDT.Controllers
     {
         private readonly WEBBANGIAYContext _context;
 
-        public NguoiDungsController( WEBBANGIAYContext context)
+        public NguoiDungsController(WEBBANGIAYContext context)
         {
-           
             _context = context;
-
         }
-        [HttpGet]
-        public ActionResult Login(NguoiDung user)
+
+        public IActionResult Loadsanpham()
         {
-            var x = _context.NguoiDungs.Where(y => y.Email == user.Email && y.MatKhauHash == user.MatKhauHash);
-            if (x == null)
+            HomeVM model = new HomeVM();
+            var listSP = _context.MatHangs.AsNoTracking()
+                .Where(x => x.DangDuocBan == true)
+                .ToList();
+            List<MatHangHome> listSPW = new List<MatHangHome>();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+            foreach (var item_TH in listTH)
             {
-                return View("Dangky");
+                model.TH = listTH.Where(x => x.MaThuongHieu != null).ToList();
             }
-            else
+            foreach (var item in listSP)
             {
-                return View("Login");
-            }
 
+                MatHangHome mh = new MatHangHome();
+                mh.listSPs = item;
+                foreach (var item_anh in listanh)
+                {
+                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                foreach (var item_TH in listTH)
+                {
+                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
+                }
+                listSPW.Add(mh);
+                model.MatHangs = listSPW;
+                model.Ng = (int)HttpContext.Session.GetInt32("Ten");
+            }
+            return View(model);
         }
+
+
+        public IActionResult dangky()
+        {
+            
+            return View();
+        }
+
+       
         [HttpPost]
-        public ActionResult Dangky(NguoiDung user)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> dangky([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
-            var x = _context.NguoiDungs.Where(y => y.Email == user.Email && y.MatKhauHash == user.MatKhauHash);
-            if (x == null)
+            if (ModelState.IsValid)
             {
-                return View("Dangky");
+                bool x=true;
+                var list = _context.NguoiDungs.AsNoTracking().ToList();
+                foreach (var item in list)
+                {
+                    if (nguoiDung.Email == item.Email)
+                    {
+                        ViewBag.mess = "Email đã tồn tại";
+                        x = false;
+                        return View();
+                    }
+                }
+                if (x == true)
+                {
+                    nguoiDung.MaLoaiNguoiDung = "1";
+                    _context.Add(nguoiDung);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(dangnhap));
+                }
             }
-            else
-            {
-                return View("Login");
-            }
-
+            return View();
         }
+
+        public IActionResult dangnhap()
+        {
+          
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> dangnhap([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                var list = _context.NguoiDungs.AsNoTracking().ToList();
+                foreach (var item in list)
+                {
+                    if (nguoiDung.TenDangNhap == item.Email && nguoiDung.MatKhauHash == item.MatKhauHash)
+                    {
+                        int x = int.Parse(item.MaLoaiNguoiDung);
+                        if (x == 1)
+                        {
+                            int id = item.MaNguoiDung;
+
+                            HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
+                            return RedirectToAction("Loadsanpham");
+                        }
+                        else if (x == 2)
+                        {
+                            int id = item.MaNguoiDung;
+
+                            HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
+                            return RedirectToAction("","Home",new { area = "Admin" });
+                        }
+                    }
+                }
+            }
+            return View();
+        }
+
 
 
     }
 }
-

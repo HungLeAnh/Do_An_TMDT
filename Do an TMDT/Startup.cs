@@ -1,6 +1,7 @@
 using AspNetCoreHero.ToastNotification;
 using Do_an_TMDT.Areas.Admin.Controllers;
 using Do_an_TMDT.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -44,6 +45,16 @@ namespace Do_an_TMDT
                     config.Position = NotyfPosition.TopRight;
                 }
             );
+            services.AddSession();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(p =>
+                {
+                    p.Cookie.Name = "UserLoginCookie";
+                    p.ExpireTimeSpan = TimeSpan.FromDays(1);
+                    //p.LoginPath = "/dang-nhap.html";
+                    //p.LogoutPath = "/dang-xuat/html";
+                    p.AccessDeniedPath = "/not-found.html";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +71,7 @@ namespace Do_an_TMDT
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();

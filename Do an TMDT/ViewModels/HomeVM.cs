@@ -10,6 +10,7 @@ namespace Do_an_TMDT.ViewModels
     {
        public List<MatHangHome> MatHangs { get; set; }
        public List<ThuongHieu> TH { get; set; } 
+        public int Ng { get; set; }
     
     }
 }

@@ -3,6 +3,7 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <ul class="menu">
     <a href=""><img src="images/logo.png" alt=""></a>
     <li><a href="">Trang chủ</a></li>
@@ -24,18 +25,32 @@
                     <input type="text" placeholder="Tìm kiếm sản phẩm">
                 </div>
             </li>
+            @{
+                if (@Model.Ng != 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
 
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Tài Khoản </a></li>
+                            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                }
+            }
+            @{
+                if (@Model.Ng == 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
 
-            <li>
-                <a href=""><ion-icon name="person-outline"></ion-icon></a>
-                <ul class="dangnhap">
-
-                    <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
-                    <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
-                </ul>
-            </li>
-
-
+                            <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
+                        </ul>
+                    </li>
+                }
+            }
 
             <li>
                 <a href="">
@@ -81,7 +96,6 @@
     </a>
 
 </ul>
-
 <div class="than">
     <img src="images/Chinh.webp" width="100%" alt="">
     <div class="xanh">
