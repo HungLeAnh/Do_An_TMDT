@@ -1,9 +1,8 @@
-﻿@model Do_an_TMDT.Models.NguoiDung
-
+﻿
 @{
-    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Do_an_TMDT.Models.NguoiDung
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,19 +12,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="~/css/3.css" rel="stylesheet" />
-
     <link rel="shortcut icon" href="#">
+    <link href="~/css/3.css" rel="stylesheet" />
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
             integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
             crossorigin="anonymous"></script>
 </head>
-
 <body>
+
     <section class="bread-crumb">
         <div class="container">
             <div class="nd-main-title-breadcrumb text-center">Đăng nhập tài khoản</div>
@@ -43,10 +40,23 @@
                 </li>
 
             </ul>
+            @{
+
+                if (@ViewBag.mess != null)
+                {
+                    <div class="col">
+                        <div class="alert alert-danger col-lg-2" role="alert">
+                            @ViewBag.mess
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </section>
 
-    <!-- Phần chính của trang đăng nhập -->
+
+
+
 
     <div class="row justify-content-lg-center">
         <div class="col-lg-7 col-md-12">
@@ -55,65 +65,63 @@
                     <div class="col-lg-12 col-md-12 account-content order-lg-last order-md-last order-sm-first order-first">
                         <ul class="auth-block__menu-list p-0">
                             <li class="active">
-                                <a href="#" title="Đăng nhập">Đăng nhập</a>
+                                <a href="" title="Đăng nhập">Đăng nhập</a>
                             </li>
                             <li>
-                                <a href="/dangky.html" title="Đăng ký">Đăng ký</a>
+                                <a asp-controller="NguoiDungs"  asp-action="dangky">Đăng ký</a>
                             </li>
                         </ul>
                         <div id="nd-login">
-                            <form accept-charset="utf-8" asp-action="Login" id="customer_login" method="post">
-                                <input name="FormType" type="hidden" value="customer_login">
-                                <input name="utf8" type="hidden" value="true">
+                            <form accept-charset="utf-8" asp-action="dangnhap" id="customer_register"
+                                  method="post">
+                                <input name="FormType" type="hidden" value="customer_register">
+                                <input name="utf8" type="hidden" value="true"><input type="hidden"
+                                                                                     id="" name="Token"
+                                                                                     value="">
                                 <div class="form-signup">
-
                                 </div>
                                 <div class="form-signup clearfix">
-                                    <fieldset class="form-group margin-bottom-10">
-                                        <label>Email<span class="required">*</span></label>
-                                        <input asp-for="Email" autocomplete="off" placeholder="Nhập Địa chỉ Email" type="email"
-                                               class="form-control form-control-lg" value="" name="email"
-                                               id="customer_email" required="" data-validation="email"
-                                               data-validation-error-msg="Email sai định dạng">
-                                    </fieldset>
-                                    <fieldset class="form-group margin-bottom-0">
-                                        <label>Mật khẩu<span class="required">*</span></label>
-                                        <input asp-for="MatKhauHash" autocomplete="off" placeholder="Nhập Mật khẩu" type="password"
-                                               class="form-control form-control-lg" value="" name="password"
-                                               id="customer_password" data-validation-error-msg="Không được để trống"
-                                               data-validation="required">
-                                    </fieldset>
-                                    <div class="clearfix"></div>
-                                    <p class="text-right recover">
-                                        <a href="#recover" class="btn-link-style" onclick="showRecoverPasswordForm();"
-                                           title="Quên mật khẩu?">Quên mật khẩu?</a>
-                                    </p>
-                                    <div class="pull-xs-left text-center" style="margin-top: 15px;">
-                                        <button class="btn-style btn-blues" type="submit" value="Đăng nhập">
-                                            Đăng
-                                            Nhập
-                                        </button>
+                                    <div class="row">
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label asp-for="TenDangNhap" class="control-label"> Nhập Họ Và Tên</label>
+                                                <input placeholder="Nhập Tên Đăng Nhập" required="" asp-for="TenDangNhap" class="form-control" />
+                                                <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                            <label asp-for="MatKhauHash" class="control-label">Nhập mật Khẩu</label>
+                                            <input type="password" asp-for="MatKhauHash" required="" class="form-control" />
+                                            <span asp-validation-for="MatKhauHash" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-12 text-center margin-top-10">
+                                            <button type="submit" value="Đăng nhập" class="btn-style btn-blues">
+                                                Đăng Nhập
+                                            </button>
+                                        </div>
                                     </div>
-                                    <p class="login--notes">
-                                        ND Shoes cam kết bảo mật và sẽ không bao giờ đăng <br>hay
-                                        chia sẻ thông tin mà chưa có được sự đồng ý của bạn.
-                                    </p>
                                 </div>
-                                <input name="returnUrl" type="hidden" value="/account">
                             </form>
                             <div class="clearfix"></div>
                             <div class="line-break">
                                 <span>hoặc đăng nhập qua</span>
                             </div>
                             <div class="social-login text-center">
-                                <a href="" class="social-login--facebook"
-                                   onclick="loginFacebook()">
-                                    <img width="129px" height="37px"
-                                         alt="facebook-login-button"
+                                <a href="" class="social-login--facebook" onclick="loginFacebook()">
+                                    <img width="129px"
+                                         height="37px" alt="facebook-login-button"
                                          src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
                                 </a>
                                 <a href="" class="social-login--google" onclick="loginGoogle()">
-                                    <img width="129px" height="37px" alt="google-login-button"
+                                    <img width="129px"
+                                         height="37px" alt="google-login-button"
                                          src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
                                 </a>
                             </div>
@@ -161,7 +169,7 @@
     <script type="text/javascript">
         function showRecoverPasswordForm() {
             document.getElementById('recover-password').style.display = 'block';
-            document.getElementById('nd-login').style.display='none';
+            document.getElementById('nd-login').style.display = 'none';
         }
 
         function hideRecoverPasswordForm() {
@@ -172,5 +180,11 @@
 
     </script>
 </body>
+
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
