@@ -70,26 +70,26 @@ namespace Do_an_TMDT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> dangky([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
+            bool x = true;
+            var list = _context.NguoiDungs.AsNoTracking().ToList();
+            foreach (var item in list)
+            {
+                if (nguoiDung.Email == item.Email)
+                {
+                    ViewBag.mess = "Email đã tồn tại";
+                    x = false;
+                    return View();
+                }
+            }
+            if (x == true)
+            {
+                nguoiDung.MaLoaiNguoiDung = "KH";
+                _context.Add(nguoiDung);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(dangnhap));
+            }
             if (ModelState.IsValid)
             {
-                bool x=true;
-                var list = _context.NguoiDungs.AsNoTracking().ToList();
-                foreach (var item in list)
-                {
-                    if (nguoiDung.Email == item.Email)
-                    {
-                        ViewBag.mess = "Email đã tồn tại";
-                        x = false;
-                        return View();
-                    }
-                }
-                if (x == true)
-                {
-                    nguoiDung.MaLoaiNguoiDung = "1";
-                    _context.Add(nguoiDung);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(dangnhap));
-                }
             }
             return View();
         }
@@ -111,7 +111,7 @@ namespace Do_an_TMDT.Controllers
                 var list = _context.NguoiDungs.AsNoTracking().ToList();
                 foreach (var item in list)
                 {
-                    if (nguoiDung.TenDangNhap == item.Email && nguoiDung.MatKhauHash == item.MatKhauHash)
+                    if (nguoiDung.Email == item.Email && nguoiDung.MatKhauHash == item.MatKhauHash)
                     {
                         int x = int.Parse(item.MaLoaiNguoiDung);
                         if (x == 1)

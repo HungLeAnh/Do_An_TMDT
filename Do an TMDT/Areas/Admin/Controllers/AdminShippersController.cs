@@ -6,61 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AdminNguoiDungsController : Controller
+    public class AdminShippersController : Controller
     {
         private readonly WEBBANGIAYContext _context;
 
-        public AdminNguoiDungsController(WEBBANGIAYContext context)
+        public AdminShippersController(WEBBANGIAYContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/AdminNguoiDungs
-        public IActionResult Index(int? page,string maLoaiNguoiDung = "")
+        // GET: Admin/AdminShippers
+        public async Task<IActionResult> Index()
         {
-            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 10;
-            var lsCustomers = new List<NguoiDung>();
-            maLoaiNguoiDung = maLoaiNguoiDung.Trim();
-            if (maLoaiNguoiDung != "")
-            {
-                lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.MaLoaiNguoiDung == maLoaiNguoiDung)
-                    .AsNoTracking()
-                    .OrderByDescending(x => x.MaNguoiDung)
-                    .Include(n => n.MaLoaiNguoiDungNavigation).ToList();
-            }
-            else
-            {
-                lsCustomers = _context.NguoiDungs
-                    .AsNoTracking()
-                    .OrderByDescending(x => x.MaNguoiDung)
-                    .Include(n => n.MaLoaiNguoiDungNavigation).ToList();
-            }
-            PagedList<NguoiDung> models = new PagedList<NguoiDung>(lsCustomers.AsQueryable(), pageNumber, pageSize);
-            
-            ViewBag.CurrentPage = pageNumber;
-            ViewBag.CurrentLoaiNguoiDung = maLoaiNguoiDung;
+            var wEBBANGIAYContext = _context.NguoiDungs.Include(n => n.MaLoaiNguoiDungNavigation);
+            return View(await wEBBANGIAYContext.ToListAsync());
+        }
 
-            ViewData["LoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "TenLoaiNguoiDung",maLoaiNguoiDung);
-            return View(models);
-        }
-        public IActionResult Filtter(string loaiNguoiDung ="")
-        {
-            var url = $"/Admin/AdminNguoiDungs?MaLoaiNguoiDung={loaiNguoiDung.Trim()}";
-            if (loaiNguoiDung == "")
-            {
-                url = $"/Admin/AdminNguoiDungs";
-            }
-            return Json(new { status = "success", redirectUrl = url });
-        }
-        // GET: Admin/AdminNguoiDungs/Details/5
+        // GET: Admin/AdminShippers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -79,14 +45,14 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Create
+        // GET: Admin/AdminShippers/Create
         public IActionResult Create()
         {
             ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung");
             return View();
         }
 
-        // POST: Admin/AdminNguoiDungs/Create
+        // POST: Admin/AdminShippers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -103,7 +69,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Edit/5
+        // GET: Admin/AdminShippers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -120,7 +86,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // POST: Admin/AdminNguoiDungs/Edit/5
+        // POST: Admin/AdminShippers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -156,7 +122,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // GET: Admin/AdminNguoiDungs/Delete/5
+        // GET: Admin/AdminShippers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -175,7 +141,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(nguoiDung);
         }
 
-        // POST: Admin/AdminNguoiDungs/Delete/5
+        // POST: Admin/AdminShippers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

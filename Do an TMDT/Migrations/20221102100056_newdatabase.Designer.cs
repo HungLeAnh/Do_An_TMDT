@@ -4,14 +4,16 @@ using Do_an_TMDT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Do_an_TMDT.Migrations
 {
     [DbContext(typeof(WEBBANGIAYContext))]
-    partial class WEBBANGIAYContextModelSnapshot : ModelSnapshot
+    [Migration("20221102100056_newdatabase")]
+    partial class newdatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

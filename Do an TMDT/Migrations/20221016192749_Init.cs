@@ -79,7 +79,7 @@ namespace Do_an_TMDT.Migrations
                     MaThuongHieu = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TenThuongHieu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Slug = table.Column<string>(type: "nchar(20)", fixedLength: true, maxLength: 20, nullable: false)
+                    Slug = table.Column<string>(type: "nvarchar(50)", fixedLength: true, maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,7 @@ namespace Do_an_TMDT.Migrations
                 {
                     MaNguoiDung = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MaLoaiNguoiDung = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false),
+                    MaLoaiNguoiDung = table.Column<string>(type: "nvarchar(10)", fixedLength: true, maxLength: 10, nullable: false),
                     TenNguoiDung = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TenDangNhap = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),

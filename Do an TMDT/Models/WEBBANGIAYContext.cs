@@ -38,6 +38,7 @@ namespace Do_an_TMDT.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY;Trusted_Connection=True;");
             }
         }
@@ -52,6 +53,10 @@ namespace Do_an_TMDT.Models
                     .HasName("PK_ChiTietDonHang_1");
 
                 entity.ToTable("ChiTietDonHang");
+
+                entity.HasIndex(e => e.MaDonHang, "IX_ChiTietDonHang_MaDonHang");
+
+                entity.HasIndex(e => e.MaMatHang, "IX_ChiTietDonHang_MaMatHang");
 
                 entity.Property(e => e.MaChiTietDonHang).ValueGeneratedOnAdd();
 
@@ -76,6 +81,11 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("ChiTietGioHang");
 
+                entity.HasIndex(e => e.MaGioHang, "AK_ChiTietGioHang_MaGioHang")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.MaMatHang, "IX_ChiTietGioHang_MaMatHang");
+
                 entity.HasIndex(e => e.MaGioHang, "UQ_ChiTietGioHang")
                     .IsUnique();
 
@@ -89,6 +99,12 @@ namespace Do_an_TMDT.Models
             modelBuilder.Entity<DanhGia>(entity =>
             {
                 entity.HasKey(e => e.MaDanhGia);
+
+                entity.HasIndex(e => e.MaDonHang, "IX_DanhGia_MaDonHang");
+
+                entity.HasIndex(e => e.MaMatHang, "IX_DanhGia_MaMatHang");
+
+                entity.HasIndex(e => e.MaNguoiDung, "IX_DanhGia_MaNguoiDung");
 
                 entity.Property(e => e.NoiDung).HasMaxLength(150);
 
@@ -138,6 +154,8 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("DonHang");
 
+                entity.HasIndex(e => e.MaNguoiDung, "IX_DonHang_MaNguoiDung");
+
                 entity.Property(e => e.DiaChi)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -155,10 +173,15 @@ namespace Do_an_TMDT.Models
                 entity.Property(e => e.TongTien).HasColumnType("numeric(18, 0)");
 
                 entity.HasOne(d => d.MaNguoiDungNavigation)
-                    .WithMany(p => p.DonHangs)
+                    .WithMany(p => p.DonHangMaNguoiDungNavigations)
                     .HasForeignKey(d => d.MaNguoiDung)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DonHang_NguoiDung");
+
+                entity.HasOne(d => d.MaNguoiGiaoHangNavigation)
+                    .WithMany(p => p.DonHangMaNguoiGiaoHangNavigations)
+                    .HasForeignKey(d => d.MaNguoiGiaoHang)
+                    .HasConstraintName("FK_DonHang_NguoiDung1");
             });
 
             modelBuilder.Entity<GioHang>(entity =>
@@ -170,7 +193,7 @@ namespace Do_an_TMDT.Models
                 entity.HasIndex(e => e.MaNguoiDung, "UQ_GioHang")
                     .IsUnique();
 
-                entity.Property(e => e.MaGioHang).ValueGeneratedOnAdd();
+                entity.Property(e => e.MaGioHang).ValueGeneratedNever();
 
                 entity.HasOne(d => d.MaGioHangNavigation)
                     .WithOne(p => p.GioHang)
@@ -201,7 +224,7 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("LoaiNguoiDung");
 
-                entity.Property(e => e.MaLoaiNguoiDung).HasMaxLength(50);
+                entity.Property(e => e.MaLoaiNguoiDung).HasMaxLength(10);
 
                 entity.Property(e => e.TenLoaiNguoiDung)
                     .IsRequired()
@@ -214,6 +237,16 @@ namespace Do_an_TMDT.Models
                     .HasName("PK__MatHang__A92254E571897811");
 
                 entity.ToTable("MatHang");
+
+                entity.HasIndex(e => e.MaDanhMuc, "IX_MatHang_MaDanhMuc");
+
+                entity.HasIndex(e => e.MaKichCo, "IX_MatHang_MaKichCo");
+
+                entity.HasIndex(e => e.MaMauSac, "IX_MatHang_MaMauSac");
+
+                entity.HasIndex(e => e.MaNhaCungCap, "IX_MatHang_MaNhaCungCap");
+
+                entity.HasIndex(e => e.MaThuongHieu, "IX_MatHang_MaThuongHieu");
 
                 entity.Property(e => e.GiaBan).HasColumnType("numeric(18, 0)");
 
@@ -289,6 +322,8 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("NguoiDung");
 
+                entity.HasIndex(e => e.MaLoaiNguoiDung, "IX_NguoiDung_MaLoaiNguoiDung");
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -296,13 +331,15 @@ namespace Do_an_TMDT.Models
 
                 entity.Property(e => e.MaLoaiNguoiDung)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.MatKhauHash)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Salt)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -336,6 +373,8 @@ namespace Do_an_TMDT.Models
                     .HasName("PK__NguoiDun__7C39CE6E46E6A4D8");
 
                 entity.ToTable("NguoiDung_DiaChi");
+
+                entity.HasIndex(e => e.MaNguoiDung, "IX_NguoiDung_DiaChi_MaNguoiDung");
 
                 entity.Property(e => e.MaDiaChi).ValueGeneratedOnAdd();
 
@@ -373,6 +412,8 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("TheoDoi");
 
+                entity.HasIndex(e => e.MaMatHang, "IX_TheoDoi_MaMatHang");
+
                 entity.HasIndex(e => new { e.MaNguoiDung, e.MaMatHang }, "UQ__TheoDoi__8FABF22D99F1F197")
                     .IsUnique();
 
@@ -400,8 +441,7 @@ namespace Do_an_TMDT.Models
 
                 entity.Property(e => e.Slug)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .IsFixedLength(true);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.TenThuongHieu)
                     .IsRequired()

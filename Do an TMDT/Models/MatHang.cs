@@ -25,6 +25,7 @@ namespace Do_an_TMDT.Models
         public bool DangDuocBan { get; set; }
         [DefaultValue(0)]
         public double SoSao { get; set; }
+        [Required]
         public int? SoLuong { get; set; }
         [DefaultValue(0)]
         public int? SoLuongDaBan { get; set; }
