@@ -53,11 +53,11 @@ namespace Do_an_TMDT.Controllers
                 model.MatHangs = listSPW;
                 try
                 {
-                    model.Ng = (int)HttpContext.Session.GetInt32("Ten");
+                    ViewBag.Ids = (int)HttpContext.Session.GetInt32("Ten");
                 }
                 catch
                 {
-                    model.Ng = 0;
+                    ViewBag.Id = 0;
                 }
             }
             foreach(var item2 in model.MatHangs.Where(x=>x.listSPs.MaMatHang==MaSp).ToList())

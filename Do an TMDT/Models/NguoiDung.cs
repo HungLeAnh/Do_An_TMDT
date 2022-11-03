@@ -22,8 +22,11 @@ namespace Do_an_TMDT.Models
         [Required]
         public string TenNguoiDung { get; set; }
         public string AnhDaiDien { get; set; }
+
         public string TenDangNhap { get; set; }
+        
         public string MatKhauHash { get; set; }
+
         public string Salt { get; set; }
         public string Email { get; set; }
         public string Sdt { get; set; }

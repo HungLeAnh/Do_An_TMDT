@@ -54,7 +54,7 @@ namespace Do_an_TMDT.Controllers
                 }
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
-                model.Ng = 0;
+                
                
             }
             return View(model);
