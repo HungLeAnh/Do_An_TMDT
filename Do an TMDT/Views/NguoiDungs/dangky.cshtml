@@ -41,20 +41,20 @@
 
             </ul>
         </div>
-        @{
 
-            if (@ViewBag.mess != null)
-            {
-                <div class="col">
-                    <div class="alert alert-danger col-lg-2" role="alert">
-                        @ViewBag.mess
-                    </div>
-                </div>
-            }
-        }
     </section>
 
+    @{
 
+        if (@ViewBag.mess != null)
+        {
+            <div class="col">
+                <div class="alert alert-danger col-lg-4" role="alert">
+                    @ViewBag.mess
+                </div>
+            </div>
+        }
+    }
 
 
 
@@ -82,17 +82,23 @@
                                 </div>
                                 <div class="form-signup clearfix">
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label asp-for="MaLoaiNguoiDung" class="control-label">Mã Loại người dùng</label>
+                                                <select asp-for="MaLoaiNguoiDung" class="form-control" asp-items="ViewBag.MaLoaiNguoiDung"></select>
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label asp-for="TenNguoiDung" class="control-label"></label>
+                                                <label asp-for="TenNguoiDung" class="control-label">Họ Và Tên</label>
                                                 <input placeholder="Nhập Họ Và Tên" required="" asp-for="TenNguoiDung" class="form-control" />
                                                 <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label asp-for="TenDangNhap" class="control-label"> Nhập Họ Và Tên</label>
+                                                <label asp-for="TenDangNhap" class="control-label"> Nhập Tên Đăng nhập</label>
                                                 <input placeholder="Nhập Tên Đăng Nhập" required="" asp-for="TenDangNhap" class="form-control" />
                                                 <span asp-validation-for="TenDangNhap" class="text-danger"></span>
                                             </div>
@@ -124,6 +130,7 @@
                                             <input type="password" asp-for="MatKhauHash" required="" class="form-control" />
                                             <span asp-validation-for="MatKhauHash" class="text-danger"></span>
                                         </div>
+                                        
 
                                         <div class="col-md-12 text-center margin-top-10">
                                             <button type="submit" value="Đăng ký" class="btn-style btn-blues">

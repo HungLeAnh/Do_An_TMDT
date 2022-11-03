@@ -4,14 +4,16 @@ using Do_an_TMDT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Do_an_TMDT.Migrations
+namespace Do_an_TMDT.Data.Migrations
 {
     [DbContext(typeof(WEBBANGIAYContext))]
-    partial class WEBBANGIAYContextModelSnapshot : ModelSnapshot
+    [Migration("20221102115318_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,9 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaChiTietDonHang", "MaDonHang")
                         .HasName("PK_ChiTietDonHang_1");
 
-                    b.HasIndex(new[] { "MaDonHang" }, "IX_ChiTietDonHang_MaDonHang");
+                    b.HasIndex("MaDonHang");
 
-                    b.HasIndex(new[] { "MaMatHang" }, "IX_ChiTietDonHang_MaMatHang");
+                    b.HasIndex("MaMatHang");
 
                     b.ToTable("ChiTietDonHang");
                 });
@@ -65,10 +67,7 @@ namespace Do_an_TMDT.Migrations
 
                     b.HasKey("MaGioHang", "MaMatHang");
 
-                    b.HasIndex(new[] { "MaGioHang" }, "AK_ChiTietGioHang_MaGioHang")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "MaMatHang" }, "IX_ChiTietGioHang_MaMatHang");
+                    b.HasIndex("MaMatHang");
 
                     b.HasIndex(new[] { "MaGioHang" }, "UQ_ChiTietGioHang")
                         .IsUnique();
@@ -101,11 +100,11 @@ namespace Do_an_TMDT.Migrations
 
                     b.HasKey("MaDanhGia");
 
-                    b.HasIndex(new[] { "MaDonHang" }, "IX_DanhGia_MaDonHang");
+                    b.HasIndex("MaDonHang");
 
-                    b.HasIndex(new[] { "MaMatHang" }, "IX_DanhGia_MaMatHang");
+                    b.HasIndex("MaMatHang");
 
-                    b.HasIndex(new[] { "MaNguoiDung" }, "IX_DanhGia_MaNguoiDung");
+                    b.HasIndex("MaNguoiDung");
 
                     b.ToTable("DanhGia");
                 });
@@ -155,9 +154,6 @@ namespace Do_an_TMDT.Migrations
                     b.Property<int>("MaNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MaNguoiGiaoHang")
-                        .HasColumnType("int");
-
                     b.Property<string>("Sdt")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -176,9 +172,7 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaDonHang")
                         .HasName("PK_DonHang_1");
 
-                    b.HasIndex("MaNguoiGiaoHang");
-
-                    b.HasIndex(new[] { "MaNguoiDung" }, "IX_DonHang_MaNguoiDung");
+                    b.HasIndex("MaNguoiDung");
 
                     b.ToTable("DonHang");
                 });
@@ -186,6 +180,7 @@ namespace Do_an_TMDT.Migrations
             modelBuilder.Entity("Do_an_TMDT.Models.GioHang", b =>
                 {
                     b.Property<int>("MaGioHang")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("MaNguoiDung")
@@ -219,8 +214,8 @@ namespace Do_an_TMDT.Migrations
             modelBuilder.Entity("Do_an_TMDT.Models.LoaiNguoiDung", b =>
                 {
                     b.Property<string>("MaLoaiNguoiDung")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TenLoaiNguoiDung")
                         .IsRequired()
@@ -285,15 +280,15 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaMatHang")
                         .HasName("PK__MatHang__A92254E571897811");
 
-                    b.HasIndex(new[] { "MaDanhMuc" }, "IX_MatHang_MaDanhMuc");
+                    b.HasIndex("MaDanhMuc");
 
-                    b.HasIndex(new[] { "MaKichCo" }, "IX_MatHang_MaKichCo");
+                    b.HasIndex("MaKichCo");
 
-                    b.HasIndex(new[] { "MaMauSac" }, "IX_MatHang_MaMauSac");
+                    b.HasIndex("MaMauSac");
 
-                    b.HasIndex(new[] { "MaNhaCungCap" }, "IX_MatHang_MaNhaCungCap");
+                    b.HasIndex("MaNhaCungCap");
 
-                    b.HasIndex(new[] { "MaThuongHieu" }, "IX_MatHang_MaThuongHieu");
+                    b.HasIndex("MaThuongHieu");
 
                     b.ToTable("MatHang");
                 });
@@ -352,8 +347,8 @@ namespace Do_an_TMDT.Migrations
 
                     b.Property<string>("MaLoaiNguoiDung")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MatKhauHash")
                         .HasMaxLength(50)
@@ -389,7 +384,7 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaNguoiDung")
                         .HasName("PK__NguoiDun__C539D762078210E6");
 
-                    b.HasIndex(new[] { "MaLoaiNguoiDung" }, "IX_NguoiDung_MaLoaiNguoiDung");
+                    b.HasIndex("MaLoaiNguoiDung");
 
                     b.ToTable("NguoiDung");
                 });
@@ -412,7 +407,7 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaDiaChi", "MaNguoiDung")
                         .HasName("PK__NguoiDun__7C39CE6E46E6A4D8");
 
-                    b.HasIndex(new[] { "MaNguoiDung" }, "IX_NguoiDung_DiaChi_MaNguoiDung");
+                    b.HasIndex("MaNguoiDung");
 
                     b.ToTable("NguoiDung_DiaChi");
                 });
@@ -458,7 +453,7 @@ namespace Do_an_TMDT.Migrations
                     b.HasKey("MaTheoDoi", "MaNguoiDung", "MaMatHang")
                         .HasName("PK__TheoDoi__3156C07993ADD5B7");
 
-                    b.HasIndex(new[] { "MaMatHang" }, "IX_TheoDoi_MaMatHang");
+                    b.HasIndex("MaMatHang");
 
                     b.HasIndex(new[] { "MaNguoiDung", "MaMatHang" }, "UQ__TheoDoi__8FABF22D99F1F197")
                         .IsUnique();
@@ -475,8 +470,9 @@ namespace Do_an_TMDT.Migrations
 
                     b.Property<string>("Slug")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nchar(20)")
+                        .IsFixedLength(true);
 
                     b.Property<string>("TenThuongHieu")
                         .IsRequired()
@@ -549,19 +545,12 @@ namespace Do_an_TMDT.Migrations
             modelBuilder.Entity("Do_an_TMDT.Models.DonHang", b =>
                 {
                     b.HasOne("Do_an_TMDT.Models.NguoiDung", "MaNguoiDungNavigation")
-                        .WithMany("DonHangMaNguoiDungNavigations")
+                        .WithMany("DonHangs")
                         .HasForeignKey("MaNguoiDung")
                         .HasConstraintName("FK_DonHang_NguoiDung")
                         .IsRequired();
 
-                    b.HasOne("Do_an_TMDT.Models.NguoiDung", "MaNguoiGiaoHangNavigation")
-                        .WithMany("DonHangMaNguoiGiaoHangNavigations")
-                        .HasForeignKey("MaNguoiGiaoHang")
-                        .HasConstraintName("FK_DonHang_NguoiDung1");
-
                     b.Navigation("MaNguoiDungNavigation");
-
-                    b.Navigation("MaNguoiGiaoHangNavigation");
                 });
 
             modelBuilder.Entity("Do_an_TMDT.Models.GioHang", b =>
@@ -726,9 +715,7 @@ namespace Do_an_TMDT.Migrations
                 {
                     b.Navigation("DanhGia");
 
-                    b.Navigation("DonHangMaNguoiDungNavigations");
-
-                    b.Navigation("DonHangMaNguoiGiaoHangNavigations");
+                    b.Navigation("DonHangs");
 
                     b.Navigation("GioHang");
 

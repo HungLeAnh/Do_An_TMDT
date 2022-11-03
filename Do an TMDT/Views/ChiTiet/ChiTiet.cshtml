@@ -29,7 +29,7 @@
                 </div>
             </li>
             @{
-                if (@Model.Ng != 0)
+                if (ViewBag.Id != 0)
                 {
                     <li>
                         <a href=""><ion-icon name="person-outline"></ion-icon></a>
@@ -42,7 +42,7 @@
                 }
             }
             @{
-                if (@Model.Ng == 0)
+                if (ViewBag.Id == 0)
                 {
                     <li>
                         <a href=""><ion-icon name="person-outline"></ion-icon></a>
@@ -135,7 +135,7 @@
                 <button onclick="cong()">+</button>
             </div>
             <div class="themgiohang">
-                        @{ if (@Model.Ng == 0)
+                        @{ if (ViewBag.Id == 0)
                             {
                         <button asp-controller="NguoiDungs" asp-action="dangky" id="them">THÊM VÀO GIỎ HÀNG</button>
                         <button asp-controller="NguoiDungs" asp-action="dangky" id="mua">MUA NGAY</button>

@@ -1,0 +1,51 @@
+﻿@model Do_an_TMDT.Models.NguoiDung
+@{
+    ViewData["Title"] = "EditDiaChi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/4.css" rel="stylesheet" />
+<section class="NoidungChinh">
+    <div class="Noidung1">
+        <div class="title_hello">
+            <h5 class="title_trangtaikhoan">Trang Tài Khoản</h5>
+            <p>
+                Xin chào:
+                <span>Khách hàng </span>
+            </p>
+        </div>
+        <ul class="noidung1_1">
+            <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
+            <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
+            <li><a class="noidungInfo">Đổi mật khẩu</a></li>
+            <li><a class="noidungInfo"hreflang="" href="SoDiaChi.html">Số địa chỉ(0)</a></li>
+            <li><a class="noidungInfo" href="index.html">Đăng xuất</a></li>
+        </ul>
+    </div>
+    <form asp-action="EditMK" class="Noidung2">
+        <h2 class="title_Chinh">Đổi mật khẩu</h2>
+        <p>Để đảm bảo tính bảo mật, vui lòng đặt mật khẩu với ít nhất 8 kí tự</p>
+        <div class="KhungDoiMK">
+            <div class="MKCu">
+                <p>Mật khẩu cũ</p>
+                <input asp-for="MatKhauHash" class="MKhauCu" type="password" placeholder="Nhập mật khẩu cũ">
+            </div>
+            <div class="MKMoi1">
+                <p>Mật khẩu mới</p>
+                <input class="MKhauMoi1" type="password" placeholder="Nhập lại mật khẩu mới">
+            </div>
+            <div class="MKMoi2">
+                <p>Nhập lại mật khẩu mới</p>
+                <input  class="MKhauMoi2" type="password" placeholder="Nhập mật khẩu mới">
+            </div>
+            <button type="button" onclick="" class="btn_changePW">
+                Đặt lại mật khẩu
+            </button>
+        </div>
+
+
+    </form>
+
+
+
+</section>
+

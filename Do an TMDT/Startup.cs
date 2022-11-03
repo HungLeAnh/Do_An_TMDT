@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace Do_an_TMDT
 {
@@ -47,6 +48,14 @@ namespace Do_an_TMDT
             );
             services.AddSession();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddGoogle(googleOptions =>
+                {
+                    IConfigurationSection googleAuthNSention = Configuration.GetSection("Authentication:Google");
+                    googleOptions.ClientId = googleAuthNSention["ClientId"];
+                    googleOptions.ClientSecret = googleAuthNSention["ClientSecret"];
+                }
+                )
+             
                 .AddCookie(p =>
                 {
                     p.Cookie.Name = "UserLoginCookie";
@@ -55,6 +64,7 @@ namespace Do_an_TMDT
                     //p.LogoutPath = "/dang-xuat/html";
                     p.AccessDeniedPath = "/not-found.html";
                 });
+                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
