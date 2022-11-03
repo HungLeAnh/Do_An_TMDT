@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace WebShop.Helpper
+namespace Do_an_TMDT.Helpper
 {
     public static class Utilities
     {

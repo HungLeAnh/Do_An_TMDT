@@ -36,9 +36,11 @@ namespace Do_an_TMDT.ViewModels
 
             [MinLength(5, ErrorMessage = "Bạn cần đặt mật khẩu tối thiểu 5 ký tự")]
             [Display(Name = "Nhập lại mật khẩu")]
-            [Compare("Password", ErrorMessage = "Nhập lại mật khẩu không đúng")]
-            public string ConfirmPassword { get; set; }
-        
+            [Compare("MatKhauHash", ErrorMessage = "Nhập lại mật khẩu không đúng")]
+            public string MaLoaiNguoiDung { get; set; }
+            public string Salt { get; set; }
+            public string TenDangNhap { get; set; }
+
     }
 
 }

@@ -22,30 +22,49 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminMatHangs
-        public ActionResult Index(int? page=1)
+        public IActionResult Index(int? page=1,int? maDanhMuc=0)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
-            var lsMatHangs = _context.MatHangs
-                .Include(m => m.MaDanhMucNavigation)
-                .Include(m => m.MaKichCoNavigation)
-                .Include(m => m.MaMauSacNavigation)
-                .Include(m => m.MaNhaCungCapNavigation)
-                .Include(m => m.MaThuongHieuNavigation)
-                .Include(m => m.MatHangAnhs)
-                .AsNoTracking()
-                .OrderByDescending(x => x.MaMatHang);
-            PagedList<MatHang> models = new PagedList<MatHang>(lsMatHangs, pageNumber, pageSize);
+            List<MatHang> lsMatHangs = new List<MatHang>();   
+            if (maDanhMuc != 0)
+            {
+                 lsMatHangs = _context.MatHangs
+                    .Where(x=>x.MaDanhMuc == maDanhMuc)
+                    .Include(m => m.MaDanhMucNavigation)
+                    .Include(m => m.MaKichCoNavigation)
+                    .Include(m => m.MaMauSacNavigation)
+                    .Include(m => m.MaNhaCungCapNavigation)
+                    .Include(m => m.MaThuongHieuNavigation)
+                    .Include(m => m.MatHangAnhs)
+                    .AsNoTracking()
+                    .OrderByDescending(x => x.MaMatHang).ToList();
+
+            }
+            else
+            {
+                 lsMatHangs = _context.MatHangs
+                    .Include(m => m.MaDanhMucNavigation)
+                    .Include(m => m.MaKichCoNavigation)
+                    .Include(m => m.MaMauSacNavigation)
+                    .Include(m => m.MaNhaCungCapNavigation)
+                    .Include(m => m.MaThuongHieuNavigation)
+                    .Include(m => m.MatHangAnhs)
+                    .AsNoTracking()
+                    .OrderByDescending(x => x.MaMatHang).ToList();
+            }
+            PagedList<MatHang> models = new PagedList<MatHang>(lsMatHangs.AsQueryable(), pageNumber, pageSize);
 
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.CurrentMaDanhMuc = maDanhMuc;
             ViewData[nameof(DanhMuc)] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
             return View(models);
         }
 
-        public IActionResult Filtter(int _MaDanhMuc = 0)
+        public IActionResult Filtter(int maDanhMuc = 0)
         {
-            var url = $"/Admin/AdminMatHangs?MaMatHang={_MaDanhMuc}";
-            if (_MaDanhMuc == 0)
+            var url = $"/Admin/AdminMatHangs?MaDanhMuc={maDanhMuc}";
+            if (maDanhMuc == 0)
             {
                 url = $"/Admin/AdminMatHangs";
             }

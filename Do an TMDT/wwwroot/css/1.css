@@ -369,18 +369,6 @@ h1::after
 .section{
 margin-top: 20px;
 }
-.container
-{
-    position: absolute;
-    width: fit-content;
-    height: fit-content;
-    color:white;
-    display: flex;
-    margin-top: 25px;
-    border-bottom: 1px solid #b3a3a3;
-    padding-bottom: 20px;
-    margin-left: 160px;
-}
 .footer
 {
     position: relative;
@@ -392,6 +380,17 @@ margin-top: 20px;
     top: 0;
     width: 500px;
 
+}
+.container1 {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    color: white;
+    display: flex;
+    margin-top: 70px;
+    border-bottom: 1px solid #b3a3a3;
+    padding-bottom: 100px;
+    margin-left: 180px;
 }
 .phone
 {

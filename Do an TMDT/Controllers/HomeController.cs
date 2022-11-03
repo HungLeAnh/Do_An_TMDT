@@ -54,11 +54,8 @@ namespace Do_an_TMDT.Controllers
                 }
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
-                ViewBag.AllProducts = listSP;
-
-
-
-     
+                
+               
             }
             return View(model);
         }

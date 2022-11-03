@@ -21,13 +21,9 @@
             <div class="col-lg-8">
                 <div class="d-md-flex">
                     <div class="m-b-10 m-r-15">
-                        <select class="custom-select" id="DanhMuc" name="DanhMuc" style="min-width: 180px;" asp-items="ViewBag.DanhMuc">
-                            <option selected>Catergory</option>
-                        </select>
-                    </div>
-                    <div class="m-b-10">
-                        <select class="custom-select" style="min-width: 180px;">
-                            <option selected>Chọn trạng thái</option>
+                        <select class="custom-select" id="txtMaDanhMuc" name="txtMaDanhMuc" style="min-width: 180px;" asp-items="ViewBag.DanhMuc">
+                            <option selected>Chọn danh mục</option>
+                            <option value="0">Chọn tất cả</option>
                         </select>
                     </div>
                 </div>
@@ -73,8 +69,8 @@
                                 <img class="img-fluid rounded" onerror="src='/images/duphong.webp'"
                                  src="~/@if(item.MatHangAnhs.Count>0)
                                 {
-                            @item.MatHangAnhs.FirstOrDefault().Anh
-}"
+                                    @item.MatHangAnhs.FirstOrDefault().Anh
+                                }"
                                  style="max-width: 60px;">
                             </td>
                             <td>
@@ -143,6 +139,11 @@
 
                 </tbody>
             </table>
+            <div aria-label="Page navigation example">
+                <ul class="pagination">
+                    <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminMatHangs" asp-route-MaDanhMuc="@ViewBag.CurrentMaDanhMuc" asp-action="Index" />
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -150,18 +151,18 @@
 @section Scripts{
 <script>
     $(document).ready(function () {
-        jQuery("#txtCatID").change(function () {
-            var catID = jQuery(this).children(":selected").attr("value");
-            catID = parseFloat(catID);
-            $('#txtCatID option')
-                .removeAttr('selected');
-            $("#txtCatID > [value=" + catID + "]").attr("selected", "true");
+        jQuery("#txtMaDanhMuc").change(function () {
+            var madanhmuc = jQuery(this).children(":selected").attr("value");
+            madanhmuc = parseFloat(madanhmuc);
+            $('#txtMaDanhMuc option')
+                    .removeAttr('selected');
+            $("#txtMaDanhMuc > [value=" + madanhmuc + "]").attr("selected", "true");
             $.ajax({
                 url: '/Admin/AdminMatHangs/Filtter',
                 datatype: "json",
                 type: "GET",
                 data: {
-                    CatID: catID
+                        maDanhMuc: madanhmuc
                 },
                 async: true,
                 success: function (results) {

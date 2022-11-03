@@ -11,7 +11,8 @@ namespace Do_an_TMDT.Models
         public NguoiDung()
         {
             DanhGia = new HashSet<DanhGia>();
-            DonHangs = new HashSet<DonHang>();
+            DonHangMaNguoiDungNavigations = new HashSet<DonHang>();
+            DonHangMaNguoiGiaoHangNavigations = new HashSet<DonHang>();
             NguoiDungDiaChis = new HashSet<NguoiDungDiaChi>();
             TheoDois = new HashSet<TheoDoi>();
         }
@@ -22,8 +23,11 @@ namespace Do_an_TMDT.Models
         [Required]
         public string TenNguoiDung { get; set; }
         public string AnhDaiDien { get; set; }
+
         public string TenDangNhap { get; set; }
+        
         public string MatKhauHash { get; set; }
+
         public string Salt { get; set; }
         public string Email { get; set; }
         public string Sdt { get; set; }
@@ -32,7 +36,8 @@ namespace Do_an_TMDT.Models
         public virtual LoaiNguoiDung MaLoaiNguoiDungNavigation { get; set; }
         public virtual GioHang GioHang { get; set; }
         public virtual ICollection<DanhGia> DanhGia { get; set; }
-        public virtual ICollection<DonHang> DonHangs { get; set; }
+        public virtual ICollection<DonHang> DonHangMaNguoiDungNavigations { get; set; }
+        public virtual ICollection<DonHang> DonHangMaNguoiGiaoHangNavigations { get; set; }
         public virtual ICollection<NguoiDungDiaChi> NguoiDungDiaChis { get; set; }
         public virtual ICollection<TheoDoi> TheoDois { get; set; }
     }

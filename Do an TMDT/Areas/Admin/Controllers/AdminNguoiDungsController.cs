@@ -23,25 +23,43 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminNguoiDungs
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page,string maLoaiNguoiDung = "")
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
-            var lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung != "Khách hàng")
-                .AsNoTracking()
-                .OrderByDescending(x => x.MaNguoiDung)
-                .Include(n=>n.MaLoaiNguoiDungNavigation);
-            PagedList<NguoiDung> models = new PagedList<NguoiDung>(lsCustomers, pageNumber, pageSize);
+            var pageSize = 10;
+            var lsCustomers = new List<NguoiDung>();
+            maLoaiNguoiDung = maLoaiNguoiDung.Trim();
+            if (maLoaiNguoiDung != "")
+            {
+                lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.MaLoaiNguoiDung == maLoaiNguoiDung)
+                    .AsNoTracking()
+                    .OrderByDescending(x => x.MaNguoiDung)
+                    .Include(n => n.MaLoaiNguoiDungNavigation).ToList();
+            }
+            else
+            {
+                lsCustomers = _context.NguoiDungs
+                    .AsNoTracking()
+                    .OrderByDescending(x => x.MaNguoiDung)
+                    .Include(n => n.MaLoaiNguoiDungNavigation).ToList();
+            }
+            PagedList<NguoiDung> models = new PagedList<NguoiDung>(lsCustomers.AsQueryable(), pageNumber, pageSize);
             
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.CurrentLoaiNguoiDung = maLoaiNguoiDung;
 
-            ViewData["LoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+            ViewData["LoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "TenLoaiNguoiDung",maLoaiNguoiDung);
             return View(models);
-            /*
-            var wEBBANGIAYContext = _context.NguoiDungs.Include(n => n.MaLoaiNguoiDungNavigation);
-            return View(await wEBBANGIAYContext.ToListAsync());*/
         }
-
+        public IActionResult Filtter(string loaiNguoiDung ="")
+        {
+            var url = $"/Admin/AdminNguoiDungs?MaLoaiNguoiDung={loaiNguoiDung.Trim()}";
+            if (loaiNguoiDung == "")
+            {
+                url = $"/Admin/AdminNguoiDungs";
+            }
+            return Json(new { status = "success", redirectUrl = url });
+        }
         // GET: Admin/AdminNguoiDungs/Details/5
         public async Task<IActionResult> Details(int? id)
         {

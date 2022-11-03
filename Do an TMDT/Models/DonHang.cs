@@ -20,8 +20,10 @@ namespace Do_an_TMDT.Models
         public string TinhTrang { get; set; }
         public bool DaThanhToan { get; set; }
         public decimal TongTien { get; set; }
+        public int? MaNguoiGiaoHang { get; set; }
 
         public virtual NguoiDung MaNguoiDungNavigation { get; set; }
+        public virtual NguoiDung MaNguoiGiaoHangNavigation { get; set; }
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual ICollection<DanhGia> DanhGia { get; set; }
     }

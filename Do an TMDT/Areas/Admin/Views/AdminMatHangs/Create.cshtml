@@ -4,81 +4,121 @@
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h1>Create</h1>
-
-<h4>MatHang</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TenMatHang" class="control-label"></label>
-                <input asp-for="TenMatHang" class="form-control" />
-                <span asp-validation-for="TenMatHang" class="text-danger"></span>
+<form asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="media align-items-center m-b-15">
+                <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+                    <img src="assets/images/others/thumb-16.jpg" alt="">
+                </div>
+                <div class="m-l-15">
+                    <h4 class="m-b-0">Skinny Men Blazer</h4>
+                    <p class="text-muted m-b-0">Code: #5325</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="GiaBan" class="control-label"></label>
-                <input asp-for="GiaBan" class="form-control" />
-                <span asp-validation-for="GiaBan" class="text-danger"></span>
+            <div class="m-b-15">
+                <button class="btn btn-primary">
+                    <i class="anticon anticon-save"></i>
+                    <span>Save</span>
+                </button>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DangDuocBan" /> @Html.DisplayNameFor(model => model.DangDuocBan)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoSao" class="control-label"></label>
-                <input asp-for="SoSao" class="form-control" />
-                <span asp-validation-for="SoSao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoLuong" class="control-label"></label>
-                <input asp-for="SoLuong" class="form-control" />
-                <span asp-validation-for="SoLuong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoLuongDaBan" class="control-label"></label>
-                <input asp-for="SoLuongDaBan" class="form-control" />
-                <span asp-validation-for="SoLuongDaBan" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DangDuocHienThi" /> @Html.DisplayNameFor(model => model.DangDuocHienThi)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNhaCungCap" class="control-label"></label>
-                <select asp-for="MaNhaCungCap" class ="form-control" asp-items="ViewBag.NhaCungCap"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaThuongHieu" class="control-label"></label>
-                <select asp-for="MaThuongHieu" class ="form-control" asp-items="ViewBag.ThuongHieu"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaDanhMuc" class="control-label"></label>
-                <select asp-for="MaDanhMuc" class ="form-control" asp-items="ViewBag.DanhMuc"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaKichCo" class="control-label"></label>
-                <select asp-for="MaKichCo" class ="form-control" asp-items="ViewBag.KichCo" ></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaMauSac" class="control-label"></label>
-                <select asp-for="MaMauSac" class ="form-control" asp-items="ViewBag.MauSac" ></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Basic Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-option">Option Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#product-edit-description">Description</a>
+            </li>
+        </ul>
     </div>
-</div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="product-edit-basic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="TenMatHang" class="font-weight-semibold">Tên mặt hàng</label>
+                        <input type="text" class="form-control" asp-for="TenMatHang">
+                        <span asp-validation-for="TenMatHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GiaBan" class="font-weight-semibold" >Giá bán</label>
+                        <input asp-for="GiaBan" type="text" class="form-control">
+                        <span asp-validation-for="GiaBan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label asp-for="DangDuocBan" class="font-weight-semibold">Đang được bán</label>
+                        <input class="form-check-input form-inline" asp-for="DangDuocBan">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-semibold">Số sao</label>
+                        <input asp-for="SoSao" class="form-control" />
+                        <span asp-validation-for="SoSao" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SoLuong" class="control-label font-weight-semibold"></label>
+                        <input asp-for="SoLuong" class="form-control" />
+                        <span asp-validation-for="SoLuong" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SoLuongDaBan" class="control-label font-weight-semibold"></label>
+                        <input asp-for="SoLuongDaBan" class="form-control" />
+                        <span asp-validation-for="SoLuongDaBan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MoTa" class="control-label font-weight-semibold"></label>
+                        <input asp-for="MoTa" class="form-control" />
+                        <span asp-validation-for="MoTa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="font-weight-semibold ">
+                            <input class="form-check-input" asp-for="DangDuocHienThi" /> @Html.DisplayNameFor(model => model.DangDuocHienThi)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="product-edit-option">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="MaNhaCungCap" class="control-label font-weight-semibold"></label>
+                        <select asp-for="MaNhaCungCap" class="form-control" asp-items="ViewBag.NhaCungCap"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaThuongHieu" class="control-label font-weight-semibold"></label>
+                        <select asp-for="MaThuongHieu" class="form-control" asp-items="ViewBag.ThuongHieu"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaDanhMuc" class="control-label font-weight-semibold"></label>
+                        <select asp-for="MaDanhMuc" class="form-control" asp-items="ViewBag.DanhMuc"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaKichCo" class="control-label font-weight-semibold"></label>
+                        <select asp-for="MaKichCo" class="form-control" asp-items="ViewBag.KichCo"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaMauSac" class="control-label font-weight-semibold"></label>
+                        <select asp-for="MaMauSac" class="form-control" asp-items="ViewBag.MauSac"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="product-edit-description">
+            <div class="card">
+                <div class="card-body">
+                    <div id="productDescription">
+                        <p>Special cloth alert. The key to more success is to have a lot of pillows. Surround yourself with angels, positive energy, beautiful people, beautiful souls, clean heart, angel. They will try to close the door on you, just open it. A major key, never panic. Don’t panic, when it gets crazy and rough, don’t panic, stay calm. They key is to have every key, the key to open every door.The other day the grass was brown, now it’s green because I ain’t give up. Never surrender. Lion! I’m up to something. Always remember in the jungle there’s a lot of they in there, after you overcome they, you will make it to paradise.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>

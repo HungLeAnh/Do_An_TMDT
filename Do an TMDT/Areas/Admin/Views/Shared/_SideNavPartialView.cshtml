@@ -21,7 +21,7 @@
             <li class="nav-item ">
                 <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Index">
                     <span class="icon-holder">
-                        <i class="anticon anticon-table"></i>
+                        <i class="fas fa-cubes"></i>
                     </span>
                     <span class="title">Quản lý sản phẩm</span>
                 </a>
@@ -32,6 +32,14 @@
                         <i class="anticon anticon-build"></i>
                     </span>
                     <span class="title">Quản lý khách hàng</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="dropdown-toggle" asp-area="Admin" asp-controller="AdminShippers" asp-action="Index">
+                    <span class="icon-holder">
+                        <i class="fas fa-shipping-fast"></i>
+                    </span>
+                    <span class="title">Quản lý Shipper</span>
                 </a>
             </li>
             <li class="nav-item ">
@@ -66,89 +74,9 @@
                         <a asp-area="Admin" asp-controller="AdminThuongHieus" asp-action="Index">Quản lí thương hiệu</a>
 
                     </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
-                    <span class="icon-holder">
-                        <i class="anticon anticon-file"></i>
-                    </span>
-                    <span class="title">Pages</span>
-                    <span class="arrow">
-                        <i class="arrow-icon"></i>
-                    </span>
-                </a>
-                <ul class="dropdown-menu">
                     <li>
-                        <a href="profile.html">Profile</a>
-                    </li>
-                    <li>
-                        <a href="invoice.html">Invoice</a>
-                    </li>
-                    <li>
-                        <a href="members.html">Members</a>
-                    </li>
-                    <li>
-                        <a href="pricing.html">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="setting.html">Setting</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="javascript:void(0);">
-                            <span>Blog</span>
-                            <span class="arrow">
-                                <i class="arrow-icon"></i>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="blog-grid.html">Blog Grid</a>
-                            </li>
-                            <li>
-                                <a href="blog-list.html">Blog List</a>
-                            </li>
-                            <li>
-                                <a href="blog-post.html">Blog Post</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="dropdown-toggle" href="javascript:void(0);">
-                    <span class="icon-holder">
-                        <i class="anticon anticon-lock"></i>
-                    </span>
-                    <span class="title">Quản lý shipper</span>
-                    <span class="arrow">
-                        <i class="arrow-icon"></i>
-                    </span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="login-1.html">Login 1</a>
-                    </li>
-                    <li>
-                        <a href="login-2.html">Login 2</a>
-                    </li>
-                    <li>
-                        <a href="login-3.html">Login 3</a>
-                    </li>
-                    <li>
-                        <a href="sign-up-1.html">Sign Up 1</a>
-                    </li>
-                    <li>
-                        <a href="sign-up-2.html">Sign Up 2</a>
-                    </li>
-                    <li>
-                        <a href="sign-up-3.html">Sign Up 3</a>
-                    </li>
-                    <li>
-                        <a href="error-1.html">Error 1</a>
-                    </li>
-                    <li>
-                        <a href="error-2.html">Error 2</a>
+                        <a asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Index">Quản lí nhà cung cấp</a>
+
                     </li>
                 </ul>
             </li>

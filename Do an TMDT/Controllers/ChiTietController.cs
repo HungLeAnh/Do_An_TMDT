@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
 using Do_an_TMDT.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Do_an_TMDT.Controllers
 {
@@ -50,7 +51,14 @@ namespace Do_an_TMDT.Controllers
                 }
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
-                ViewBag.AllProducts = listSP;
+                try
+                {
+                    ViewBag.Ids = (int)HttpContext.Session.GetInt32("Ten");
+                }
+                catch
+                {
+                    ViewBag.Id = 0;
+                }
             }
             foreach(var item2 in model.MatHangs.Where(x=>x.listSPs.MaMatHang==MaSp).ToList())
             {
