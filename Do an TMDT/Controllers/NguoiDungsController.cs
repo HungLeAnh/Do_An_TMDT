@@ -150,7 +150,7 @@ namespace Do_an_TMDT.Controllers
             int i = 0;
             var listLoaiNguoidung = _context.LoaiNguoiDungs.AsNoTracking().ToList();
             var list = _context.NguoiDungs.AsNoTracking().ToList();
-            string[] MaLoaiNguoiDung = new string[3];
+            string[] MaLoaiNguoiDung = new string[listLoaiNguoidung.Count()];
             foreach (var item in listLoaiNguoidung)
             {
                 MaLoaiNguoiDung[i] = item.MaLoaiNguoiDung;
