@@ -102,13 +102,24 @@
 <div class="anh"><img src="~/images/nen.webp" width="100%" alt=""></div>
 <div class="section">
     <div class="anh_sp">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" width="300" />
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[1].Anh" width="300" alt="">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[2].Anh" width="300" alt="">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[3].Anh" width="300" alt="">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[4].Anh" width="300" alt="">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[5].Anh" width="300" alt="">
-        <img src="~/@Model.MatHangs[0].MatHangAnhs[4].Anh" width="300" alt="">
+        @{ if (Model.MatHangs[0].MatHangAnhs.Count > 0)
+            {
+                foreach (var item in Model.MatHangs[0].MatHangAnhs)
+                {
+                    <img onerror="this.src='~/images/duphong.webp'" src="~/@item.Anh " width="300" />
+                }
+            }
+            else
+            {
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp " width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                }
+            }
     </div>
     <div class="thongtin">
         <div class="name">

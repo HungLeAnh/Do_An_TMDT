@@ -262,6 +262,7 @@ namespace Do_an_TMDT.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<int?>("SoLuong")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("SoLuongDaBan")
@@ -349,11 +350,13 @@ namespace Do_an_TMDT.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MatKhauHash")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Salt")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
