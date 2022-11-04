@@ -50,9 +50,9 @@
                         <input asp-for="GiaBan" type="text" class="form-control">
                         <span asp-validation-for="GiaBan" class="text-danger"></span>
                     </div>
-                    <div class="form-group form-check">
+                    <div class="form-group">
                         <label asp-for="DangDuocBan" class="font-weight-semibold">Đang được bán</label>
-                        <input class="form-check-input form-inline" asp-for="DangDuocBan">
+                        <input class="form-check-inline" asp-for="DangDuocBan">
                     </div>
                     <div class="form-group">
                         <label class="control-label font-weight-semibold">Số sao</label>
@@ -70,14 +70,8 @@
                         <span asp-validation-for="SoLuongDaBan" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="MoTa" class="control-label font-weight-semibold"></label>
-                        <input asp-for="MoTa" class="form-control" />
-                        <span asp-validation-for="MoTa" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="font-weight-semibold ">
-                            <input class="form-check-input" asp-for="DangDuocHienThi" /> @Html.DisplayNameFor(model => model.DangDuocHienThi)
-                        </label>
+                        <label class="font-weight-semibold ">Đang được hiển thị</label>
+                        <input class="form-check-inline" asp-for="DangDuocHienThi" /> 
                     </div>
                 </div>
             </div>
@@ -111,8 +105,9 @@
         <div class="tab-pane fade" id="product-edit-description">
             <div class="card">
                 <div class="card-body">
-                    <div id="productDescription">
-                        <p>Special cloth alert. The key to more success is to have a lot of pillows. Surround yourself with angels, positive energy, beautiful people, beautiful souls, clean heart, angel. They will try to close the door on you, just open it. A major key, never panic. Don’t panic, when it gets crazy and rough, don’t panic, stay calm. They key is to have every key, the key to open every door.The other day the grass was brown, now it’s green because I ain’t give up. Never surrender. Lion! I’m up to something. Always remember in the jungle there’s a lot of they in there, after you overcome they, you will make it to paradise.</p>
+                    <div class="form-group" id="productDescription">
+                        <input asp-for="MoTa" class="form-control" />
+                        <span asp-validation-for="MoTa" class="text-danger"></span>
                     </div>
                 </div>
             </div>

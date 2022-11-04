@@ -50,11 +50,6 @@ namespace Do_an_TMDT.Migrations
                 table: "DonHang",
                 column: "MaNguoiGiaoHang");
 
-            migrationBuilder.CreateIndex(
-                name: "AK_ChiTietGioHang_MaGioHang",
-                table: "ChiTietGioHang",
-                column: "MaGioHang",
-                unique: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_DonHang_NguoiDung1",
