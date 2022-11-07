@@ -148,29 +148,31 @@ namespace Do_an_TMDT.Controllers
             };
 
             _context.Add(donhang);
+          
+                MatHang mathang = new MatHang
+                {
+                    MaMatHang = Convert.ToInt32(MaSp),
+                    TenMatHang = model.MatHangs[0].listSPs.TenMatHang,
+                    GiaBan = model.MatHangs[0].listSPs.GiaBan,
+                    DangDuocBan = true,
+                    SoSao = model.MatHangs[0].listSPs.SoSao,
+                    SoLuong = model.MatHangs[0].listSPs.SoLuong - sl1,
+                    SoLuongDaBan = model.MatHangs[0].listSPs.SoLuongDaBan + sl1,
+                    MoTa = model.MatHangs[0].listSPs.MoTa,
+                    DangDuocHienThi = true,
+                    MaNhaCungCap = model.MatHangs[0].listSPs.MaNhaCungCap,
+                    MaThuongHieu = model.MatHangs[0].listSPs.MaThuongHieu,
+                    MaDanhMuc = model.MatHangs[0].listSPs.MaDanhMuc,
+                    MaKichCo = model.MatHangs[0].listSPs.MaKichCo,
+                    MaMauSac = model.MatHangs[0].listSPs.MaMauSac
+                };
 
-            MatHang mathang = new MatHang
-            {
-                MaMatHang = Convert.ToInt32(MaSp),
-                TenMatHang = model.MatHangs[0].listSPs.TenMatHang,
-                GiaBan = model.MatHangs[0].listSPs.GiaBan,
-                DangDuocBan = true,
-                SoSao = model.MatHangs[0].listSPs.SoSao,
-                SoLuong = model.MatHangs[0].listSPs.SoLuong - sl1,
-                SoLuongDaBan = model.MatHangs[0].listSPs.SoLuongDaBan + sl1,
-                MoTa = model.MatHangs[0].listSPs.MoTa,
-                DangDuocHienThi = true,
-                MaNhaCungCap = model.MatHangs[0].listSPs.MaNhaCungCap,
-                MaThuongHieu = model.MatHangs[0].listSPs.MaThuongHieu,
-                MaDanhMuc= model.MatHangs[0].listSPs.MaDanhMuc,
-                MaKichCo= model.MatHangs[0].listSPs.MaKichCo,
-                MaMauSac= model.MatHangs[0].listSPs.MaMauSac
-            };
+                _context.Update(mathang);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(BaoCao));
+            
 
-            _context.Update(mathang);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(BaoCao));
+            
 
         }
         public IActionResult BaoCao()

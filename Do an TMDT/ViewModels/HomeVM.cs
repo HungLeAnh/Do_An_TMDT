@@ -13,5 +13,6 @@ namespace Do_an_TMDT.ViewModels
         public List<ThuongHieu> TH { get; set; }
         public int SoLuong { get; set; }
         public string DiaChi { get; set; }
+        public string key { get; set; }
     }
 }

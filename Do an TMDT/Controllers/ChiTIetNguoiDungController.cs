@@ -154,8 +154,9 @@ namespace Do_an_TMDT.Controllers
         }
         public async Task<IActionResult> SoDiaChi()
         {
-           
-            
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+            var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+            ViewBag.diachi = listdiachi;
             return View();
         }
         [HttpPost]

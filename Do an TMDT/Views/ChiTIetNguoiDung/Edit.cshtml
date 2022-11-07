@@ -9,14 +9,29 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link href="~/css/1.css" rel="stylesheet" />
-<div class="than">
-    <img src="~/images/TrangThongTin.jpg" width="100%" height="300px" alt="">
-    <div class="TieuDeTrangThongTin" text-center>
-        Trang Khách Hàng
+<link href="~/css/4.css" rel="stylesheet" />
+<link href="~/css/3.css" rel="stylesheet" />
 
+<section class="bread-crumb">
+    <div class="container">
+        <div class="nd-main-title-breadcrumb text-center">Thông Tin Khách Hàng</div>
+        <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+            <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="/" title="Trang chủ">
+                    <span itemprop="name">Trang chủ</span>
+                    <meta itemprop="position" content="1">
+                </a>
+            </li>
 
+            <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                <strong itemprop="name">Chi Tiết</strong>
+                <meta itemprop="position" content="2">
+            </li>
+
+        </ul>
     </div>
-</div>
+
+</section>
 
 
 
@@ -25,7 +40,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaNguoiDung" />
-            
+
             <div class="form-group col-lg-6">
                 <label asp-for="TenNguoiDung" class="control-label"></label>
                 <input asp-for="TenNguoiDung" class="form-control" />
@@ -41,7 +56,7 @@
                 <input asp-for="TenDangNhap" class="form-control" />
                 <span asp-validation-for="TenDangNhap" class="text-danger"></span>
             </div>
-        
+
             <div class="form-group col-lg-6">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
@@ -58,8 +73,8 @@
                 <span asp-validation-for="ViDienTu" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input  type="submit"  class="btn btn-primary" />
-                
+                <input type="submit" class="btn btn-primary" />
+
             </div>
         </form>
     </div>

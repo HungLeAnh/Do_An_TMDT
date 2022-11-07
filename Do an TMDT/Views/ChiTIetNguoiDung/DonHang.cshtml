@@ -4,14 +4,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/css/4.css" rel="stylesheet" />
-<div class="than">
-    <img src="~/images/TrangThongTin.jpg" width="100%" height="300px" alt="">
-    <div class="TieuDeTrangThongTin" text-center>
-        Trang Khách Hàng
+<link href="~/css/3.css" rel="stylesheet" />
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<section class="bread-crumb">
+    <div class="container">
+        <div class="nd-main-title-breadcrumb text-center">Thông Tin Khách Hàng</div>
+        <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+            <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="/" title="Trang chủ">
+                    <span itemprop="name">Trang chủ</span>
+                    <meta itemprop="position" content="1">
+                </a>
+            </li>
 
+            <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                <strong itemprop="name">Chi Tiết</strong>
+                <meta itemprop="position" content="2">
+            </li>
 
+        </ul>
     </div>
-</div>
+
+</section>
 <section class="NoidungChinh">
     <div class="Noidung1">
         <div class="title_hello">
@@ -24,14 +41,14 @@
         <ul class="noidung1_1">
             <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
             <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
-            <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id =@ViewBag.khachhang.MaNguoiDung })" >Đổi mật khẩu</a></li>
+            <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id =@ViewBag.khachhang.MaNguoiDung })">Đổi mật khẩu</a></li>
             <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
             <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>
     </div>
     <div class="Noidung2">
         <h2 class="title_Chinh">Đơn hàng của bạn</h2>
-        <div class="table_DonHang" >
+        <div class="table_DonHang">
             <table>
                 <tr>
                     <th>Đơn hàng</th>
@@ -43,17 +60,17 @@
                 @foreach (var item in ViewBag.donhang)
                 {
                     <tr>
-                       
-                            <th>@item.MaDonHang</th>
-                            <th>@item.TinhTrang</th>
-                            <th>@item.DiaChi</th>
-                            <th>@item.TongTien</th>
-                            <th>Đã Thanh Toán</th>
+
+                        <th>@item.MaDonHang</th>
+                        <th>@item.TinhTrang</th>
+                        <th>@item.DiaChi</th>
+                        <th>@item.TongTien</th>
+                        <th>Đã Thanh Toán</th>
 
                     </tr>
-                        }
+                }
 
-                </table>
+            </table>
         </div>
 
 
