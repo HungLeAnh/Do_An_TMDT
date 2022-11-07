@@ -9,7 +9,7 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <div class="than">
-    <img src="image/TrangThongTin.jpg" width="100%" height="300px" alt="">
+    <img src="~/images/TrangThongTin.jpg" width="100%" height="300px" alt="">
     <div class="TieuDeTrangThongTin" text-center>
         Trang Khách Hàng
 
@@ -29,9 +29,9 @@
         <ul class="noidung1_1">
             <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
             <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
-            <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id = @ViewBag.khachhang.MaNguoiDung })"">Đổi mật khẩu</a></li>
-            <li><a class="noidungInfo" href="SoDiaChi.html">Số địa chỉ(0)</a></li>
-            <li><a class="noidungInfo" href="index.html">Đăng xuất</a></li>
+            <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id =@ViewBag.khachhang.MaNguoiDung })" >Đổi mật khẩu</a></li>
+            <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>
     </div>
     <div class="Noidung2">

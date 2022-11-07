@@ -119,7 +119,7 @@ namespace Do_an_TMDT.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMK(int id, [Bind("MatKhauHash")] NguoiDung nguoiDung)
+        public async Task<IActionResult> EditMK(int id,NguoiDung nguoiDung)
         {
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
@@ -151,6 +151,33 @@ namespace Do_an_TMDT.Controllers
             }
             ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
             return View();
+        }
+        public async Task<IActionResult> SoDiaChi()
+        {
+           
+            
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SoDiaChi(int id, [Bind("DiaChi")] HomeVM Home)
+        {
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+            var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+            NguoiDungDiaChi nd = new NguoiDungDiaChi
+            {
+                MaNguoiDung = Convert.ToInt32(taikhoanID),
+                DiaChi = Home.DiaChi,
+
+            };
+           
+                 _context.Add(nd);
+                await _context.SaveChangesAsync();
+                var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                ViewBag.diachi = listdiachi;
+                return RedirectToAction(nameof(SoDiaChi));
+            
+            
         }
         private bool NguoiDungExists(int id)
         {

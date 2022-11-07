@@ -1,0 +1,131 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+@{
+    ViewData["Title"] = "SoDiaChi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<!-- page css -->
+<link href="~/adminassets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<!-- Core css -->
+<link href="~/adminassets/css/app.min.css" rel="stylesheet">
+<link href="~/css/4.css" rel="stylesheet" />
+<div class="than">
+    <img src="~/images/TrangThongTin.jpg" width="100%" height="300px" alt="">
+    <div class="TieuDeTrangThongTin" text-center>
+        Trang Khách Hàng
+
+
+    </div>
+</div>
+<section class="NoidungChinh">
+    <div class="Noidung1">
+        <div class="title_hello">
+            <h5 class="title_trangtaikhoan">Trang Tài Khoản</h5>
+            <p>
+                Xin chào:
+                <span>Khách hàng </span>
+            </p>
+        </div>
+        <ul class="noidung1_1">
+            <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
+            <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
+            <li><a class="noidungInfo">Đổi mật khẩu</a></li>
+            <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
+        </ul>
+    </div>
+    <form asp-action="SoDiaChi">
+
+        <div class="Noidung2">
+            <h2 class="title_Chinh">Số địa chỉ</h2>
+            <div class="KhungDiaChi">
+
+                <div class="table-responsive">
+                    <table class="table table-hover e-commerce-table">
+                        <thead>
+                            <tr>
+                                <th>Dịa Chỉ</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (ViewBag.diachi != null)
+                                {
+                                    foreach (var item in @ViewBag.diachi)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.DiaChi
+                                            </td>
+
+
+
+                                            <td>
+                                                <div class="btn-group btn-group-sm ">
+                                                    <a>
+                                                        <i class="fas fa-pen btn btn-primary "></i>
+                                                    </a>
+                                                    <a>
+                                                        <i class="fas fa-clipboard-list btn btn-warning "></i>
+                                                    </a>
+                                                    <!-- Button trigger modal -->
+                                                    <a>
+                                                        <i class="fas fa-trash-alt btn btn-danger "></i>
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                            Chưa có địa chỉ
+                                        </td>
+
+
+
+                                        <td>
+                                            <div class="btn-group btn-group-sm ">
+                                                <a>
+                                                    <i class="fas fa-pen btn btn-primary "></i>
+                                                </a>
+                                                <a>
+                                                    <i class="fas fa-clipboard-list btn btn-warning "></i>
+                                                </a>
+                                                <!-- Button trigger modal -->
+                                                <a>
+                                                    <i class="fas fa-trash-alt btn btn-danger "></i>
+                                                </a>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <input asp-for="DiaChi" class="form-control" />
+                <div class="btn_DC">
+                    <button type="submit" onclick="" class="btn_addAddress">Thêm địa chỉ</button>
+                </div>
+            </div>
+    </form>
+
+
+
+</section>

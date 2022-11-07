@@ -4,6 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/css/4.css" rel="stylesheet" />
+<div class="than">
+    <img src="~/images/TrangThongTin.jpg" width="100%" height="300px" alt="">
+    <div class="TieuDeTrangThongTin" text-center>
+        Trang Khách Hàng
+
+
+    </div>
+</div>
 <section class="NoidungChinh">
     <div class="Noidung1">
         <div class="title_hello">
@@ -17,8 +25,8 @@
             <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
             <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
             <li><a class="noidungInfo">Đổi mật khẩu</a></li>
-            <li><a class="noidungInfo"hreflang="" href="SoDiaChi.html">Số địa chỉ(0)</a></li>
-            <li><a class="noidungInfo" href="index.html">Đăng xuất</a></li>
+            <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>
     </div>
     <form asp-action="EditMK" class="Noidung2">

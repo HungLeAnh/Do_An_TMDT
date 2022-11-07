@@ -139,26 +139,38 @@
             </div>
         </div>
         <div class="nhapdulieu">
-            <div class="soluong">
-                <p>Số Lượng:<b id="soluong">1</b></p>
-                <button onclick="tru()">-</button>
-                <input onchange="nhap()" id="id1" type="number" value="1" min="0" max="500">
-                <button onclick="cong()">+</button>
-            </div>
-            <div class="themgiohang">
-                        @{ if (ViewBag.Id == 0)
-                            {
-                        <button asp-controller="NguoiDungs" asp-action="dangky" id="them">THÊM VÀO GIỎ HÀNG</button>
-                        <button asp-controller="NguoiDungs" asp-action="dangky" id="mua">MUA NGAY</button>
-                            }
-                            else { 
-                        <button id="them">THÊM VÀO GIỎ HÀNG</button>
-                        <button  id="mua">MUA NGAY</button>
-                            }
+            <form asp-action="ChiTiet">
+                <div class="soluong">
+                    <p>Số Lượng:<b id="soluong">1</b></p>
+                    <button type="button" onclick="tru()">-</button>
 
-                }
 
-            </div>
+                    <div class="form-group">
+                        <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="1" min="0" max="500">
+                    </div>
+                 
+
+
+                    <button type="button" onclick="cong()">+</button>
+                </div>
+                <div class="themgiohang">
+                    @{ if (ViewBag.Id == 0)
+                        {
+                            <button id="them"><a>THÊM VÀO GIỎ HÀNG</a></button>
+                               <a asp-controller="NguoiDungs" asp-action="dangky"> <button type="button" id="mua">Mua Ngay</button></a>
+                        }
+                        else if (ViewBag.Id != 0)
+                        {
+                            <button id="them">THÊM VÀO GIỎ HÀNG</button>
+
+                            <button type="submit" id="mua" >Mua Ngay</button>
+
+                        }
+
+                    }
+
+                </div>
+            </form>
 
         </div>
         <div class="tong"><h3>Tổng tiền:</h3><p id="tong">0 <sup>đ</sup></p></div>
@@ -191,6 +203,7 @@
             document.getElementById("soluong").innerHTML = x;
         }
         Tong();
+        loadMore();
     }
     function cong() {
         let x = Number(document.getElementById("id1").value);
@@ -198,14 +211,35 @@
         document.getElementById("id1").value = x;
         document.getElementById("soluong").innerHTML = x;
         Tong();
+        loadMore()
     }
     function Tong() {
         let x = Number(document.getElementById("id1").value);
         let y = Number(document.getElementById("gia").innerHTML);
         let z = x * y;
+
         document.getElementById("tong").innerHTML = z + '<sup>đ</sup></p>';
         console.log(z)
 
 
     }
+    function loadMore() {
+        console.log("load")
+        /* tạo viên amount để Gọi và đếm classname là product */
+        var sl = document.getElementById("soluong").value;
+        $.ajax({
+            url: "ChiTiet", //send to Controller
+            type: "get", //send it through get method
+            data: {
+                slsp: sl
+            },
+            success: function (data) {
+                $("#content").append(data);
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+    };
+
 </script>

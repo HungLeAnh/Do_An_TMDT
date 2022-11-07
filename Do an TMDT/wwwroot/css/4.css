@@ -1,12 +1,11 @@
-*
-{
-    padding:0;
-    margin:0;
+* {
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
-.menu
-{
+
+.menu {
     width: 100%;
     height: 96px;
     background-color: #120414;
@@ -14,25 +13,24 @@
     list-style: none;
     align-items: center;
     padding-left: 180px;
-    
 }
-.menu img{
-    padding-right: 180px;
-}
-.menu>li
-{
-    position: relative;
-    padding: 20px 20px;
 
-}
-.menu>li>a
-{
-    font-size: 17px;
-    color:white;
-    text-decoration: none;
-}
-.sub-nav
-{ 
+    .menu img {
+        padding-right: 180px;
+    }
+
+    .menu > li {
+        position: relative;
+        padding: 20px 20px;
+    }
+
+        .menu > li > a {
+            font-size: 17px;
+            color: white;
+            text-decoration: none;
+        }
+
+.sub-nav {
     position: absolute;
     list-style: none;
     background-color: white;
@@ -41,131 +39,145 @@
     display: none;
     z-index: 2;
 }
-.xoay
-{
+
+.xoay {
     padding-left: 5px;
-    
 }
-.sub-nav>li
-{
-    padding:10px 15px;
+
+.sub-nav > li {
+    padding: 10px 15px;
     border-bottom: 1px solid #E5E6EC;
 }
-.sub-nav>li>a
-{
- color:black;
- text-decoration: none;
- font-weight: 50px;
-}
-.sub-nav>li:hover a{
-    color:#D92414;
-}
-.sub-icon
-{
+
+    .sub-nav > li > a {
+        color: black;
+        text-decoration: none;
+        font-weight: 50px;
+    }
+
+    .sub-nav > li:hover a {
+        color: #D92414;
+    }
+
+.sub-icon {
     display: flex;
     margin-left: 100px;
 }
-.menu>li:hover>a{
-    color:#D92414;
-    
+
+.menu > li:hover > a {
+    color: #D92414;
 }
-.menu>li:hover .sub-nav{
-display: block;
+
+.menu > li:hover .sub-nav {
+    display: block;
 }
-.menu>li:hover .xoay{
+
+.menu > li:hover .xoay {
     animation-name: xoaylen;
     animation-duration: 0.5s;
     transform: rotate(180deg);
 }
-@keyframes xoaylen
-{
-    0%{transform: rotate(0deg);}
-    25%{transform: rotate(45deg);}
-    50%{transform: rotate(90deg);}
-    75%{transform: rotate(135deg);}
-    100%{transform: rotate(180deg);}
+
+@keyframes xoaylen {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(45deg);
+    }
+
+    50% {
+        transform: rotate(90deg);
+    }
+
+    75% {
+        transform: rotate(135deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
 }
-.sub-icon>li
-{
+
+.sub-icon > li {
     padding: 0 10px;
 }
-.sub-icon>li ion-icon
-{
-font-size: 20px;
-color:white;
-padding:-3px 0
-}
-.search
-{
-    
+
+    .sub-icon > li ion-icon {
+        font-size: 20px;
+        color: white;
+        padding: -3px 0
+    }
+
+.search {
     position: absolute;
-    
     transform: translateX(-90%);
     display: none;
     z-index: 2;
 }
-.search::before
-{
-    content: "";
-    width: 15px;
-    height: 15px;
-    background-color: white;
-    position: absolute;
-    transform: rotate(-45deg);
-    right: 10px;
-    top: -5px;
-}
-.search>input
-{
-    width: 280px;
-    height: 40px;
-    padding: 10px;
-}
-.sub-icon>li:hover ion-icon
-{
+
+    .search::before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: white;
+        position: absolute;
+        transform: rotate(-45deg);
+        right: 10px;
+        top: -5px;
+    }
+
+    .search > input {
+        width: 280px;
+        height: 40px;
+        padding: 10px;
+    }
+
+.sub-icon > li:hover ion-icon {
     color: #D92414;
 }
-.sub-icon>li:hover .search
-{
- display: block;
+
+.sub-icon > li:hover .search {
+    display: block;
 }
-.sub-icon>li:nth-child(4)::after
-{
+
+.sub-icon > li:nth-child(4)::after {
     content: "o";
     position: absolute;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: #D92414;
-    color:white;
+    color: white;
     font-size: 10px;
-text-align: center;
-padding-right: 2px;
-padding-bottom: 1px;
+    text-align: center;
+    padding-right: 2px;
+    padding-bottom: 1px;
 }
-.sub-icon>li:nth-child(5)::after
-{
+
+.sub-icon > li:nth-child(5)::after {
     content: "o";
     position: absolute;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: #D92414;
-    color:white;
+    color: white;
     font-size: 10px;
-text-align: center;
-padding-right: 2px;
-padding-bottom: 1px;
+    text-align: center;
+    padding-right: 2px;
+    padding-bottom: 1px;
 }
-.than
-{
+
+.than {
     width: 100%;
     height: 300px;
     position: relative;
 }
-.dangnhap
-{
-    width:150px ;
+
+.dangnhap {
+    width: 150px;
     height: auto;
     background-color: white;
     padding: 10px 20px;
@@ -176,82 +188,89 @@ padding-bottom: 1px;
     display: none;
     z-index: 2;
 }
-.dangnhap>li>a{
-    text-decoration: none;
-    color:black;
-}
-.dangnhap>li{
-padding: 10px 0;
-}
-.dangnhap::before
-{
-    content: "";
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg);
-    position: absolute;
-    top:-10px;
-    right: 10px;
-    background-color: white;
-}
-.dangnhap>li:hover a{
-    color:#D92414
-}
-.sub-icon>li:hover .dangnhap{
+
+    .dangnhap > li > a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .dangnhap > li {
+        padding: 10px 0;
+    }
+
+    .dangnhap::before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        transform: rotate(45deg);
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        background-color: white;
+    }
+
+    .dangnhap > li:hover a {
+        color: #D92414
+    }
+
+.sub-icon > li:hover .dangnhap {
     display: block;
 }
-.than>img
-{  
-z-index: 0;
+
+.than > img {
+    z-index: 0;
 }
-.xanh
-{
+
+.xanh {
     position: absolute;
     width: 1250px;
     height: 190px;
-    background-color:#3F3FDB;
+    background-color: #3F3FDB;
     bottom: -50px;
     display: flex;
     left: 150px;
     padding: 15px;
 }
-.khoi{
-    color:white;
+
+.khoi {
+    color: white;
     text-align: center;
     padding: 0 10px;
 }
-.khoi>p{
-    font-size: 14px;
-    padding-top: 10px;
-}
-.khoi>ion-icon
-{
-    color: white;
-    font-size: 60px;
-}
-.tieude
-{
+
+    .khoi > p {
+        font-size: 14px;
+        padding-top: 10px;
+    }
+
+    .khoi > ion-icon {
+        color: white;
+        font-size: 60px;
+    }
+
+.tieude {
     margin-top: 150px;
     text-align: center;
 }
-.tieude>h1{
-    font-display: upper;
-    color: #3F3FDB;
 
-}
-.tieude>h1:hover{
-    color: #D92414;
-}
-.tieude>h1::before:hover
-{
-    background-color: #D92414;
-}
-.tieude>h1::after:hover
-{
-    background-color: #D92414;
-}
-h1::before
-{
+    .tieude > h1 {
+        font-display: upper;
+        color: #3F3FDB;
+    }
+
+        .tieude > h1:hover {
+            color: #D92414;
+        }
+
+        .tieude > h1::before:hover {
+            background-color: #D92414;
+        }
+
+        .tieude > h1::after:hover {
+            background-color: #D92414;
+        }
+
+h1::before {
     content: "";
     width: 10px;
     height: 10px;
@@ -259,8 +278,8 @@ h1::before
     background-color: #3F3FDB;
     transform: translate3d(-400%,130%,0);
 }
-h1::after
-{
+
+h1::after {
     content: "";
     width: 10px;
     height: 10px;
@@ -268,16 +287,15 @@ h1::after
     background-color: #3F3FDB;
     transform: translate3d(350%,130%,0);
 }
-.menu_sp
-{
+
+.menu_sp {
     width: 1200px;
     height: 1000px;
     margin-left: 180px;
     margin-top: 20px;
-    
 }
-.menu_sp-item
-{
+
+.menu_sp-item {
     width: 250px;
     height: fit-content;
     float: left;
@@ -285,48 +303,50 @@ h1::after
     margin-right: 40px;
     margin-bottom: 20px;
 }
-.menu_sp-item .item_text a
-{
-    text-decoration: none;
-    color:#3d3c3c;
-    font-weight: 100px;
-    padding-top:10px;
-   
-}
-.item_text
-{
+
+    .menu_sp-item .item_text a {
+        text-decoration: none;
+        color: #3d3c3c;
+        font-weight: 100px;
+        padding-top: 10px;
+    }
+
+.item_text {
     margin-top: 10px;
 }
-.tim{
+
+.tim {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 20px;
 }
-.item_gia
-{
-    color:#F97E6C;
+
+.item_gia {
+    color: #F97E6C;
     font-weight: bold;
     font-size: 20px;
     margin-top: 10px;
 }
-.menu_sp span{
+
+.menu_sp span {
     margin-top: 10px;
 }
-.item_daban
-{
-    color:#BCBCBC;
+
+.item_daban {
+    color: #BCBCBC;
     font-size: 15px;
     margin-top: 10px;
 }
-.layer2
-{
+
+.layer2 {
     position: absolute;
     top: 0;
     left: 0;
     display: none;
 }
-.menu_sp-item:hover .layer2{
+
+.menu_sp-item:hover .layer2 {
     transition: 1s;
     display: block;
 }
@@ -335,11 +355,12 @@ h1::after
 
 
 
-.than img{
-    position:absolute;
+.than img {
+    position: absolute;
     z-index: -1;
 }
-.TieuDeTrangThongTin{
+
+.TieuDeTrangThongTin {
     padding-left: 550px;
     padding-top: 150px;
     text-transform: uppercase;
@@ -348,92 +369,102 @@ h1::after
     color: rgb(254, 255, 255);
     font-size: 36px;
     text-shadow: 5px 2px 4px grey;
-
 }
-.NoidungChinh{
+
+.NoidungChinh {
     position: relative;
     padding-left: 200px;
     display: flex;
     width: 100%;
     height: 500px;
 }
-.Noidung1{
+
+.Noidung1 {
     text-align: left;
 }
-.title_hello{
+
+.title_hello {
     padding-top: 10px;
     padding-bottom: 20px;
 }
-.title_trangtaikhoan{
-    
+
+.title_trangtaikhoan {
     padding-top: 10px;
     text-transform: uppercase;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24px;
 }
 
-.noidungInfo{
+.noidungInfo {
     font-family: Arial, Helvetica, sans-serif;
     padding-top: 0px;
     margin-bottom: 20px;
-    
 }
-.noidung1_1{
+
+.noidung1_1 {
     list-style: none;
     display: list-item;
     margin-bottom: 20px;
 }
-.Noidung2{
+
+.Noidung2 {
     list-style: none;
-    padding-top:30px;
+    padding-top: 30px;
     padding-left: 200px;
 }
-.title_Chinh{
+
+.title_Chinh {
     text-transform: uppercase;
     font-size: 19px;
     margin-bottom: 20px;
 }
-.noidung1_1>li>a{
 
+.noidung1_1 > li > a {
     margin-top: 20px;
     margin-bottom: 20px;
     list-style: none;
     text-decoration: none;
     display: block;
-
-}
-.noidung1_1>li>a:hover {
-    color: red;
-    font-size: 20px;
 }
 
-table{
+    .noidung1_1 > li > a:hover {
+        color: red;
+        font-size: 20px;
+    }
+
+table {
     width: 600px;
 }
-table, tr,th{
+
+table, tr, th {
     border: 1px solid rgb(134, 132, 132);
     border-collapse: collapse;
 }
-tr,th{
+
+tr, th {
     padding: 5px 10px;
 }
-.Noidung2 table tr th p{
-    color: rgb(96, 95, 95);
 
+.Noidung2 table tr th p {
+    color: rgb(96, 95, 95);
 }
-.KhungDoiMK{
+
+.KhungDoiMK {
     padding-top: 20px;
 }
-.KhungDoiMK input{
-    width: 100%;
-    height: 40px;
-}
-.MKCu,.MKMoi1,.MKMoi2{
+
+    .KhungDoiMK input {
+        width: 100%;
+        height: 40px;
+    }
+
+.MKCu, .MKMoi1, .MKMoi2 {
     font-size: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
-.KhungDoiMK button{
+
+.KhungDoiMK button {
     text-align: center;
     width: 100%;
     height: 40px;
@@ -441,22 +472,23 @@ tr,th{
     border: none;
     background-color: green;
     border: outset;
-    border-radius: 5px; 
+    border-radius: 5px;
     cursor: pointer;
     color: white;
     margin-right: 7px;
     font-weight: 600;
     transition: 0.25s;
 }
-.KhungDoiMK button:hover{
-    background-color: rgb(101, 178, 219);
 
+    .KhungDoiMK button:hover {
+        background-color: rgb(101, 178, 219);
+    }
 
-}
 .KhungDiaChi {
     padding-bottom: 20px;
 }
-.btn_DC button{
+
+.btn_DC button {
     text-align: center;
     width: 100px;
     height: 40px;
@@ -464,194 +496,227 @@ tr,th{
     border: none;
     background-color: green;
     border: outset;
-    border-radius: 5px; 
+    border-radius: 5px;
     cursor: pointer;
     color: white;
     margin-right: 7px;
     font-weight: 600;
     transition: 0.25s;
 }
-.btn_DC button:hover{
-    color:aquamarine;
-    background-color: rgb(17, 122, 122);
-}
+
+    .btn_DC button:hover {
+        color: aquamarine;
+        background-color: rgb(17, 122, 122);
+    }
 
 
 
 
-.khung1{
+.khung1 {
     display: flex;
 }
-.khung1_1{
+
+.khung1_1 {
     display: flex;
 }
 
-.khung1_1_1{
+.khung1_1_1 {
     padding-left: 250px;
     padding-top: 50px;
     width: 620px;
 }
-.tieude_TT{
+
+.tieude_TT {
     display: flex;
 }
-.tieude_TT>h3{
-    width: 290px;
-}
-.tieude_TT>div>a{
-    text-decoration: none;
-}
-.tieude_TT>div:hover,
-.tieude_TT>div>a:hover{
-    color:#4dc649;
-}
-.khungDienTT{
+
+    .tieude_TT > h3 {
+        width: 290px;
+    }
+
+    .tieude_TT > div > a {
+        text-decoration: none;
+    }
+
+        .tieude_TT > div:hover,
+        .tieude_TT > div > a:hover {
+            color: #4dc649;
+        }
+
+.khungDienTT {
     margin-top: 10px;
     padding-top: 10px;
 }
-.khungDienTT input, .khung1_1_1 select{
-    width: 350px;
-    height: 32px;
-    margin: 10px 0px;
-    border: 1px solid rgb(136, 135, 135);
-    border-radius: 3px;
-}
+
+    .khungDienTT input, .khung1_1_1 select {
+        width: 350px;
+        height: 32px;
+        margin: 10px 0px;
+        border: 1px solid rgb(136, 135, 135);
+        border-radius: 3px;
+    }
 
 
 
-.khung1_1_2{
+.khung1_1_2 {
     padding-left: 40px;
-    padding-top:50px;
+    padding-top: 50px;
     width: 380px;
 }
-.VanChuyen{
+
+.VanChuyen {
     margin-bottom: 50px;
 }
-.VanChuyen>h3{
-    margin-bottom: 20px;
-}
-.CachThucVanChuyen{
+
+    .VanChuyen > h3 {
+        margin-bottom: 20px;
+    }
+
+.CachThucVanChuyen {
     width: 280px;
     height: 50px;
     border: 1px solid rgb(136, 135, 135);
-    border-radius:5px;
+    border-radius: 5px;
     padding: 12px 10px;
 }
-.CachThucThanhToan{
+
+.CachThucThanhToan {
     width: 280px;
     height: auto;
     border: 1px solid rgb(136, 135, 135);
     border-radius: 5px;
     padding: 12px 10px;
 }
-.CachThucThanhToan>input{
-    margin-bottom: 10px;
-}
 
-.khung1_2{
-    width:100%;
+    .CachThucThanhToan > input {
+        margin-bottom: 10px;
+    }
+
+.khung1_2 {
+    width: 100%;
     height: 720px;
     background-color: antiquewhite;
     border: 1px outset rgb(136, 135, 135);
     border-radius: 5px;
-
 }
 
-.tongDonHang{
+.tongDonHang {
     border-bottom: 1px solid rgb(136, 135, 135);
     padding: 20px 20px;
 }
-.sanphamtrongDonHang{
+
+.sanphamtrongDonHang {
     border-bottom: 1px solid #3d3c3c;
-}
-.sanphamtrongDonHang>div{
-    display: flex;
-    padding: 10px 20px;
-    font-size: 18px;
-}
-.sanphamtrongDonHang>div .anh_sp{
-    width: 20px;
-}
-.sanphamtrongDonHang>div .ten_sp{
-    width: 250px;
-}
-.sanphamtrongDonHang>div .gia_sp{
-    width: 150px;
-}
-.sanphamtrongDonHang>div>ion-icon{
-    width: 20px;
-}
-.maGiamGia{
-    border-bottom: 1px solid #3d3c3c;
-}
-.maGiamGia>input{
-    width: 400px;
-    height: 50px;
-    padding-left: 10px;
-}
-.maGiamGia>button{
-    width: 80px;
-    height: 50px;
-    border: 1px solid #3d3c3c;
-    background-color: rgb(48, 119, 95);
-    border-radius: 3px;
-}
-.maGiamGia>input, 
-.maGiamGia>button{
-    margin: 20px 5px;
-    font-size: 18px;
-}
-.tinhTien{
-    border-bottom: 1px solid #3d3c3c;
-}
-.tinhTien>div{
-    display: flex;
-    padding: 10px 20px;
-    font-size: 16px;
-    color:#686767;
-}
-.tinhTien>div .ten_phi{
-    width: 270px;
-    padding-left: 20px;
 }
 
-.TongTien{
+    .sanphamtrongDonHang > div {
+        display: flex;
+        padding: 10px 20px;
+        font-size: 18px;
+    }
 
+        .sanphamtrongDonHang > div .anh_sp {
+            width: 20px;
+        }
+
+        .sanphamtrongDonHang > div .ten_sp {
+            width: 250px;
+        }
+
+        .sanphamtrongDonHang > div .gia_sp {
+            width: 150px;
+        }
+
+        .sanphamtrongDonHang > div > ion-icon {
+            width: 20px;
+        }
+
+.maGiamGia {
+    border-bottom: 1px solid #3d3c3c;
 }
-.Hang_chot_tien{
+
+    .maGiamGia > input {
+        width: 400px;
+        height: 50px;
+        padding-left: 10px;
+    }
+
+    .maGiamGia > button {
+        width: 80px;
+        height: 50px;
+        border: 1px solid #3d3c3c;
+        background-color: rgb(48, 119, 95);
+        border-radius: 3px;
+    }
+
+    .maGiamGia > input,
+    .maGiamGia > button {
+        margin: 20px 5px;
+        font-size: 18px;
+    }
+
+.tinhTien {
+    border-bottom: 1px solid #3d3c3c;
+}
+
+    .tinhTien > div {
+        display: flex;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #686767;
+    }
+
+        .tinhTien > div .ten_phi {
+            width: 270px;
+            padding-left: 20px;
+        }
+
+.TongTien {
+}
+
+.Hang_chot_tien {
     display: flex;
     font-size: 20px;
-    padding:20px 20px;
+    padding: 20px 20px;
 }
-.gia_cuoi{
+
+.gia_cuoi {
     width: 350px;
 }
-.khung1_2_5_2{
+
+.khung1_2_5_2 {
     display: flex;
 }
-.back_voHang{
+
+.back_voHang {
     display: flex;
     font-size: 20px;
     width: 350px;
     padding-top: 15px;
     padding-left: 20px;
 }
-.back_voHang>a{
-    text-decoration: none;
-}
-.TongTien button{
-    width:150px;
+
+    .back_voHang > a {
+        text-decoration: none;
+    }
+
+.TongTien button {
+    width: 150px;
     height: 50px;
     border-radius: 3px;
     font-size: 18px;
 }
+
 .back_voHang:hover,
-.back_voHang>a:hover{
-    color:#4dc649;
+.back_voHang > a:hover {
+    color: #4dc649;
 }
-.TongTien button{
+
+.TongTien button {
     background-color: #497dc6;
 }
-.TongTien button:hover,
-.maGiamGia button:hover{
-    background-color: #4dc649;
-}
+
+    .TongTien button:hover,
+    .maGiamGia button:hover {
+        background-color: #4dc649;
+    }
