@@ -156,7 +156,8 @@ namespace Do_an_TMDT.Helpper
                     {
                         await file.CopyToAsync(stream);
                     }
-                    return newname;
+                    string url = "images/" + sDirectory + "/" + newname;
+                    return url;
                 }
             }
             catch
