@@ -25,7 +25,12 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
-            var lsCustomers = _context.NguoiDungs.Where(x => x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung == "Khách hàng")
+            var lsCustomers = _context.NguoiDungs
+                .Where(x => 
+                        x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Khách hàng") || 
+                        x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người dùng") ||
+                        x.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("user")
+                        )
                 .AsNoTracking()
                 .OrderByDescending(x => x.MaNguoiDung)
                 .Include(n => n.NguoiDungDiaChis);

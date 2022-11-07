@@ -22,7 +22,11 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // GET: Admin/AdminShippers
         public async Task<IActionResult> Index()
         {
-            var wEBBANGIAYContext = _context.NguoiDungs.Include(n => n.MaLoaiNguoiDungNavigation);
+            var wEBBANGIAYContext = _context.NguoiDungs
+                .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng")|| 
+                            m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Shipper")
+                      )
+                .Include(n => n.MaLoaiNguoiDungNavigation);
             return View(await wEBBANGIAYContext.ToListAsync());
         }
 
