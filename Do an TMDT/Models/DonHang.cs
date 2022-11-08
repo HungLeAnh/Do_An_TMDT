@@ -21,6 +21,7 @@ namespace Do_an_TMDT.Models
         public bool DaThanhToan { get; set; }
         public decimal TongTien { get; set; }
         public int? MaNguoiGiaoHang { get; set; }
+        public DateTime NgayXuatDonHang { get; set; }
 
         public virtual NguoiDung MaNguoiDungNavigation { get; set; }
         public virtual NguoiDung MaNguoiGiaoHangNavigation { get; set; }
