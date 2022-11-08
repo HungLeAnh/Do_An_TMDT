@@ -1,18 +1,23 @@
-﻿
-@model IEnumerable<Do_an_TMDT.Models.DanhMuc>
-
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.DanhMuc>
 @{
+    int CurrentPage = ViewBag.CurrentPage;
     ViewData["Title"] = "Quản lý danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
 <div class="page-header">
-    <h2 class="header-title">@ViewData["Title"]</h2>
-    <br />
+    <h2 class="header-title">@ViewData["Title"] :</h2>
     <div class="header-sub-title">
-        <nav class="breadcrumb breadcrumb-dash">
-            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-            <span class="breadcrumb-item active">@ViewData["Title"]</span>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"] : trang @CurrentPage
+                </li>
+            </ol>
         </nav>
     </div>
 </div>
@@ -22,7 +27,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">
-                    Tên danh mục
+                    Tên Danh Mục
                 </th>
                 <th scope="col">Slug</th>
                 <th scope="col">
@@ -46,14 +51,14 @@
                     </td>
                     <td>
                         <div class="btn-group btn-group-sm ">
-                            <a asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Edit" asp-route-id="@item.MaDanhMuc">
+                            <a class="m-10" asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Edit" asp-route-id="@item.MaDanhMuc">
                                 <i class="fas fa-pen btn btn-primary "></i>
                             </a>
-                            <a asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Details" asp-route-id="@item.MaDanhMuc">
+                            <a class="m-10" asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Details" asp-route-id="@item.MaDanhMuc">
                                 <i class="fas fa-clipboard-list btn btn-warning "></i>
                             </a>
                             <!-- Button trigger modal -->
-                            <a data-toggle="modal" data-target="#deleteModal-@item.MaDanhMuc">
+                            <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaDanhMuc">
                                 <i class="fas fa-trash-alt btn btn-danger "></i>
                             </a>
                             <form asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Delete" asp-route-id="@item.MaDanhMuc">
@@ -62,14 +67,14 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Xóa danh mục</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Xóa danh mục:</h5>
                                                 <button type="button" class="close" data-dismiss="modal">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body text-center">
                                                 <div class="warning">Bạn muốn xóa danh mục này?</div>
-                                                <div class="text-danger "> @item.MaDanhMuc : @item.MaDanhMuc</div>
+                                                <div class="text-danger "> @item.MaDanhMuc : @item.TenDanhMuc</div>
 
                                             </div>
                                             <div class="modal-footer">
@@ -86,4 +91,9 @@
             }
         </tbody>
     </table>
+</div>
+<div aria-label="Page navigation example">
+    <ul class="pagination">
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminDanhMucs" asp-action="Index" />
+    </ul>
 </div>

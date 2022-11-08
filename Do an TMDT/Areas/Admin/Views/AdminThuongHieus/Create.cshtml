@@ -1,37 +1,51 @@
 ﻿@model Do_an_TMDT.Models.ThuongHieu
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm thương hiệu";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]: </h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb" >
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminThuongHieus" asp-action="Index">Quản lý thương hiệu</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
+    
+</div>
 
-<h1>Create</h1>
-
-<h4>ThuongHieu</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TenThuongHieu" class="control-label"></label>
+                <label class="control-label">Tên Thương Hiệu</label>
                 <input asp-for="TenThuongHieu" class="form-control" oninput="slugGenarate()" id="slug-source" type="text" />
                 <span asp-validation-for="TenThuongHieu" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
+                <label class="control-label">Slug</label>
                 <input asp-for="Slug" class="form-control" readonly type="text" value="" id="slug-target" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+                <a asp-area="Admin" asp-controller="AdminThuongHieus" asp-action="Index" class="btn btn-primary">Quay Lại</a>
             </div>
+
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 @section Scripts{
     <script>
@@ -55,5 +69,8 @@
 
             document.getElementById("slug-target-span").innerHTML = slug;
         }
-    </script>
+    </script>    
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
 }

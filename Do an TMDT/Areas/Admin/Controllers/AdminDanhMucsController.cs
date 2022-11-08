@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -13,16 +16,26 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
     public class AdminDanhMucsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminDanhMucsController(WEBBANGIAYContext context)
+        public AdminDanhMucsController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
+
         }
 
         // GET: Admin/AdminDanhMucs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.DanhMucs.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsDanhMuc = await _context.DanhMucs.ToListAsync();
+            PagedList<DanhMuc> model = new PagedList<DanhMuc>(lsDanhMuc.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(model);
+
         }
 
         // GET: Admin/AdminDanhMucs/Details/5

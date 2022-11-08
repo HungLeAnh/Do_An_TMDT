@@ -1,37 +1,55 @@
 ﻿@model Do_an_TMDT.Models.NhaCungCap
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa nhà cung cấp";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h1>Edit</h1>
-
-<h4>NhaCungCap</h4>
-<hr />
-<div class="row">
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]: </h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb" >
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class ="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Index">Quản lý nhà cung cấp</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+            
+<div class="row center-tabs">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaNhaCungCap" />
             <div class="form-group">
-                <label asp-for="TenNhaCungCap" class="control-label"></label>
+                <label  class="control-label">Tên nhà cung cấp</label>
                 <input asp-for="TenNhaCungCap" class="form-control" />
                 <span asp-validation-for="TenNhaCungCap" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Std" class="control-label"></label>
+                <label  class="control-label">Số điện thoại</label>
                 <input asp-for="Std" class="form-control" />
-                <span asp-validation-for="Std" class="text-danger"></span>
+                <span asp-validation-for="Std" class="text-danger" ></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Index" class="btn btn-primary">Quay Lại</a>
             </div>
+
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
 

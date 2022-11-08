@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PagedList.Core;
+using AspNetCoreHero.ToastNotification.Notyf;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -13,16 +17,25 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
     public class AdminThuongHieusController : Controller
     {
         private readonly WEBBANGIAYContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminThuongHieusController(WEBBANGIAYContext context)
+        public AdminThuongHieusController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
+
         }
 
         // GET: Admin/AdminThuongHieus
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.ThuongHieus.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsThuongHieu = await _context.ThuongHieus.ToListAsync();
+            PagedList<ThuongHieu> model = new PagedList<ThuongHieu>(lsThuongHieu.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(model);
         }
 
         // GET: Admin/AdminThuongHieus/Details/5
