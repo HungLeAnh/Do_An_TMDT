@@ -21,7 +21,62 @@ namespace Do_an_TMDT.Controllers
         }
 
         // GET: ThuongHieux
-        public async Task<IActionResult> Chitiet(int MaSp)
+        public IActionResult ChiTiet(int MaSp)
+        {
+
+            HomeVM model = new HomeVM();
+            var listSP = _context.MatHangs.AsNoTracking()
+                .Where(x => x.DangDuocBan == true)
+                .ToList();
+            List<MatHangHome> listSPW = new List<MatHangHome>();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+
+            foreach (var item in listSP)
+            {
+
+                MatHangHome mh = new MatHangHome();
+
+                mh.listSPs = item;
+                foreach (var item_anh in listanh)
+                {
+                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                foreach (var item_TH in listTH)
+                {
+                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
+                }
+                listSPW.Add(mh);
+                model.MatHangs = listSPW;
+                if (HttpContext.Session.GetInt32("Ten") != null)
+                {
+
+                    ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+                }
+                else
+                {
+                    ViewBag.Id = 0;
+                }
+
+
+            }
+            foreach (var item2 in model.MatHangs.Where(x => x.listSPs.MaMatHang == MaSp).ToList())
+            {
+                model.MatHangs[0] = item2;
+            }
+            HttpContext.Session.SetInt32("IDSP", MaSp);
+            return View(model);
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChiTiet( [Bind("SoLuong")] HomeVM sl)
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
@@ -51,22 +106,33 @@ namespace Do_an_TMDT.Controllers
                 }
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
-                try
+                if (HttpContext.Session.GetInt32("Ten") != null)
                 {
-                    ViewBag.Ids = (int)HttpContext.Session.GetInt32("Ten");
+
+                    ViewBag.Id = HttpContext.Session.GetInt32("Ten");
                 }
-                catch
+                else
                 {
                     ViewBag.Id = 0;
                 }
+
+
             }
-            foreach(var item2 in model.MatHangs.Where(x=>x.listSPs.MaMatHang==MaSp).ToList())
+           int MaSp=(int)HttpContext.Session.GetInt32("IDSP");
+            foreach (var item2 in model.MatHangs.Where(x => x.listSPs.MaMatHang == MaSp).ToList())
             {
-                model.MatHangs[0] = item2;   
+                model.MatHangs[0] = item2;
             }
-            return View(model);
+            if (sl.SoLuong <= model.MatHangs[0].listSPs.SoLuong)
+            {
+                HttpContext.Session.SetInt32("sl", sl.SoLuong);
+                return RedirectToAction("ThanhToan", "DonHangs");
+            }
+            else{
+                ViewBag.eror = "Số lượng sản phẩm lớn hơn trong kho";
+                return View(model);
+            }
 
         }
-
     }
 }
