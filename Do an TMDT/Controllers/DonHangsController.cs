@@ -174,7 +174,7 @@ namespace Do_an_TMDT.Controllers
                 _context.Update(mathang);
                 await _context.SaveChangesAsync();
             var mess = new MimeMessage();
-            mess.From.Add(new MailboxAddress("Đơn Hàng:#"+donhang.MaDonHang, "20110305@student.hcmute.edu.vn"));
+            mess.From.Add(new MailboxAddress("Đơn Hàng:#"+donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
             mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
             mess.Subject = "Đơn hàng của bạn";
             var bodyBuilder = new BodyBuilder();
@@ -185,7 +185,7 @@ namespace Do_an_TMDT.Controllers
             {
 
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("20110305@student.hcmute.edu.vn", "Quyen01022002@");
+                client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
                 client.Send(mess);
                 client.Disconnect(true);
 

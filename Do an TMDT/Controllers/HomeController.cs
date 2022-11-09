@@ -23,8 +23,8 @@ namespace Do_an_TMDT.Controllers
             _context = context;
 
         }
-
-        public IActionResult Loadsanpham(int MaLoai)
+       
+            public IActionResult Loadsanpham(int MaLoai)
         {
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
