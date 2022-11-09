@@ -6,12 +6,18 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="page-header">
-    <h2 class="header-title">@ViewData["Title"]</h2>
-    <br/>
+    <h2 class="header-title">@ViewData["Title"] :</h2>
     <div class="header-sub-title">
-        <nav class="breadcrumb breadcrumb-dash">
-            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-            <span class="breadcrumb-item active">Quản lí tài khoản :</span>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"] : trang @CurrentPage
+                </li>
+            </ol>
         </nav>
     </div>
 </div>
@@ -23,7 +29,7 @@
                     <div class="m-b-10 m-r-15">
                         
                         <select class="custom-select" style="min-width: 200px;" id="idloainguoidung" name="idloainguoidung" asp-items="ViewBag.LoaiNguoiDung">
-                            <option value="" selected>All</option>
+                            <option selected>All</option>
                         </select>
                     </div>
                 </div>

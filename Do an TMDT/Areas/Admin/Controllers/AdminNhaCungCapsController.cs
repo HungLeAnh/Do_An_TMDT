@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -20,9 +22,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminNhaCungCaps
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.NhaCungCaps.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsNhaCungCap = await _context.NhaCungCaps.ToListAsync();
+            PagedList<NhaCungCap> model = new PagedList<NhaCungCap>(lsNhaCungCap.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(model);
         }
 
         // GET: Admin/AdminNhaCungCaps/Details/5

@@ -1,73 +1,118 @@
 ﻿@model Do_an_TMDT.Models.NguoiDung
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"]: </h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Index">Quản lý tài khoản</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
 
-<h1>Details</h1>
+</div>
+@{
 
-<div>
-    <h4>NguoiDung</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.TenNguoiDung)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.TenNguoiDung)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.AnhDaiDien)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.AnhDaiDien)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.TenDangNhap)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.TenDangNhap)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.MatKhauHash)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.MatKhauHash)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.Sdt)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.Sdt)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.ViDienTu)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.ViDienTu)
-        </dd>
-        <dt class = "col-sm-3">
-            @Html.DisplayNameFor(model => model.MaLoaiNguoiDungNavigation)
-        </dt>
-        <dd class = "col-sm-9">
-            @Html.DisplayFor(model => model.MaLoaiNguoiDungNavigation.MaLoaiNguoiDung)
-        </dd>
-    </dl>
+    if (@ViewBag.mess != null)
+    {
+    <div class="col">
+         <div class="alert alert-danger col-lg-4" role="alert">
+              @ViewBag.mess
+         </div>
+    </div>
+    }
+}
+<div class="container">
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-8">
+            <div class="row m-10 ">
+                <div class="col-sm-6 border border-dark ">
+                    Mã loại người dùng
+                </div>
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.MaLoaiNguoiDung)
+                </div>
+
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Tên đăng nhập
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.TenDangNhap)
+                </div>
+
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Tên người dùng
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.TenNguoiDung)
+                </div>
+
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Ảnh đại diện
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.AnhDaiDien)
+                </div>
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Email
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Số điện thoại
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.Sdt)
+                </div>
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Ví điện tử
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.ViDienTu)
+                </div>
+            </div>
+
+            <div class="row m-10 justify-content-center">
+                <div class="col-auto">
+                    <a class="btn btn-primary m-1" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Edit" asp-route-id="@Model.MaNguoiDung">Chỉnh sửa</a>
+                    <a class="btn btn-primary m-1" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Index">Quay Lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaNguoiDung">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

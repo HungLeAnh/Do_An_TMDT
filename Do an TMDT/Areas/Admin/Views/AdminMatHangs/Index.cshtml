@@ -22,8 +22,7 @@
                 <div class="d-md-flex">
                     <div class="m-b-10 m-r-15">
                         <select class="custom-select" id="txtMaDanhMuc" name="txtMaDanhMuc" style="min-width: 180px;" asp-items="ViewBag.DanhMuc">
-                            <option selected>Chọn danh mục</option>
-                            <option value="0">Chọn tất cả</option>
+                            <option selected>All</option>
                         </select>
                     </div>
                 </div>
@@ -114,13 +113,13 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Xóa mặt hàng này</h5>
                                                         <button type="button" class="close" data-dismiss="modal">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body text-center">
-                                                        <div class="warning">Bạn muốn xóa người dùng này?</div>
+                                                        <div class="warning">Bạn muốn xóa mặt hàng này?</div>
                                                         <div class="text-danger "> @item.MaMatHang : @item.TenMatHang</div>
 
                                                     </div>

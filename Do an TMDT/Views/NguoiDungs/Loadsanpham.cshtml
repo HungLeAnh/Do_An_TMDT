@@ -11,6 +11,14 @@
     <li>
         <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
         <ul class="sub-nav">
+            @{if (ViewBag.listcate != null)
+                {
+
+            @foreach (var item in ViewBag.listcate)
+            {
+                <li><a href="">@item.TenThuongHieu</a></li>
+            }}
+                }
         </ul>
     </li>
     <li><a href="">Tin tức</a></li>
@@ -21,9 +29,13 @@
                 <a href="">
                     <ion-icon name="search-outline"></ion-icon>
                 </a>
+                 <form asp-action="Timkiem" >
                 <div class="search">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm">
+                    
+                        <input type="text" asp-for="TenNguoiDung" placeholder="Tìm kiếm sản phẩm">
+                   
                 </div>
+                </form>
             </li>
             @{
                 if (ViewBag.Id != 0)
@@ -157,7 +169,7 @@
                 </div>
 
                 <div class="layer2">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[0].Anh}" width="250px" alt=""></a>
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
                     <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
                     <button><ion-icon name="cart-outline"></ion-icon></button>
                 </div>

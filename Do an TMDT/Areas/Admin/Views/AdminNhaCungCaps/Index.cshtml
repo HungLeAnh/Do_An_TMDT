@@ -1,42 +1,99 @@
-﻿@model IEnumerable<Do_an_TMDT.Models.NhaCungCap>
-
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.NhaCungCap>
 @{
-    ViewData["Title"] = "Index";
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Quản lý nhà cung cấp";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] :</h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"] : trang @CurrentPage
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">
+                    Tên nhà cung cấp
+                </th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">
+                    <a class="btn btn-primary btn-tone" asp-action="Create">
+                        <i class="anticon anticon-plus"></i>
+                        Thêm
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(modelItem => item.MaNhaCungCap)</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenNhaCungCap)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Std)
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm ">
+                            <a class="m-10" asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Edit" asp-route-id="@item.MaNhaCungCap">
+                                <i class="fas fa-pen btn btn-primary "></i>
+                            </a>
+                            <a class="m-10" asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Details" asp-route-id="@item.MaNhaCungCap">
+                                <i class="fas fa-clipboard-list btn btn-warning "></i>
+                            </a>
+                            <!-- Button trigger modal -->
+                            <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaNhaCungCap">
+                                <i class="fas fa-trash-alt btn btn-danger "></i>
+                            </a>
+                            <form asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Delete" asp-route-id="@item.MaNhaCungCap">
 
-<h1>Index</h1>
+                                <div class="modal fade" id="deleteModal-@item.MaNhaCungCap" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Xóa nhà cung cấp này:</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <div class="warning">Bạn muốn xóa nhà cung cấp này?</div>
+                                                <div class="text-danger "> @item.MaNhaCungCap : @item.TenNhaCungCap</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenNhaCungCap)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Std)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenNhaCungCap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Std)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaNhaCungCap">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaNhaCungCap">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaNhaCungCap">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div aria-label="Page navigation example">
+    <ul class="pagination">
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminNhaCungCaps" asp-action="Index" />
+    </ul>
+</div>

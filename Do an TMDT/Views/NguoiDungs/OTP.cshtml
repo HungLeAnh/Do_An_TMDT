@@ -1,0 +1,179 @@
+﻿@model Do_an_TMDT.Models.NguoiDung
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+    <link href="~/css/3.css" rel="stylesheet" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <section class="bread-crumb">
+        <div class="container">
+            <div class="nd-main-title-breadcrumb text-center">Đăng ký tài khoản</div>
+            <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                    <a itemprop="item" href="/" title="Trang chủ">
+                        <span itemprop="name">Trang chủ</span>
+                        <meta itemprop="position" content="1">
+                    </a>
+                </li>
+
+                <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                    <strong itemprop="name">Đăng ký tài khoản</strong>
+                    <meta itemprop="position" content="2">
+                </li>
+
+            </ul>
+        </div>
+
+    </section>
+
+    @{
+
+        if (@ViewBag.mess != null)
+        {
+            <div class="col">
+                <div class="alert alert-danger col-lg-4" role="alert">
+                    @ViewBag.mess
+                </div>
+            </div>
+        }
+
+    }
+
+
+
+    <div class="row justify-content-lg-center">
+        <div class="col-lg-7 col-md-12">
+            <div class="page-login account-box-shadow">
+                <div id="login" class="row">
+                    <div class="col-lg-12 col-md-12 account-content order-lg-last order-md-last order-sm-first order-first">
+                        <ul class="auth-block__menu-list p-0">
+                            <li>
+                                <a asp-controller="NguoiDungs" asp-action="dangnhap" title="Đăng nhập">Đăng nhập</a>
+                            </li>
+                            <li class="active">
+                                <a href="#" title="Đăng ký">Đăng ký</a>
+                            </li>
+                        </ul>
+                        <div id="nd-login">
+                            <form accept-charset="utf-8" asp-action="OTP" id="customer_register"
+                                  method="post">
+                                <input name="FormType" type="hidden" value="customer_register">
+                                <input name="utf8" type="hidden" value="true"><input type="hidden"
+                                                                                     id="" name="Token"
+                                                                                     value="">
+                                <div class="form-signup">
+                                </div>
+                                <div class="form-signup clearfix">
+                                    <div class="row">
+                                        
+
+                                        <div class="form-group">
+                                            <label asp-for="MaNguoiDung" class="control-label">Nhập Mã Xác thực</label>
+                                            <input  asp-for="MaNguoiDung" required="" class="form-control" />
+                                            <span asp-validation-for="MaNguoiDung" class="text-danger"></span>
+                                        </div>
+
+
+                                        <div class="col-md-12 text-center margin-top-10">
+                                            <button type="submit" value="Đăng ký" class="btn-style btn-blues">
+                                                Xác Nhận
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="clearfix"></div>
+                            <div class="line-break">
+                                <span>hoặc đăng nhập qua</span>
+                            </div>
+                            <div class="social-login text-center">
+                                <a href="" class="social-login--facebook" onclick="loginFacebook()">
+                                    <img width="129px"
+                                         height="37px" alt="facebook-login-button"
+                                         src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
+                                </a>
+                                <a href="" class="social-login--google" onclick="loginGoogle()">
+                                    <img width="129px"
+                                         height="37px" alt="google-login-button"
+                                         src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
+                                </a>
+                            </div>
+                        </div>
+                        <div id="recover-password" class="form-signup" style="display:none;">
+                            <div class="fix-sblock text-center">
+                                Bạn quên mật khẩu? Nhập địa chỉ email để lấy lại mật khẩu qua email.
+                            </div>
+                            <form accept-charset="utf-8" action="/account/recover" id="recover_customer_password"
+                                  method="post">
+                                <input name="FormType" type="hidden" value="recover_customer_password">
+                                <input name="utf8" type="hidden" value="true">
+                                <div class="form-signup ">
+
+                                </div>
+
+                                <div class="form-signup clearfix">
+                                    <fieldset class="form-group">
+                                        <label>Email<span class="required">*</span></label>
+                                        <input type="email" class="form-control form-control-lg" value="" name="Email"
+                                               id="recover-email" placeholder="Nhập địa chỉ Email" data-validation="email"
+                                               data-validation-error-msg="Email sai định dạng" required="">
+                                    </fieldset>
+                                </div>
+                                <div class="action_bottom text-center">
+                                    <button class="btn-style btn-blues" style="margin-top: 10px;" type="submit"
+                                            value="Lấy lại mật khẩu">
+                                        Lấy lại mật khẩu
+                                    </button>
+                                </div>
+                                <div class="text-login text-center">
+                                    <p>
+                                        Quay lại <a href="javascript:;" class="btn-link-style btn-register"
+                                                    onclick="hideRecoverPasswordForm();" title="Quay lại">tại đây.</a>
+                                    </p>
+                                </div>
+                                <input name="returnUrl" type="hidden" value="/account">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showRecoverPasswordForm() {
+            document.getElementById('recover-password').style.display = 'block';
+            document.getElementById('nd-login').style.display = 'none';
+        }
+
+        function hideRecoverPasswordForm() {
+            document.getElementById('recover-password').style.display = 'none';
+            document.getElementById('nd-login').style.display = 'block';
+        }
+
+
+    </script>
+</body>
+
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

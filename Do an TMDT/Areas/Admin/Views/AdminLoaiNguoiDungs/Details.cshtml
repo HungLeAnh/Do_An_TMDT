@@ -1,25 +1,56 @@
 ﻿@model Do_an_TMDT.Models.LoaiNguoiDung
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết loại người dùng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>LoaiNguoiDung</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenLoaiNguoiDung)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenLoaiNguoiDung)
-        </dd>
-    </dl>
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] :</h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminLoaiNguoiDungs" asp-action="Index">Quản lý quyền truy cập</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaLoaiNguoiDung">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container">
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-8">
+            <div class="row m-10 ">
+                <div class="col-sm-6 border border-dark ">
+                    Mã loại người dùng
+                </div>        
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.MaLoaiNguoiDung)
+                </div>
+
+            </div>
+            <div class="row m-10">
+                <div class="col-sm-6 border border-dark ">
+                    Tên loại người dùng
+                </div>
+
+                <div class="col-sm-6 border border-dark ">
+                    @Html.DisplayFor(model => model.TenLoaiNguoiDung)
+                </div>
+
+            </div>
+            <div class="row m-10 justify-content-center">
+                <div class="col-auto">
+                    <a class="btn btn-primary m-1" asp-area="Admin" asp-controller="AdminLoaiNguoiDungs" asp-action="Edit" asp-route-id="@Model.MaLoaiNguoiDung">Chỉnh sửa</a>
+                    <a class="btn btn-primary m-1" asp-area="Admin" asp-controller="AdminLoaiNguoiDungs" asp-action="Index">Quay Lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

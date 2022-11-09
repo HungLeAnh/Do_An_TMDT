@@ -9,6 +9,8 @@ using Do_an_TMDT.Models;
 using Do_an_TMDT.ViewModels;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
+using Do_an_TMDT.Extension;
+using Do_an_TMDT.Helpper;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -93,13 +95,63 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
+            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
             if (ModelState.IsValid)
             {
-                _context.Add(nguoiDung);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                bool x = true;
+                string salt = Utilities.GetRandomKey();
+                var listLoaiNguoidung = _context.LoaiNguoiDungs.AsNoTracking().ToList();
+                NguoiDung khachhang = new NguoiDung
+                {
+                    MaLoaiNguoiDung = nguoiDung.MaLoaiNguoiDung,
+                    TenDangNhap = nguoiDung.TenDangNhap,
+                    TenNguoiDung = nguoiDung.TenNguoiDung,
+                    Sdt = nguoiDung.Sdt.Trim(),
+                    Email = nguoiDung.Email.Trim(),
+                    MatKhauHash = (nguoiDung.MatKhauHash + salt.Trim()).ToMD5(),
+                    Salt = salt
+                };
+                var list = _context.NguoiDungs.AsNoTracking().ToList();
+                foreach (var item in list)
+                {
+                    if (khachhang.Email == item.Email)
+                    {
+                        ViewBag.mess = "Email đã tồn tại";
+                        x = false;
+                        break;
+                    }
+                    if (khachhang.Sdt == item.Sdt)
+                    {
+                        ViewBag.mess = " SDT đã tồn tại";
+                        x = false;
+                        break;
+                    }
+                    if (khachhang.TenDangNhap == item.TenDangNhap)
+                    {
+                        ViewBag.mess = " Tên Đăng Nhập đã tồn tại";
+                        x = false;
+                        break;
+
+                    }
+                }
+                if (x == true)
+                {
+                    if (khachhang.Sdt.Length == 10)
+                    {
+                        _context.Add(khachhang);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
+                        ViewBag.mess = " SDT không hợp lệ";
+                        x = false;
+                        return View(nguoiDung);
+                    }
+                }
             }
-            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
+
             return View(nguoiDung);
         }
 

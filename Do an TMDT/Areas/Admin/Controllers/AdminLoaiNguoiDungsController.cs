@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -24,9 +25,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLoaiNguoiDungs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.LoaiNguoiDungs.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsLoaiNguoiDung = await _context.LoaiNguoiDungs.ToListAsync();
+            PagedList<LoaiNguoiDung> model = new PagedList<LoaiNguoiDung>(lsLoaiNguoiDung.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(model);
         }
 
         // GET: Admin/AdminLoaiNguoiDungs/Details/5
