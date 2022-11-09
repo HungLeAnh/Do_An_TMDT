@@ -113,26 +113,58 @@
     </a>
 
 </ul>
-<section class="bread-crumb">
-    <div class="container">
-        <div class="nd-main-title-breadcrumb text-center">CHI TIẾT SẢN PHẨM</div>
-        <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-            <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                <a itemprop="item" href="/" title="Trang chủ">
-                    <span itemprop="name">Trang chủ</span>
-                    <meta itemprop="position" content="1">
-                </a>
-            </li>
+@{
+    if (ViewBag.Id != 0)
+    {
+        <section class="bread-crumb">
+            <div class="container">
+                <div class="nd-main-title-breadcrumb text-center">CHI TIẾT SẢN PHẨM</div>
+                <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                    <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" asp-controller="NguoiDungs" asp-action="Loadsanpham" title="Trang chủ">
+                            <span itemprop="name">Trang chủ</span>
+                            <meta itemprop="position" content="1">
+                        </a>
+                    </li>
 
-            <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                <strong itemprop="name">@Model.MatHangs[0].listSPs.TenMatHang</strong>
-                <meta itemprop="position" content="2">
-            </li>
+                    <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <strong itemprop="name">@Model.MatHangs[0].listSPs.TenMatHang</strong>
+                        <meta itemprop="position" content="2">
+                    </li>
 
-        </ul>
-    </div>
+                </ul>
+            </div>
 
-</section>
+        </section>
+
+    }
+}
+@{
+    if (ViewBag.Id == 0)
+    {
+        <section class="bread-crumb">
+            <div class="container">
+                <div class="nd-main-title-breadcrumb text-center">CHI TIẾT SẢN PHẨM</div>
+                <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                    <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" asp-controller="Home" asp-action="Loadsanpham" title="Trang chủ">
+                            <span itemprop="name">Trang chủ</span>
+                            <meta itemprop="position" content="1">
+                        </a>
+                    </li>
+
+                    <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <strong itemprop="name">@Model.MatHangs[0].listSPs.TenMatHang</strong>
+                        <meta itemprop="position" content="2">
+                    </li>
+
+                </ul>
+            </div>
+
+        </section>
+
+    }
+}
 
 <div class="section">
     <div class="anh_sp">
