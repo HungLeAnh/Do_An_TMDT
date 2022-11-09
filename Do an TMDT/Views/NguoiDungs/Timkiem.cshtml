@@ -5,7 +5,7 @@
 }
 
 <ul class="menu">
-    <a href=""><img src="images/logo.png" alt=""></a>
+    <a href=""><img src="~/images/logo.png" alt=""></a>
     <li><a href="">Trang chủ</a></li>
     <li><a href="">Giới Thiệu</a></li>
     <li>
@@ -14,11 +14,11 @@
             @{if (ViewBag.listcate != null)
                 {
 
-            @foreach (var item in ViewBag.listcate)
-            {
-                <li><a href="">@item.TenThuongHieu</a></li>
-            }}
-                }
+                    @foreach (var item in ViewBag.listcate)
+                    {
+                        <li><a href="">@item.TenThuongHieu</a></li>
+                    }}
+            }
         </ul>
     </li>
     <li><a href="">Tin tức</a></li>
@@ -29,12 +29,12 @@
                 <a href="">
                     <ion-icon name="search-outline"></ion-icon>
                 </a>
-                 <form asp-action="Timkiem" >
-                <div class="search">
-                    
+                <form asp-action="Timkiem">
+                    <div class="search">
+
                         <input type="text" asp-for="TenNguoiDung" placeholder="Tìm kiếm sản phẩm">
-                   
-                </div>
+
+                    </div>
                 </form>
             </li>
             @{
@@ -109,7 +109,7 @@
 
 </ul>
 <div class="than">
-    <img src="images/Chinh.webp" width="100%" alt="">
+    <img src="~/images/Chinh.webp" width="100%" alt="">
     <div class="xanh">
         <div class="khoi">
             <ion-icon name="airplane-outline"></ion-icon><br>
@@ -150,34 +150,69 @@
 <div class="menu_sp">
     @{int i = 0;
     }
-    @if(ViewBag.mathang != null){
+    @if (ViewBag.mathang != null)
+    {
         @foreach (var item in @ViewBag.mathang)
         {
 
-            <div class="menu_sp-item">
+            if (item.MatHangAnhs.Count > 0)
+            {
+                <div class="menu_sp-item">
 
-                <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[0].Anh}" width="250px" alt="">
-                <div class="item_text">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
-                </div>
-                <div class="item_daban">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
-                </div>
-                <br>
-                <div class="item_gia">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
-                </div>
+                    <img onerror="this.src='images/duphong.webp'" src="~/@item.MatHangAnhs[0].Anh" width="250px" alt="">
 
-                <div class="layer2">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
-                    <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
-                    <button><ion-icon name="cart-outline"></ion-icon></button>
-                </div>
+                    <div class="item_text">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+                    </div>
+                    <div class="item_daban">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+                    </div>
+                    <br>
+                    <div class="item_gia">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+                    </div>
 
-            </div>
-            i++;
+                    <div class="layer2">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">
+                            <img onerror="this.src='images/duphong.webp'" src="~/@item.MatHangAnhs[1].Anh" width="250px" alt="">
+                        </a>
+                        <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+                        <button><ion-icon name="cart-outline"></ion-icon></button>
+                    </div>
+
+                </div>
+                i++;
+            }
+            else
+            {
+                <div class="menu_sp-item">
+
+                    <img onerror="this.src='images/duphong.webp'" src="" width="250px" alt="">
+
+                    <div class="item_text">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+                    </div>
+                    <div class="item_daban">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+                    </div>
+                    <br>
+                    <div class="item_gia">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+                    </div>
+
+                    <div class="layer2">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">
+                            <img onerror="this.src='images/duphong.webp'" src="" width="250px" alt="">
+                        </a>
+                        <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+                        <button><ion-icon name="cart-outline"></ion-icon></button>
+                    </div>
+
+                </div>
+                i++;
+            }
+
         }
-
     }
 
 </div>

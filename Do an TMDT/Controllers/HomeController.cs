@@ -24,8 +24,10 @@ namespace Do_an_TMDT.Controllers
 
         }
 
-        public IActionResult Loadsanpham()
+        public IActionResult Loadsanpham(int MaLoai)
         {
+            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
+            ViewBag.listcate = listcate;
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
                 .Where(x => x.DangDuocBan == true)
@@ -58,6 +60,17 @@ namespace Do_an_TMDT.Controllers
 
 
             }
+            if (MaLoai == null)
+            {
+                MaLoai = listcate[0].MaThuongHieu;
+            }
+            int j = 0;
+            foreach (var item2 in model.MatHangs.Where(x => x.listSPs.MaThuongHieu == MaLoai).ToList())
+            {
+                model.MatHangs[j] = item2; ;
+                j++;
+            }
+            ViewBag.TH = model.MatHangs;
             int i = 0;
             HttpContext.Session.SetInt32("Ten", i);
             return View(model);
@@ -66,6 +79,8 @@ namespace Do_an_TMDT.Controllers
 
         public IActionResult Timkiem(HomeVM timkiem)
         {
+            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
+            ViewBag.listcate = listcate;
             HomeVM model = new HomeVM();
             List <MatHang> listSP=null;
             if (!String.IsNullOrEmpty(timkiem.key))
