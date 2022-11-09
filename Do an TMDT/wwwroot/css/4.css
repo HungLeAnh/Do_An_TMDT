@@ -12,7 +12,7 @@
     display: flex;
     list-style: none;
     align-items: center;
-    padding-left: 180px;
+    padding-left: 130px;
 }
 
     .menu img {
@@ -521,7 +521,7 @@ tr, th {
 }
 
 .khung1_1_1 {
-    padding-left: 250px;
+    padding-left: 130px;
     padding-top: 50px;
     width: 620px;
 }
@@ -559,7 +559,7 @@ tr, th {
 
 
 .khung1_1_2 {
-    padding-left: 40px;
+    padding-left: 0px;
     padding-top: 50px;
     width: 380px;
 }
@@ -598,6 +598,7 @@ tr, th {
     background-color: antiquewhite;
     border: 1px outset rgb(136, 135, 135);
     border-radius: 5px;
+    margin-left:-50px;
 }
 
 .tongDonHang {

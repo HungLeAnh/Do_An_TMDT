@@ -10,6 +10,14 @@
     <li>
         <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
         <ul class="sub-nav">
+            @{if (ViewBag.listcate != null)
+                {
+
+                    @foreach (var item in ViewBag.listcate)
+                    {
+                        <li><a href="">@item.TenThuongHieu</a></li>
+                    }}
+            }
         </ul>
     </li>
     <li><a href="">Tin tức</a></li>
@@ -20,11 +28,13 @@
                 <a href="">
                     <ion-icon name="search-outline"></ion-icon>
                 </a>
+                <form asp-action="Timkiem" >
                 <div class="search">
                     
                         <input type="text" asp-for="key" placeholder="Tìm kiếm sản phẩm">
                    
                 </div>
+                </form>
             </li>
 
 
@@ -85,7 +95,7 @@
 </ul>
 
 <div class="than">
-    <img src="images/Chinh.webp" width="100%" alt="">
+    <img src="~/images/Chinh.webp" width="100%" alt="">
     <div class="xanh">
         <div class="khoi">
             <ion-icon name="airplane-outline"></ion-icon><br>
@@ -161,3 +171,4 @@
     }
 
 </div>
+
