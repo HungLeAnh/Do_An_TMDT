@@ -24,7 +24,8 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             DateTime HienTai = DateTime.Now;
             ViewBag.TongDoanhThu = string.Format("{0:0,0}", ThongKeTongDoanhThu());
-            ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(HienTai.Year) - ThongKeDoanhThuTheoNam(HienTai.Year - 1)) / ThongKeDoanhThuTheoNam(HienTai.Year - 1) * 100);
+            if(ThongKeDoanhThuTheoNam(HienTai.Year-1) != 0)
+                ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(HienTai.Year) - ThongKeDoanhThuTheoNam(HienTai.Year - 1)) / ThongKeDoanhThuTheoNam(HienTai.Year - 1) * 100);
             ViewBag.SoDonHang = ThongKeTongDonHang();
             ViewBag.SoNguoiDung = ThongKeTongNguoiDung();
             ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0.00}", ThongKeDoanhThuTheoNam(HienTai.Year) / HienTai.Month);

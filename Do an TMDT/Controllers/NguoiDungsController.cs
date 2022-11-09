@@ -172,7 +172,7 @@ namespace Do_an_TMDT.Controllers
                             HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
                             return RedirectToAction("Loadsanpham");
                         }
-                        else if (x == MaLoaiNguoiDung[1])
+                        else if (x == MaLoaiNguoiDung[2])
                         {
                             int id = item.MaNguoiDung;
 

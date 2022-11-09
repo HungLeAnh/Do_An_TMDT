@@ -144,7 +144,8 @@ namespace Do_an_TMDT.Controllers
                 Sdt = khachhang[0].Sdt,
                 TinhTrang = "Đang Giao",
                 DaThanhToan = true,
-                TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan + 80000
+                TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan + 80000,
+                NgayXuatDonHang = DateTime.Now
             };
 
             _context.Add(donhang);
