@@ -24,8 +24,21 @@ namespace Do_an_TMDT.Controllers
         {
             _context = context;
         }
+        public IActionResult Cart(int MaLoai)
+        {
+            int Id = (int)HttpContext.Session.GetInt32("Ten");
+            var list = _context.GioHangs.Where(x => x.MaNguoiDung == Id).ToList();
+            int idGH = list[0].MaGioHang;
+            var list_SP = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idGH).ToList();
 
-        public IActionResult Loadsanpham()
+            return View();
+        }
+        public IActionResult AddCart(int MaSP)
+        {
+            var list_SP = _context.ChiTietGioHangs.Where(x => x.MaGioHang == MaSP).ToList();
+            return View();
+        }
+            public IActionResult Loadsanpham()
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
@@ -94,6 +107,7 @@ namespace Do_an_TMDT.Controllers
                     MatKhauHash = (nguoiDung.MatKhauHash + salt.Trim()).ToMD5(),
                     Salt = salt
                 };
+                
                 HttpContext.Session.SetString("MaLoaiNguoiDung", khachhang.MaLoaiNguoiDung);
                 HttpContext.Session.SetString("TenDangNhap", khachhang.TenDangNhap);
                 HttpContext.Session.SetString("TenNguoiDung", khachhang.TenNguoiDung);
@@ -136,7 +150,7 @@ namespace Do_an_TMDT.Controllers
                       
 
                         var mess = new MimeMessage();
-                        mess.From.Add(new MailboxAddress("Trần Bửu Quyến", "20110305@student.hcmute.edu.vn"));
+                        mess.From.Add(new MailboxAddress("Trần Bửu Quyến", "tranbuuquyen2002@gmail.com"));
                         mess.To.Add(new MailboxAddress("Xác Thực", nguoiDung.Email));
                         mess.Subject = "Xác Thực Email";
                         mess.Body = new TextPart("plain")
@@ -148,7 +162,7 @@ namespace Do_an_TMDT.Controllers
                         {
 
                             client.Connect("smtp.gmail.com", 587, false);
-                            client.Authenticate("20110305@student.hcmute.edu.vn", "Quyen01022002@");
+                            client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
                             client.Send(mess);
                             client.Disconnect(true);
 
@@ -253,8 +267,17 @@ namespace Do_an_TMDT.Controllers
                         MatKhauHash = HttpContext.Session.GetString("MK"),
                         Salt = HttpContext.Session.GetString("Salt")
                     };
-
+                   
                     _context.Add(khachhang);
+                    await _context.SaveChangesAsync();
+                    var list = _context.NguoiDungs.Where(x => x.Email == khachhang.Email).ToList();
+                    ChiTietGioHang ct_GH= new { }
+                    GioHang gioHang = new GioHang
+                    {
+                        MaNguoiDung = list[0].MaNguoiDung,
+                        MaGioHang = list[0].MaNguoiDung
+                    };
+                    _context.Add(gioHang);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(dangnhap));
                 }
