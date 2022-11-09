@@ -219,7 +219,7 @@ namespace Do_an_TMDT.Controllers
                           
                             return RedirectToAction("Loadsanpham");
                         }
-                        else if (x == MaLoaiNguoiDung[1])
+                        else if (x == MaLoaiNguoiDung[2])
                         {
                             int id = item.MaNguoiDung;
 
