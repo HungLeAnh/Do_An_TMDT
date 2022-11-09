@@ -271,7 +271,7 @@ namespace Do_an_TMDT.Controllers
                     _context.Add(khachhang);
                     await _context.SaveChangesAsync();
                     var list = _context.NguoiDungs.Where(x => x.Email == khachhang.Email).ToList();
-                    ChiTietGioHang ct_GH= new { }
+                    
                     GioHang gioHang = new GioHang
                     {
                         MaNguoiDung = list[0].MaNguoiDung,
