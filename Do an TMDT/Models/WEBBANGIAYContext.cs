@@ -80,17 +80,11 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("ChiTietGioHang");
 
-                entity.HasIndex(e => e.MaGioHang, "AK_ChiTietGioHang_MaGioHang")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.MaMatHang, "IX_ChiTietGioHang_MaMatHang");
 
-                entity.HasIndex(e => e.MaGioHang, "UQ_ChiTietGioHang")
-                    .IsUnique();
-
                 entity.HasOne(d => d.MaGioHangNavigation)
-                    .WithOne(p => p.ChiTietGioHang)
-                    .HasForeignKey<ChiTietGioHang>(d => d.MaGioHang)
+                    .WithMany(p => p.ChiTietGioHangs)
+                    .HasForeignKey(d => d.MaGioHang)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ChiTietGioHang_GioHang");
 
@@ -167,7 +161,7 @@ namespace Do_an_TMDT.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.NgayXuatDonHang).HasColumnType("datetime");
+                entity.Property(e => e.NgayXuatDonHang).HasColumnType("date");
 
                 entity.Property(e => e.Sdt)
                     .IsRequired()
@@ -195,8 +189,7 @@ namespace Do_an_TMDT.Models
 
             modelBuilder.Entity<GioHang>(entity =>
             {
-                entity.HasKey(e => e.MaGioHang)
-                    .HasName("PK_GioHang_1");
+                entity.HasKey(e => e.MaGioHang);
 
                 entity.ToTable("GioHang");
 

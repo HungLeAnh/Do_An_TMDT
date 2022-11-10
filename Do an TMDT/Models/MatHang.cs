@@ -37,6 +37,7 @@ namespace Do_an_TMDT.Models
         public int MaDanhMuc { get; set; }
         public int? MaKichCo { get; set; }
         public int? MaMauSac { get; set; }
+        public int? GiaNhap { get; set; }
 
         public virtual DanhMuc MaDanhMucNavigation { get; set; }
         public virtual KichCo MaKichCoNavigation { get; set; }
