@@ -38,7 +38,7 @@ namespace Do_an_TMDT.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY;Integrated Security=True;");
             }
         }
 
@@ -80,13 +80,13 @@ namespace Do_an_TMDT.Models
 
                 entity.ToTable("ChiTietGioHang");
 
-                entity.HasIndex(e => e.MaGioHang, "AK_ChiTietGioHang_MaGioHang")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.MaMatHang, "IX_ChiTietGioHang_MaMatHang");
 
-                entity.HasIndex(e => e.MaGioHang, "UQ_ChiTietGioHang")
-                    .IsUnique();
+                entity.HasOne(d => d.MaGioHangNavigation)
+                    .WithMany(p => p.ChiTietGioHangs)
+                    .HasForeignKey(d => d.MaGioHang)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ChiTietGioHang_GioHang");
 
                 entity.HasOne(d => d.MaMatHangNavigation)
                     .WithMany(p => p.ChiTietGioHangs)
@@ -155,9 +155,13 @@ namespace Do_an_TMDT.Models
 
                 entity.HasIndex(e => e.MaNguoiDung, "IX_DonHang_MaNguoiDung");
 
+                entity.HasIndex(e => e.MaNguoiGiaoHang, "IX_DonHang_MaNguoiGiaoHang");
+
                 entity.Property(e => e.DiaChi)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.NgayXuatDonHang).HasColumnType("date");
 
                 entity.Property(e => e.Sdt)
                     .IsRequired()
@@ -193,13 +197,6 @@ namespace Do_an_TMDT.Models
                     .IsUnique();
 
                 entity.Property(e => e.MaGioHang).ValueGeneratedNever();
-
-                entity.HasOne(d => d.MaGioHangNavigation)
-                    .WithOne(p => p.GioHang)
-                    .HasPrincipalKey<ChiTietGioHang>(p => p.MaGioHang)
-                    .HasForeignKey<GioHang>(d => d.MaGioHang)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GioHang_ChiTietGioHang");
 
                 entity.HasOne(d => d.MaNguoiDungNavigation)
                     .WithOne(p => p.GioHang)
@@ -377,7 +374,10 @@ namespace Do_an_TMDT.Models
 
                 entity.Property(e => e.MaDiaChi).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.DiaChi).HasMaxLength(50);
+                entity.Property(e => e.DiaChi)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'')");
 
                 entity.HasOne(d => d.MaNguoiDungNavigation)
                     .WithMany(p => p.NguoiDungDiaChis)

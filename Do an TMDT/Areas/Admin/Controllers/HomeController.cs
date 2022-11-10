@@ -59,9 +59,9 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
         public decimal ThongKeDoanhThuTheoNam(int Nam)
         {
-            if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Year == Nam).Count() > 0)
+            if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam).Count() > 0)
             {
-                decimal TongDoanhThu = decimal.Parse(_context.DonHangs.Where(n => n.NgayXuatDonHang.Year == Nam).Sum(n => n.TongTien).ToString());
+                decimal TongDoanhThu = decimal.Parse(_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam).Sum(n => n.TongTien).ToString());
                 return TongDoanhThu;
             }
             return 0;
@@ -73,9 +73,9 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             {
                 return "Chưa có dữ liệu";
             }
-            if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Year == Nam && n.NgayXuatDonHang.Month == Thang).Count() > 0)
+            if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang).Count() > 0)
             {
-                return "$" + _context.DonHangs.Where(n => n.NgayXuatDonHang.Year == Nam && n.NgayXuatDonHang.Month == Thang).Sum(n => n.TongTien).ToString();
+                return "$" + _context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang).Sum(n => n.TongTien).ToString();
             }
             return "$0";
         }

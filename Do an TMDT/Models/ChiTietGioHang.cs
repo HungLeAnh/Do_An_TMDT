@@ -12,7 +12,7 @@ namespace Do_an_TMDT.Models
         public int SoLuong { get; set; }
         public int Gia { get; set; }
 
+        public virtual GioHang MaGioHangNavigation { get; set; }
         public virtual MatHang MaMatHangNavigation { get; set; }
-        public virtual GioHang GioHang { get; set; }
     }
 }
