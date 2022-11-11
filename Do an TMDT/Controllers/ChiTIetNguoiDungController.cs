@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
 using Do_an_TMDT.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Do_an_TMDT.Extension;
 
 namespace Do_an_TMDT.Controllers
 {
@@ -119,39 +120,68 @@ namespace Do_an_TMDT.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMK(int id,NguoiDung nguoiDung)
+        public async Task<IActionResult> EditMK(int id, [Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
-            var taikhoanID = HttpContext.Session.GetInt32("Ten");
-            var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-            nguoiDung.MaLoaiNguoiDung = khachhang[0].MaLoaiNguoiDung;
-            nguoiDung.MaNguoiDung = khachhang[0].MaNguoiDung;
-            if (!ModelState.IsValid)
+
+
+            
+            
+                var taikhoanID = HttpContext.Session.GetInt32("Ten");
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                nguoiDung.MaLoaiNguoiDung = khachhang[0].MaLoaiNguoiDung;
+                nguoiDung.MaNguoiDung = khachhang[0].MaNguoiDung;
+                nguoiDung.TenNguoiDung = khachhang[0].TenNguoiDung;
+                nguoiDung.AnhDaiDien = khachhang[0].AnhDaiDien;
+                nguoiDung.TenDangNhap = khachhang[0].TenDangNhap;
+                nguoiDung.Email = khachhang[0].Email;
+                nguoiDung.Sdt = khachhang[0].Sdt;
+                nguoiDung.ViDienTu = khachhang[0].ViDienTu;
+                nguoiDung.Salt = khachhang[0].Salt;
+                nguoiDung.MatKhauHash=(nguoiDung.MatKhauHash+ khachhang[0].Salt.Trim()).ToMD5();
+            if (nguoiDung.MatKhauHash != khachhang[0].MatKhauHash)
             {
-                if (id != nguoiDung.MaNguoiDung)
-                {
-                    return NotFound();
-                }
-                try
-                {
-                    _context.Update(nguoiDung);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!NguoiDungExists(nguoiDung.MaNguoiDung))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(ChiTietNG));
+
+                return View();
+
             }
-            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
-            return View();
+            else
+            {
+                HttpContext.Session.SetInt32("Ten", nguoiDung.MaNguoiDung);
+                return RedirectToAction("MKMoi", new { id = khachhang[0].MaNguoiDung });
+            }
+            //    if (!ModelState.IsValid)
+            //{
+            //    if (id != nguoiDung.MaNguoiDung)
+            //    {
+            //        return NotFound();
+            //    }
+            //    try
+            //    {
+            //        _context.Update(nguoiDung);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!NguoiDungExists(nguoiDung.MaNguoiDung))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(ChiTietNG));
+            //}
+            //ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
+            //
+            ViewBag.mess = "sai mật khẩu";
+                return View();
+
+
         }
+
+        
         public async Task<IActionResult> SoDiaChi()
         {
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
@@ -185,6 +215,74 @@ namespace Do_an_TMDT.Controllers
             return _context.NguoiDungs.Any(e => e.MaNguoiDung == id);
         }
 
+        public async Task<IActionResult> MKMoi(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var nguoiDung = await _context.NguoiDungs.FindAsync(id);
+            if (nguoiDung == null)
+            {
+                return NotFound();
+            }
+            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MKMoi(int id, [Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
+        {
+
+
+
+
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+            var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+            nguoiDung.MaLoaiNguoiDung = khachhang[0].MaLoaiNguoiDung;
+            nguoiDung.MaNguoiDung = khachhang[0].MaNguoiDung;
+            nguoiDung.TenNguoiDung = khachhang[0].TenNguoiDung;
+            nguoiDung.AnhDaiDien = khachhang[0].AnhDaiDien;
+            nguoiDung.TenDangNhap = khachhang[0].TenDangNhap;
+            nguoiDung.Email = khachhang[0].Email;
+            nguoiDung.Sdt = khachhang[0].Sdt;
+            nguoiDung.ViDienTu = khachhang[0].ViDienTu;
+            nguoiDung.Salt = khachhang[0].Salt;
+            nguoiDung.MatKhauHash = (nguoiDung.MatKhauHash + khachhang[0].Salt.Trim()).ToMD5();
+
+
+            if (!ModelState.IsValid)
+            {
+                if (id != nguoiDung.MaNguoiDung)
+                {
+                    return NotFound();
+                }
+                try
+                {
+                    _context.Update(nguoiDung);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!NguoiDungExists(nguoiDung.MaNguoiDung))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(ChiTietNG));
+            }
+            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
+            //
+
+            return View();
+
+
+        }
 
     }
 }
