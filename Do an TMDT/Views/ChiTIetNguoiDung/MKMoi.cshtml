@@ -1,6 +1,6 @@
 ﻿@model Do_an_TMDT.Models.NguoiDung
 @{
-    ViewData["Title"] = "EditMK";
+    ViewData["Title"] = "MKMoi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -47,28 +47,33 @@
             <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>
     </div>
-    <form asp-action="EditMK" class="Noidung2">
+    <form asp-action="MKMoi" class="Noidung2">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="MaNguoiDung" />
         <h2 class="title_Chinh">Đổi mật khẩu</h2>
         <p>Để đảm bảo tính bảo mật, vui lòng đặt mật khẩu với ít nhất 8 kí tự</p>
         <div class="KhungDoiMK">
             <div class="form-group col-lg-6">
-                <label asp-for="MatKhauHash" class="control-label">Mật khẩu hiện tại</label>
-                <input type="password" asp-for="MatKhauHash" class="form-control" />
-                <span asp-validation-for="MatKhauHash" class="text-danger"></span>
-            </div>
-            
+                    <label  class="control-label">Mật khẩu mới</label>
+                    <input type="password"  id="password1" class="form-control"  />
+                    <span  class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label asp-for="MatKhauHash" class="control-label">Nhập lại mật khẩu mới</label>
+                    <input type="password" id="password2" asp-for="MatKhauHash" class="form-control" onchange="validateForm()"/>
+                    <span asp-validation-for="MatKhauHash" class="text-danger"></span>
+                </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary"  >Đổi mật khẩu </button> 
 
             </div>
         </div>
 
 
     </form>
-    <script>
-        </script>
+    <script src="~/js/TestNewPw.js">
+        
+    </script>
 
 
 

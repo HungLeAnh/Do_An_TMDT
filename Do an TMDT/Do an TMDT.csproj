@@ -155,6 +155,7 @@
     <None Include="wwwroot\Adminassets\summernote\summernote.min.js.map" />
     <None Include="wwwroot\js\giohang.js" />
     <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\TestNewPw.js" />
   </ItemGroup>
 
 </Project>
