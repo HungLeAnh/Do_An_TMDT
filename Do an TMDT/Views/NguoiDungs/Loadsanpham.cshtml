@@ -14,11 +14,11 @@
             @{if (ViewBag.listcate != null)
                 {
 
-            @foreach (var item in ViewBag.listcate)
-            {
-                <li><a href="">@item.TenThuongHieu</a></li>
-            }}
-                }
+                    @foreach (var item in ViewBag.listcate)
+                    {
+                        <li><a href="">@item.TenThuongHieu</a></li>
+                    }}
+            }
         </ul>
     </li>
     <li><a href="">Tin tức</a></li>
@@ -29,12 +29,12 @@
                 <a href="">
                     <ion-icon name="search-outline"></ion-icon>
                 </a>
-                 <form asp-action="Timkiem" >
-                <div class="search">
-                    
+                <form asp-action="Timkiem">
+                    <div class="search">
+
                         <input type="text" asp-for="TenNguoiDung" placeholder="Tìm kiếm sản phẩm">
-                   
-                </div>
+
+                    </div>
                 </form>
             </li>
             @{
@@ -72,34 +72,42 @@
 
             </li>
             <li>
-                <a href=""><ion-icon name="cart-outline"></ion-icon></a>
+                <a asp-controller="GioHang" asp-action="Viewcart"><ion-icon name="cart-outline"></ion-icon></a>
                 <section class="giohang">
-                    <form action="">
-                        <table>
+                    <form asp-action="ViewCart" asp-controller="GioHang">
+                        <table class="table table-bordered">
                             <thead>
-
                                 <tr>
-                                    <th>Sản phẩm</th>
-                                    <th>Tên</th>
-                                    <th>Giá</th>
-                                    <th>SL</th>
-                                    <th>Chọn</th>
-                                </tr>
+                                    <th>Ảnh</th>
+                                    <th> Tên </th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th></th>
 
+                                </tr>
                             </thead>
                             <tbody>
+                                @foreach (var cart in ViewBag.giohang.item)
+                                {
+                                    <tr>
+                                        <td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
+                                        <td>@cart.SanPham.TenMatHang</td>
+                                        <td> @cart.CT_GH.Gia</td>
+                                        <td><input  type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
+                                        <td>@cart.tong</td>
+                                        <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
+                                    </tr>
+                                }
                                 <tr>
-                                    <td><img src="image/sp2_1.webp" alt=""></td>
-                                    <td>LeBron 19</td>
-                                    <td><p><span>19000</span><sup>đ</sup></p></td>
-                                    <td><input type="number" value="1" min="0"></td>
-                                    <td>xóa</td>
+                                    <td colspan="2">Tổng:@ViewBag.thanhtien</td>
+                                    <td colspan="5">
+                                        <button type="submit">Thanh Toán</button>
+                                    </td>
                                 </tr>
+
                             </tbody>
                         </table>
-                        <div class="tong">
-                            <p>Tổng:<span>19000</span><sup>đ</sup></p>
-                        </div>
                     </form>
                 </section>
             </li>
@@ -108,6 +116,7 @@
     </a>
 
 </ul>
+@Html.AntiForgeryToken()
 <div class="than">
     <img src="images/Chinh.webp" width="100%" alt="">
     <div class="xanh">
@@ -150,7 +159,8 @@
 <div class="menu_sp">
     @{int i = 0;
     }
-    @if(ViewBag.mathang != null){
+    @if (ViewBag.mathang != null)
+    {
         @foreach (var item in @ViewBag.mathang)
         {
 
@@ -171,7 +181,7 @@
                 <div class="layer2">
                     <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
                     <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
-                    <button><ion-icon name="cart-outline"></ion-icon></button>
+                    <button><a href="@Url.Action("AddCart", "GioHang", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
                 </div>
 
             </div>
@@ -181,3 +191,5 @@
     }
 
 </div>
+<script src="~/Adminassets/summernote/summernote-bs4.js"></script>
+@await Component.InvokeAsync("Notyf")
