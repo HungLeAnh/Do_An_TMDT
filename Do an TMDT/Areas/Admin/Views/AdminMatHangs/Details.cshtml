@@ -1,97 +1,292 @@
 ﻿@model Do_an_TMDT.Models.MatHang
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết mặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var soDanhGia = 0;
+    double sosao = 0;
+    var soluongdaban = 0;
+    var soluongconlai = 0;
+    @if (Model.DanhGia != null)
+    {
+        sosao = Model.SoSao > 0.0f ? Model.SoSao : 0.0f;
+    }
+    @if (Model.DanhGia != null)
+    {
+         soDanhGia = Model.DanhGia.Count() > 0 ? Model.DanhGia.Count() : 0;
+    }
+    @if(Model.SoLuongDaBan!=null){
+        soluongdaban = Model.SoLuongDaBan.Value > 0 ? Model.SoLuongDaBan.Value : 0;
+    }
+    @if (Model.SoLuong != null)
+    {
+        soluongconlai = Model.SoLuong.Value > 0 ? Model.SoLuong.Value : 0;
+    }
+    
 }
+@section Styles{
+    <style>
+        svg {
+          margin-bottom: 2em;
+        }
 
-<h1>Details</h1>
+        .rating__background {
+          fill: gray;
+          stroke: red;
+          stroke-width: 1;
+          height: 100%;
+          width: 100%;
+        }
 
-<div>
-    <h4>MatHang</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenMatHang)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenMatHang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GiaBan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GiaBan)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DangDuocBan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DangDuocBan)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoSao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoSao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuongDaBan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuongDaBan)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DangDuocHienThi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DangDuocHienThi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaDanhMucNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaDanhMucNavigation.Slug)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaKichCoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaKichCoNavigation.MaKichCo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaMauSacNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaMauSacNavigation.MaMauSac)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNhaCungCapNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNhaCungCapNavigation.Std)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaThuongHieuNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaThuongHieuNavigation.Slug)
-        </dd>
-    </dl>
+        .rating__value {
+          fill: #FFB94B;
+          height: 100%;
+        }
+
+    </style>
+}
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] : </h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Index">Quản lý mặt hàng</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.MaMatHang">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="page-header no-gutters has-tab">
+    <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+        <div class="media align-items-center m-b-15">
+            <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+            <img onerror="src='/images/duphong.webp'"
+                    src="~/@if(@Model.MatHangAnhs.Count>0)
+                            {
+                                @Model.MatHangAnhs.FirstOrDefault().Anh
+                            }"
+                    alt="">
+            </div>
+            <div class="m-l-15">
+                <h4 class="m-b-0">@Model.TenMatHang</h4>
+                <p class="text-muted m-b-0">Mã mặt hàng: @Model.MaMatHang</p>
+            </div>
+        </div>
+        <div class="m-b-15">
+            <a asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Edit" asp-route-id="@Model.MaMatHang" class="btn btn-primary">   
+                Chỉnh sửa
+                <i class="anticon anticon-edit"></i>
+            </a>
+        </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#mathang-thongtin">Thông tin mặt hàng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#mathang-anh">Ảnh</a>
+        </li>
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="mathang-thongtin">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <i class="font-size-40 text-success anticon anticon-smile"></i>
+                                <div class="m-l-15">
+                                    <p class="m-b-0 text-muted">
+                                        @sosao
+                                        Sao
+                                    </p>
+                                    <div class="star-rating m-t-5">
+                                    @{
+                                            <svg width="120px" height="22px" viewBox="0 0 1000 200" class='rating'>
+                                                <defs>
+
+                                                    <polygon id="star" points="100,0 131,66 200,76 150,128 162,200 100,166 38,200 50,128 0,76 69,66 " />
+
+                                                    <clipPath id="stars">
+                                                        <use xlink:href="#star" />
+                                                        <use xlink:href="#star" x="20%" />
+                                                        <use xlink:href="#star" x="40%" />
+                                                        <use xlink:href="#star" x="60%" />
+                                                        <use xlink:href="#star" x="80%" />
+                                                    </clipPath>
+
+                                                </defs>
+
+                                                <rect class='rating__background' clip-path="url(#stars)"></rect>
+
+                                                <!-- Change the width of this rect to change the rating -->
+                                                @{
+                                                    var phantram = (@sosao / 5) * 100;
+                                                }
+                                                <rect width="@phantram%" class='rating__value' clip-path="url(#stars)"></rect>
+
+                                            </svg>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <i class="font-size-40 text-primary anticon anticon-shopping-cart"></i>
+                                <div class="m-l-15">
+                                    <p class="m-b-0 text-muted">Đã bán</p>
+                                    <h3 class="m-b-0 ls-1">@soluongdaban</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <i class="font-size-40 text-primary anticon anticon-message"></i>
+                                <div class="m-l-15">
+                                    <p class="m-b-0 text-muted">Đánh giá</p>
+                                    <h3 class="m-b-0 ls-1">@soDanhGia</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <i class="font-size-40 text-primary anticon anticon-stock"></i>
+                                <div class="m-l-15">
+                                    <p class="m-b-0 text-muted">Mặt hàng trong kho</p>
+                                    <h3 class="m-b-0 ls-1">@soluongconlai</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Thông tin cơ bản</h4>
+                    <div class="table-responsive">
+                        <table class="product-info-table m-t-20">
+                            <tbody>
+                                <tr>
+                                    <td>Giá bán:</td>
+                                    <td class="text-dark font-weight-semibold">@Model.GiaBan</td>
+                                </tr>
+                                <tr>
+                                    <td>Giá nhập:</td>
+                                    <td class="text-dark font-weight-semibold">@Model.GiaNhap</td>
+                                </tr>
+                                <tr>
+                                    <td>Danh mục:</td>
+                                    <td>@Model.MaDanhMucNavigation.TenDanhMuc</td>
+                                </tr>
+                                <tr>
+                                    <td>Thương hiệu:</td>
+                                    <td>@Model.MaThuongHieuNavigation.TenThuongHieu</td>
+                                </tr>
+                                <tr>
+                                    <td>Trạng thái:</td>
+                                    <td>
+                                        @if (Model.DangDuocBan)
+                                        {
+                                            <label class="badge badge-pill badge-cyan">Đang được bán</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="badge badge-pill badge-danger">Không được bán</label>
+                                        }
+                                        @if (Model.DangDuocHienThi)
+                                        {
+                                            <label class="badge badge-pill badge-cyan">Đang được hiện</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="badge badge-pill badge-danger">Đang ẩn</label>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Thông tin chi tiết</h4>
+                    <div class="table-responsive">
+                        <table class="product-info-table m-t-20">
+                            <tbody>
+                                <tr>
+                                    <td>Kích cỡ : </td>
+                                    <td>@Model.MaKichCoNavigation.KichCo1</td>
+                                </tr>
+                                <tr>
+                                    <td>Màu sắc :</td>
+                                    <td class="d-flex">
+                                        @Model.MaMauSacNavigation.TenMauSac
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nhà cung cấp :</td>
+                                    <td>@Model.MaNhaCungCapNavigation.TenNhaCungCap</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Mô tả</h4>
+                </div>
+                <div class="card-body">
+                    @Model.MoTa
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="mathang-anh">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        @if (Model.MatHangAnhs!= null)
+                        {
+                            @foreach(var item in Model.MatHangAnhs) 
+                            {
+                                <div class="col-md-3">
+                                    <img class="img-fluid" src="~/@item.Anh" alt="">
+                                </div>
+                                    
+                            }
+                               
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div >
+        <a asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Index" class="btn btn-primary">Quay Lại</a>
+    </div>
 </div>

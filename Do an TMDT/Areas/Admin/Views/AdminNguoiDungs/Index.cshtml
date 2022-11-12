@@ -15,7 +15,7 @@
                     <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="breadcrumb-item active list-inline-item" aria-current="page">
-                    @ViewData["Title"] : trang @CurrentPage
+                    @ViewData["Title"] 
                 </li>
             </ol>
         </nav>
@@ -74,14 +74,14 @@
                                 <td>@item.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung</td>              
                                 <td>
                                     <div class="btn-group btn-group-sm ">
-                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
+                                        <a class="m-10" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-pen btn btn-primary "></i>
                                         </a>
-                                        <a asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Details" asp-route-id="@item.MaNguoiDung">
+                                        <a class="m-10" asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Details" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-clipboard-list btn btn-warning "></i>
                                         </a>
                                         <!-- Button trigger modal -->
-                                        <a data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
+                                        <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaNguoiDung">
                                             <i class="fas fa-trash-alt btn btn-danger "></i>
                                         </a>
                                         <form asp-area="Admin" asp-controller="AdminNguoiDungs" asp-action="Delete" asp-route-id="@item.MaNguoiDung">

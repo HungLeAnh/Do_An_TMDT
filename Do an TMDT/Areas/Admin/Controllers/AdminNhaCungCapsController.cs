@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -15,10 +17,13 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
     public class AdminNhaCungCapsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminNhaCungCapsController(WEBBANGIAYContext context)
+        public AdminNhaCungCapsController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
+
         }
 
         // GET: Admin/AdminNhaCungCaps

@@ -1,0 +1,171 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.DonHang>
+@{
+    ViewData["Title"] = "Quản lý hóa đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] :</h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row m-b-30">
+            <div class="col-lg-8">
+                <div class="d-md-flex">
+                    <div class="m-b-10">
+                        <select class="custom-select" style="min-width: 200px;" id="trangthaidonhang" name="trangthaidonhang" asp-items="ViewBag.TrangThai">
+                            <option selected>All</option>
+                        </select>
+@*                        @Html.DropDownList("trangthaidonhang", (IEnumerable<SelectListItem>) ViewBag.TrangThai, "All")
+*@                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-right">
+                <button class="btn btn-primary">
+                    <i class="anticon anticon-file-excel m-r-5"></i>
+                    <span>Export</span>
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Người nhận
+                        </th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Tổng tiền</th>
+                        <th>Ngày xuất hóa đơn</th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th>Người giao hàng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model!=null)
+                   {
+                       foreach (var item in Model)
+                       {
+                            <tr>
+                                <td>
+                                        @item.MaNguoiDungNavigation.TenNguoiDung
+                                </td>
+                                <td>
+                                    @item.DiaChi
+                                </td>
+                                <td>
+                                    @item.Sdt
+                                </td>
+
+                                <td>@item.TongTien</td>
+                                <td>@item.NgayXuatDonHang</td>
+                                <td>
+                                    @if (item.TinhTrang == "Đã Giao")
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Đã Giao</div>
+                                        </div>
+                                   }
+                                   else if(item.TinhTrang == "Đang Giao")
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-warning badge-dot m-r-10"></div>
+                                            <div>Đang Giao</div>
+                                        </div>
+                                   }
+                                </td>
+                                <td>
+                                    @if (item.MaNguoiGiaoHang != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.MaNguoiGiaoHang)
+                                    }
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+                                        <i class="anticon anticon-edit"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded">
+                                        <i class="anticon anticon-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                       }
+                   }
+                    
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div aria-label="Page navigation example">
+    <ul class="pagination">
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminDonHangs" asp-route-TinhTrang="@ViewBag.CurrentTinhTrang" asp-action="Index" />
+    </ul>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery("#trangthaidonhang").change(function () {
+                var trangthaidonhang = jQuery(this).children(":selected").attr("value");
+
+                $('#trangthaidonhang option')
+                    .removeAttr('selected');
+                $("#trangthaidonhang > [value='" + trangthaidonhang + "']").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminDonHangs/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        trangthai: trangthaidonhang
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}

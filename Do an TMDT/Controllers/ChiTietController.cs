@@ -76,7 +76,7 @@ namespace Do_an_TMDT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChiTiet( [Bind("SoLuong")] HomeVM sl)
+        public IActionResult ChiTiet( [Bind("SoLuong")] HomeVM sl)
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
