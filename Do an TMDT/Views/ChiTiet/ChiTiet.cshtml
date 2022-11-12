@@ -23,7 +23,7 @@
             <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
         }
     }
-    <li><a href="">Trang chủ</a></li>
+    <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
     <li><a href="">Giới Thiệu</a></li>
     <li>
         <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
@@ -233,7 +233,7 @@
                 <div class="themgiohang">
                     @{ if (ViewBag.Id == 0)
                         {
-                            if (@Model.MatHangs[0].listSPs.SoLuong == 0)
+                            if (@Model.MatHangs[0].listSPs.SoLuong <= 0)
                             {
                                 <button id="them">Hết Hàng</button>
                             }
@@ -245,15 +245,15 @@
                         }
                         else if (ViewBag.Id != 0)
                         {
-                            if (@Model.MatHangs[0].listSPs.SoLuong == 0)
+                            if (@Model.MatHangs[0].listSPs.SoLuong <= 0)
                             {
                                 <button id="them">Hết Hàng</button>
                             }
                             else
                             {
-                                <button id="them">Thêm Vào Giỏ Hàng</button>
+                                <button asp-route-id="them" id="them">Thêm Vào Giỏ Hàng</button>
 
-                                <button type="submit" id="mua">Mua Ngay</button>
+                                <button asp-route-id="mua" type="submit" id="mua">Mua Ngay</button>
                             }
 
                         }

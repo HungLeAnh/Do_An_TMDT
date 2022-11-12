@@ -76,7 +76,7 @@ namespace Do_an_TMDT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ChiTiet( [Bind("SoLuong")] HomeVM sl)
+        public async Task<IActionResult> ChiTiet( [Bind("SoLuong")] HomeVM sl, String id)
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
@@ -118,6 +118,7 @@ namespace Do_an_TMDT.Controllers
 
 
             }
+
            int MaSp=(int)HttpContext.Session.GetInt32("IDSP");
             foreach (var item2 in model.MatHangs.Where(x => x.listSPs.MaMatHang == MaSp).ToList())
             {
@@ -125,8 +126,17 @@ namespace Do_an_TMDT.Controllers
             }
             if (sl.SoLuong <= model.MatHangs[0].listSPs.SoLuong)
             {
-                HttpContext.Session.SetInt32("sl", sl.SoLuong);
-                return RedirectToAction("ThanhToan", "DonHangs");
+                if (id == "them")
+                {
+                    HttpContext.Session.SetInt32("sl", sl.SoLuong);
+
+                    return RedirectToAction("AddCart", "GioHang");
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("sl", sl.SoLuong);
+                    return RedirectToAction("ThanhToan", "DonHangs");
+                }
             }
             else{
                 ViewBag.eror = "Số lượng sản phẩm lớn hơn trong kho";

@@ -80,6 +80,34 @@ namespace Do_an_TMDT.Controllers
             int sl = (int)HttpContext.Session.GetInt32("sl");
             ViewBag.Tong = sl * model.MatHangs[0].listSPs.GiaBan;
             ViewBag.ThanhTien = sl * model.MatHangs[0].listSPs.GiaBan + 800000;
+            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
+            ViewBag.listcate = listcate;
+            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+            int idgh = (int)HttpContext.Session.GetInt32("GH");
+            var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+                  .AsNoTracking()
+                  .ToList();
+            CartVM cartNew = new CartVM();
+            List<itemcart> itemcartsNew = new List<itemcart>();
+            int thanhtien = 0;
+            foreach (var item in listGHNew)
+            {
+                itemcart it = new itemcart();
+                it.CT_GH = item;
+                var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                it.SanPham = SP[0];
+                foreach (var item_anh in listanh)
+                {
+                    it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                itemcartsNew.Add(it);
+                it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                thanhtien += it.tong;
+            }
+            cartNew.item = itemcartsNew;
+            ViewBag.thanhtien = thanhtien;
+            ViewBag.giohang = cartNew;
+            HttpContext.Session.SetInt32("thanhtien", thanhtien);
             return View(model);
         }
         [HttpPost]
@@ -191,18 +219,14 @@ namespace Do_an_TMDT.Controllers
                 client.Disconnect(true);
 
             }
-            return RedirectToAction(nameof(BaoCao));
+            HttpContext.Session.SetInt32("sl", 0);
+            return RedirectToAction("Loadsanpham","NguoiDungs");
             
 
             
 
         }
-        public IActionResult BaoCao()
-        {
-            
-
-            return View();
-        }
+       
     }
 
 }

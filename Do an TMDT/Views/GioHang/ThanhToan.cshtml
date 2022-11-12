@@ -4,72 +4,73 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-            crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
 <link href="~/css/4.css" rel="stylesheet" />
 
 
-    <ul class="menu">
-        <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
-        <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
-        <li><a href="">Giới Thiệu</a></li>
-        <li>
-            <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
-            <ul class="sub-nav">
-            </ul>
-        </li>
-        <li><a href="">Tin tức</a></li>
-        <li><a href="">Liên hệ</a></li>
-        <a href="">
-            <ul class="sub-icon">
-                <li>
-                    <a href="">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </a>
-                    <div class="search">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm">
-                    </div>
-                </li>
-                @{
-                    if (ViewBag.Id != 0)
-                    {
-                        <li>
-                            <a href=""><ion-icon name="person-outline"></ion-icon></a>
-                            <ul class="dangnhap">
+<ul class="menu">
+    <a asp-action="Loadsanpham" asp-controller="NguoiDungs"><img src="~/images/logo.png" alt=""></a>
+    <li><a asp-action="Loadsanpham" asp-controller="NguoiDungs">Trang chủ</a></li>
+    <li><a href="">Giới Thiệu</a></li>
+    <li>
+        <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
+        <ul class="sub-nav">
+        </ul>
+    </li>
+    <li><a href="">Tin tức</a></li>
+    <li><a href="">Liên hệ</a></li>
+    <a href="">
+        <ul class="sub-icon">
+            <li>
+                <a href="">
+                    <ion-icon name="search-outline"></ion-icon>
+                </a>
+                <div class="search">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm">
+                </div>
+            </li>
+            @{
+                if (ViewBag.Id != 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
 
-                                <li><a asp-controller="NguoiDungs" asp-action="dangky">Tài Khoản </a></li>
-                                <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng Xuất </a></li>
-                            </ul>
-                        </li>
-                    }
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Tài Khoản </a></li>
+                            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng Xuất </a></li>
+                        </ul>
+                    </li>
                 }
-                @{
-                    if (ViewBag.Id == 0)
-                    {
-                        <li>
-                            <a href=""><ion-icon name="person-outline"></ion-icon></a>
-                            <ul class="dangnhap">
+            }
+            @{
+                if (ViewBag.Id == 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
 
-                                <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
-                                <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
-                            </ul>
-                        </li>
-                    }
+                            <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
+                        </ul>
+                    </li>
                 }
+            }
 
-                <li>
-                    <a href="">
-                        <ion-icon name="heart-outline"></ion-icon>
-                        <input class="after" id="trangyeuthich"></input>
-                    </a>
+            <li>
+                <a href="">
+                    <ion-icon name="heart-outline"></ion-icon>
+                    <input class="after" id="trangyeuthich"></input>
+                </a>
 
-                </li>
-                <li>
-                    <a href=""><ion-icon name="cart-outline"></ion-icon></a>
-                    <section class="giohang">
+            </li>
+            <li>
+                <a href=""><ion-icon name="cart-outline"></ion-icon></a>
+                <section class="giohang">
+             
                         <form asp-action="ViewCart" asp-controller="GioHang">
                             <table class="table table-bordered">
                                 <thead>
@@ -105,15 +106,27 @@
                                 </tbody>
                             </table>
                         </form>
-                    </section>
-                </li>
-                <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
-            </ul>
-        </a>
+                
+                </section>
+            </li>
+            <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
+        </ul>
+    </a>
 
-    </ul>
-    <div class="khungThanhToan">
-        <form asp-action="ThanhToan">
+</ul>
+<div class="khungThanhToan">
+    @{
+
+        if (@ViewBag.eror != null)
+        {
+            <div class="col">
+                <div class="alert alert-danger col-lg-4" role="alert">
+                    @ViewBag.eror
+                </div>
+            </div>
+        }
+    }
+    <form asp-action="ThanhToan" asp-controller="GioHang">
         <section>
             <div class="khung1">
                 <div class="khung1_1">
@@ -124,18 +137,18 @@
                                 <ion-icon name="arrow-forward-outline"></ion-icon>
                                 <a asp-controller="NguoiDungs" asp-action="Loadsanpham">Thoát</a>
                             </div>
-                            </div>
-                            <div class="khungDienTT">
-                                
-                                <input type="text" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
-                                <input type="text" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
-                                <input type="text" placeholder="Địa chỉ" value="@ViewBag.Email">
-                                <select asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></select>
-                                
-                            </div>
-                      
-                       
-         
+                        </div>
+                        <div class="khungDienTT">
+
+                            <input type="text" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
+                            <input type="text" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
+                            <input type="text" placeholder="Địa chỉ" value="@ViewBag.Email">
+                            <select asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></select>
+
+                        </div>
+
+
+
                     </div>
                     <div class="khung1_1_2">
                         <div class="VanChuyen">
@@ -161,27 +174,33 @@
                         <h3>Đơn hàng</h3>
                     </div>
                     <div class="sanphamtrongDonHang">
-                        <div class="sp_1">
+                        @foreach (var cart in ViewBag.giohang.item)
+                        {
+                            <div class="sp_1">
 
-                            @{if (Model.MatHangs[0].MatHangAnhs.Count >0)
-                                {
-                                <img onerror="this.src='~/images/duphong.webp'" src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" height="50" width="50" >
+                                @{if (cart.MatHangAnhs.Count > 0)
+                                    {
+                                        <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
+                                    }
+                                    else
+                                    {
+
+                                        <img src="~/images/duphong.webp" height="50" width="50">
+                                    }
                                 }
-                                else
-                                {
-                                    
-                                 <img src="~/images/duphong.webp" height="50" width="50" >
-                                 }
-                                }
-                                <p class="ten_sp" style="line-height:50px;">@Model.MatHangs[0].listSPs.TenMatHang</p>
-                                <p class="gia_sp" style="line-height:50px;">@Model.MatHangs[0].listSPs.GiaBan <sup>đ</sup></p>
-                                <a ><ion-icon name="close-outline"></ion-icon></a>
+
+                                <p class="ten_sp" style="line-height:50px;">@cart.SanPham.TenMatHang</p>
+                                <p style="line-height:50px;margin-right:20px">@cart.CT_GH.SoLuong</p>
+                                <p class="gia_sp" style="line-height:50px;">@cart.CT_GH.Gia<sup>đ</sup></p>
+                                <a  href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
                             </div>
+                        }
                     </div>
+
                     <div class="tinhTien">
                         <div class="tongTienSp">
                             <p class="ten_phi">Tạm tính</p>
-                            <p class="phi">@ViewBag.Tong<sup>đ</sup></p>
+                            <p class="phi">@ViewBag.thanhtien<sup>đ</sup></p>
                         </div>
                         <div class="phiVanChuyen">
                             <p class="ten_phi">Phí vận chuyển</p>
@@ -191,7 +210,7 @@
                     <div class="TongTien">
                         <div class="Hang_chot_tien">
                             <p class="gia_cuoi">Tổng cộng</p>
-                            <p class="phi">@ViewBag.ThanhTien<sup>đ</sup></p>
+                            <p class="phi">@ViewBag.thanhtien<sup>đ</sup></p>
                         </div>
                         <div class="khung1_2_5_2">
                             <div class="back_voHang">
@@ -199,7 +218,7 @@
                                 <a asp-controller="GioHang" asp-action="ViewCart">Quay về vỏ hàng</a>
                             </div>
                             <div class="btn_datHang">
-                                <button type="submit" >Đặt hàng</button>
+                                <button type="submit">Đặt hàng</button>
                             </div>
                         </div>
                     </div>
@@ -210,7 +229,7 @@
             </div>
 
         </section>
-        </form>
+    </form>
 
 
 
@@ -221,4 +240,4 @@
 
 
 
-    </div>
+</div>

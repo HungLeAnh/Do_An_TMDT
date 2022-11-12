@@ -13,32 +13,22 @@ using Do_an_TMDT.Helpper;
 using Do_an_TMDT.Extension;
 using MimeKit;
 using MailKit.Net.Smtp;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Do_an_TMDT.Controllers
 {
     public class NguoiDungsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
-
-        public NguoiDungsController(WEBBANGIAYContext context)
+        public INotyfService _notyfService { get; }
+        public NguoiDungsController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
-        public IActionResult Cart(int MaLoai)
-        {
-            int Id = (int)HttpContext.Session.GetInt32("Ten");
-            var list = _context.GioHangs.Where(x => x.MaNguoiDung == Id).ToList();
-            int idGH = list[0].MaGioHang;
-            var list_SP = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idGH).ToList();
+        
 
-            return View();
-        }
-        public IActionResult AddCart(int MaSP)
-        {
-            var list_SP = _context.ChiTietGioHangs.Where(x => x.MaGioHang == MaSP).ToList();
-            return View();
-        }
-            public IActionResult Loadsanpham()
+        public IActionResult Loadsanpham()
         {
             HomeVM model = new HomeVM();
             var listSP = _context.MatHangs.AsNoTracking()
@@ -77,6 +67,33 @@ namespace Do_an_TMDT.Controllers
             }
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
+            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+            int idgh = (int)HttpContext.Session.GetInt32("GH");
+            var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+                  .AsNoTracking()
+                  .ToList();
+            CartVM cartNew = new CartVM();
+            List<itemcart> itemcartsNew = new List<itemcart>();
+            int thanhtien = 0;
+            foreach (var item in listGHNew)
+            {
+                itemcart it = new itemcart();
+                it.CT_GH = item;
+                var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                it.SanPham = SP[0];
+                foreach (var item_anh in listanh)
+                {
+                    it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                itemcartsNew.Add(it);
+                it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                thanhtien += it.tong;
+            }
+            cartNew.item = itemcartsNew;
+            ViewBag.thanhtien = thanhtien;
+            ViewBag.giohang = cartNew;
+            HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.SetInt32("IDSP", 0);
             return View();
         }
 
@@ -214,9 +231,9 @@ namespace Do_an_TMDT.Controllers
                         if (x == MaLoaiNguoiDung[0])
                         {
                             int id = item.MaNguoiDung;
-
+                            var ctng = _context.GioHangs.Where(x => x.MaNguoiDung == item.MaNguoiDung).ToList();
                             HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
-                          
+                            HttpContext.Session.SetInt32("GH", ctng[0].MaGioHang);
                             return RedirectToAction("Loadsanpham");
                         }
                         else if (x == MaLoaiNguoiDung[2])
@@ -225,6 +242,15 @@ namespace Do_an_TMDT.Controllers
 
                             HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
                             return RedirectToAction("", "Home", new { area = "Admin" });
+                        }
+                        else
+                        {
+                            int id = item.MaNguoiDung;
+                            var ctng = _context.GioHangs.Where(x => x.MaNguoiDung == item.MaNguoiDung).ToList();
+                            HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
+                            HttpContext.Session.SetInt32("GH", ctng[0].MaGioHang);
+                            _notyfService.Success("Thanh toán thành công!");
+                            return RedirectToAction("Loadsanpham");
                         }
 
                     }
@@ -271,12 +297,13 @@ namespace Do_an_TMDT.Controllers
                     _context.Add(khachhang);
                     await _context.SaveChangesAsync();
                     var list = _context.NguoiDungs.Where(x => x.Email == khachhang.Email).ToList();
-                    
+
                     GioHang gioHang = new GioHang
                     {
                         MaNguoiDung = list[0].MaNguoiDung,
-                        MaGioHang = list[0].MaNguoiDung
+                        MaGioHang= list[0].MaNguoiDung
                     };
+                    
                     _context.Add(gioHang);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(dangnhap));

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,9 +24,12 @@ namespace Do_an_TMDT.Controllers
             _context = context;
 
         }
-       
-            public IActionResult Loadsanpham(int MaLoai)
+
+        public IActionResult Loadsanpham(int? page , int MaLoai)
         {
+            page = 1;
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 8;
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
             HomeVM model = new HomeVM();
@@ -73,6 +77,14 @@ namespace Do_an_TMDT.Controllers
             ViewBag.TH = model.MatHangs;
             int i = 0;
             HttpContext.Session.SetInt32("Ten", i);
+            
+
+
+ 
+           
+            PagedList<MatHangHome> models = new PagedList<MatHangHome>(model.MatHangs.AsQueryable(), pageNumber, pageSize);
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.list = models;
             return View(model);
         }
 
