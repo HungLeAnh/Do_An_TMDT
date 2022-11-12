@@ -106,7 +106,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
 
         // GET: Admin/AdminMatHangs/Create
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             //IFormFile formFile = null;
             ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
@@ -119,7 +119,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // POST: Admin/AdminMatHangs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaMatHang,TenMatHang,GiaBan,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")]MatHang matHang, IFormFile[] files)
+        public async Task<IActionResult> Create([Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")]MatHang matHang,IFormFile[] files)
         {
             matHang.SoLuongDaBan = 0;
             matHang.SoSao = 0;
@@ -198,7 +198,10 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            if (matHang.MoTa == null)
+            {
+                matHang.MoTa = "";
+            }
             if (ModelState.IsValid)
             {
                 try

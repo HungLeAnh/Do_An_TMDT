@@ -84,13 +84,26 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminDonHangs/Create
-        public IActionResult Create()
+        public IActionResult Update()
         {
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "Email");
-            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "Email");
+            ViewData["MaDonHang"] = new SelectList(_context.DonHangs.Where(n => n.TinhTrang.ToLower().Equals("chưa giao")), "MaDonHang", "MaDonHang");
+            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs
+                                                        .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                               m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")), 
+                                                     "MaNguoiDung", "MaNguoiDung");
             return View();
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiDung")] DonHang donHang)
+        {
+            var DonHang = _context.DonHangs.Find(donHang.MaDonHang);
+            DonHang.MaNguoiGiaoHang = donHang.MaNguoiDung;
+            DonHang.TinhTrang = "Đang giao";
+            _context.Update(DonHang);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         // POST: Admin/AdminDonHangs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

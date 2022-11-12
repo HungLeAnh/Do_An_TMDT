@@ -1,0 +1,47 @@
+﻿@model Do_an_TMDT.Models.DonHang
+
+@{
+    ViewData["Title"] = "Phân công đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] :</h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Index">Quản lý đơn hàng</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaDonHang" class="control-label">Mã đơn hàng cần giao</label>
+                <select asp-for="MaDonHang" class ="form-control" asp-items="ViewBag.MaDonHang" required></select>
+            </div><div class="form-group">
+                <label asp-for="MaNguoiDung" class="control-label">Mã Shipper giao đơn hàng</label>
+                <select asp-for="MaNguoiDung" class ="form-control" asp-items="ViewBag.MaNguoiDung"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Index" class="btn btn-primary">Quay Lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
