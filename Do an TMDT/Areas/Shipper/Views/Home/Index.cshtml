@@ -1,0 +1,136 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.DonHang>
+@{
+    ViewBag.Title = "Trang chủ shipper";
+    Layout = "~/Areas/Shipper/Views/Shared/_ShipperLayout.cshtml";
+}
+<h1>Danh sách các đơn hàng</h1>
+<hr />
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover e-commerce-table">
+                <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Người nhận</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Tổng tiền</th>
+                        <th>Đã thanh toán</th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @if (Model!=null)
+                   {
+                       foreach (var item in Model)
+                       {
+                            <tr>
+                                <td>@item.MaDonHang</td>
+                                <td>@item.MaNguoiDungNavigation.TenNguoiDung</td>
+                                <td>@item.DiaChi</td>
+                                <td>@item.Sdt</td>
+                                <td>@item.TongTien</td>
+                                <td>
+                                    @if (@item.DaThanhToan.Equals(true))
+                                    {
+                                        <div>Đã thanh toán</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Chưa thanh toán</div>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.TinhTrang.Equals("Đã Giao", StringComparison.OrdinalIgnoreCase))
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Đã Giao</div>
+                                        </div>
+                                   }
+                                    else if (item.TinhTrang.Equals("Đang Giao", StringComparison.OrdinalIgnoreCase))
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-warning badge-dot m-r-10"></div>
+                                            <div>Đang Giao</div>
+                                        </div>
+                                   }
+                                    else if (item.TinhTrang.Equals("Chưa Giao", StringComparison.OrdinalIgnoreCase))
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
+                                            <div>Chưa Giao</div>
+                                        </div>
+                                   }
+                                </td>
+                                <td class="text-right">
+                                    <a class="m-10" asp-area="Shipper" asp-controller="Home" asp-action="Edit" asp-route-id="@item.MaDonHang">
+                                        <i class="fas fa-pen btn btn-primary "></i>
+                                    </a>
+                                </td>
+                            </tr>
+                       }
+                   }
+                    
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div aria-label="Page navigation example">
+    <ul class="pagination">
+        <pager class="pager-container" list="@Model" asp-area="Admin" asp-controller="AdminDonHangs" asp-route-TinhTrang="@ViewBag.CurrentTinhTrang" asp-action="Index" />
+    </ul>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            jQuery("#trangthaidonhang").change(function () {
+                var trangthaidonhang = jQuery(this).children(":selected").attr("value");
+
+                $('#trangthaidonhang option')
+                    .removeAttr('selected');
+                $("#trangthaidonhang > [value='" + trangthaidonhang + "']").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/AdminDonHangs/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        trangthai: trangthaidonhang
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+}
