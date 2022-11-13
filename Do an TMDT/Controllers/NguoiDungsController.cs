@@ -246,11 +246,8 @@ namespace Do_an_TMDT.Controllers
                         else
                         {
                             int id = item.MaNguoiDung;
-                            var ctng = _context.GioHangs.Where(x => x.MaNguoiDung == item.MaNguoiDung).ToList();
                             HttpContext.Session.SetInt32("Ten", item.MaNguoiDung);
-                            HttpContext.Session.SetInt32("GH", ctng[0].MaGioHang);
-                            _notyfService.Success("Thanh toán thành công!");
-                            return RedirectToAction("Loadsanpham");
+                            return RedirectToAction("", "Home", new { id = id, area = "Shipper" });
                         }
 
                     }
