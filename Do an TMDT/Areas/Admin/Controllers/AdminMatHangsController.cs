@@ -22,7 +22,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
     public class AdminMatHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
