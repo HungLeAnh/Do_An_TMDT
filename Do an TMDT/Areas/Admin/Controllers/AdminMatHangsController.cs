@@ -16,6 +16,7 @@ using Do_an_TMDT.ViewModels;
 using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Http;
 using static System.Net.WebRequestMethods;
+using Microsoft.VisualBasic;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -40,7 +41,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             if (maDanhMuc != 0)
             {
                  lsMatHangs = _context.MatHangs
-                    .Where(x=>x.MaDanhMuc == maDanhMuc)
+                    .Where(x=>x.MaDanhMuc == maDanhMuc && x.DangDuocHienThi==true)
                     .Include(m => m.MaDanhMucNavigation)
                     .Include(m => m.MaKichCoNavigation)
                     .Include(m => m.MaMauSacNavigation)
@@ -54,6 +55,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             else
             {
                  lsMatHangs = _context.MatHangs
+                    .Where(x=>x.DangDuocHienThi==true)
                     .Include(m => m.MaDanhMucNavigation)
                     .Include(m => m.MaKichCoNavigation)
                     .Include(m => m.MaMauSacNavigation)
@@ -110,8 +112,6 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             //IFormFile formFile = null;
             ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
-            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1");
-            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac");
             ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap");
             ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu");
             return View();//formFile
@@ -119,16 +119,45 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // POST: Admin/AdminMatHangs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")]MatHang matHang,IFormFile[] files)
+        public async Task<IActionResult> Create([Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,MaNhaCungCap,MaThuongHieu,MaDanhMuc,")]MatHang matHang,int kichCo,string mauSac,IFormFile[] files)
         {
             matHang.SoLuongDaBan = 0;
             matHang.SoSao = 0;
+            matHang.DangDuocHienThi = true;
             if(matHang.MoTa == null)
             {
                 matHang.MoTa = "";
             }
             if (ModelState.IsValid)
             {
+                var hasKichCo = _context.KichCos.Where(m => m.KichCo1 == kichCo).FirstOrDefault();
+                var hasMauSac = _context.MauSacs.Where(m => m.TenMauSac == mauSac).FirstOrDefault();
+                if ( hasKichCo != null )
+                {
+                    matHang.MaKichCo = hasKichCo.MaKichCo;
+                }
+                else
+                {
+                    KichCo newKichCo = new KichCo();
+                    newKichCo.KichCo1 = kichCo;
+                    _context.Add(newKichCo);
+                    await _context.SaveChangesAsync();
+
+                    matHang.MaKichCo = _context.KichCos.Where(m=>m.KichCo1==kichCo).FirstOrDefault().MaKichCo;
+                }
+                if (hasMauSac != null)
+                {
+                    matHang.MaMauSac = hasMauSac.MaMauSac;
+                }
+                else
+                {
+                    MauSac newMauSac = new MauSac();
+                    newMauSac.TenMauSac = mauSac;
+                    _context.Add(newMauSac);
+                    await _context.SaveChangesAsync();
+                    matHang.MaMauSac = _context.MauSacs.Where(m => m.TenMauSac == mauSac).FirstOrDefault().MaMauSac;
+
+                }
                 _context.Add(matHang);
                 await _context.SaveChangesAsync();
               
@@ -172,6 +201,8 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
 
             var matHang =  await _context.MatHangs
                             .Include(m => m.MatHangAnhs)
+                            .Include(m=>m.MaMauSacNavigation)
+                            .Include(m=>m.MaKichCoNavigation)
                             .Where(m =>m.MaMatHang == id).FirstOrDefaultAsync();             
             if (matHang == null)
             {
@@ -179,8 +210,8 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
 
             ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc", matHang.MaDanhMuc);
-            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1", matHang.MaKichCo);
-            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac", matHang.MaMauSac);
+            ViewBag.KichCo =  matHang.MaKichCoNavigation.KichCo1;
+            ViewBag.MauSac =  matHang.MaMauSacNavigation.TenMauSac;
             ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", matHang.MaNhaCungCap);
             ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu", matHang.MaThuongHieu);
             ViewData["MatHangAnh"] = new SelectList(_context.MatHangAnhs, "MaAnh", "Anh", matHang.MatHangAnhs);
@@ -192,7 +223,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")] MatHang matHang, IFormFile[] files)
+        public async Task<IActionResult> Edit(int id, [Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,DangDuocHienThi,SoSao,SoLuong,SoLuongDaBan,MoTa,MaNhaCungCap,MaThuongHieu,MaDanhMuc")] MatHang matHang, int kichCo, string mauSac, IFormFile[] files)
         {
             if (id != matHang.MaMatHang)
             {
@@ -217,7 +248,36 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
 
                     }
 
-                    _context.Update(matHang);
+                    var hasKichCo = _context.KichCos.Where(m => m.KichCo1 == kichCo).FirstOrDefault();
+                    var hasMauSac = _context.MauSacs.Where(m => m.TenMauSac == mauSac).FirstOrDefault();
+                    if (hasKichCo != null)
+                    {
+                        matHang.MaKichCo = hasKichCo.MaKichCo;
+                    }
+                    else
+                    {
+                        KichCo newKichCo = new KichCo();
+                        newKichCo.KichCo1 = kichCo;
+                        _context.KichCos.Add(newKichCo);
+                        await _context.SaveChangesAsync();
+
+                        matHang.MaKichCo = _context.KichCos.Where(m => m.KichCo1 == kichCo).FirstOrDefault().MaKichCo;
+                    }
+                    if (hasMauSac != null)
+                    {
+                        matHang.MaMauSac = hasMauSac.MaMauSac;
+                    }
+                    else
+                    {
+                        MauSac newMauSac = new MauSac();
+                        newMauSac.TenMauSac = mauSac;
+                        _context.MauSacs.Add(newMauSac);
+                        await _context.SaveChangesAsync();
+                        matHang.MaMauSac = _context.MauSacs.Where(m => m.TenMauSac == mauSac).FirstOrDefault().MaMauSac;
+
+                    }
+
+                    _context.MatHangs.Update(matHang);
                     await _context.SaveChangesAsync();
 
 
@@ -234,7 +294,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                             matHangAnh.Anh = await Utilities.UploadFile(file, @"products", image.ToLower());
                             if (string.IsNullOrEmpty(matHangAnh.Anh)) matHangAnh.Anh = "images/duphong.webp";
 
-                            _context.Add(matHangAnh);
+                            _context.MatHangAnhs.Add(matHangAnh);
                         }
 
                     }
@@ -264,45 +324,14 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             return View(matHang);
         }
 
-        // GET: Admin/AdminMatHangs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var matHang = await _context.MatHangs
-                .Include(m => m.MaDanhMucNavigation)
-                .Include(m => m.MaKichCoNavigation)
-                .Include(m => m.MaMauSacNavigation)
-                .Include(m => m.MaNhaCungCapNavigation)
-                .Include(m => m.MaThuongHieuNavigation)
-                .FirstOrDefaultAsync(m => m.MaMatHang == id);
-            
-            if (matHang == null)
-            {
-                return NotFound();
-            }
-
-            return View(matHang);
-        }
-
         // POST: Admin/AdminMatHangs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var matHang = await _context.MatHangs.FindAsync(id);
-            var matHangAnhs =  _context.MatHangAnhs.Where(m => m.MaMatHang == id);
-            _context.MatHangs.Remove(matHang);
-            var giohang = _context.ChiTietGioHangs.Where(x => x.MaMatHang == id).ToList();
-            foreach (var item in giohang)
-            {
-                _context.ChiTietGioHangs.Remove(item);
-            }
-            foreach(var item in matHangAnhs) 
-                _context.MatHangAnhs.Remove(item);
+            matHang.DangDuocHienThi = false;
+             _context.MatHangs.Update(matHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

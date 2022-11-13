@@ -45,7 +45,6 @@
             <table class="table table-hover e-commerce-table">
                 <thead>
                     <tr>
-                        <th>Mã sản phẩm</th>
                         <th>Tên Mặt Hàng</th>
                         <th>Ảnh</th>
                         <th>Giá bán</th>
@@ -53,7 +52,6 @@
                         <th>Số lượng</th>
                         <th>Số lượng đã bán</th>
                         <th>Đang được bán</th>
-                        <th>Đang được hiển thị</th>
                         <th>Danh mục</th>
 
                     </tr>
@@ -62,9 +60,6 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>
-                                @item.MaMatHang
-                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.TenMatHang)
                             </td>
@@ -90,9 +85,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DangDuocBan)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DangDuocHienThi)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.MaDanhMucNavigation.Slug)
