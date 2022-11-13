@@ -143,7 +143,8 @@ namespace Do_an_TMDT.Controllers
 
         public IActionResult dangky()
         {
-            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung");
+            var listLND = _context.LoaiNguoiDungs.ToList();
+      
             return View();
         }
 
@@ -152,14 +153,14 @@ namespace Do_an_TMDT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult dangky([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 bool x = true;
                 string salt = Utilities.GetRandomKey();
                 var listLoaiNguoidung = _context.LoaiNguoiDungs.AsNoTracking().ToList();
                 NguoiDung khachhang = new NguoiDung
                 {
-                    MaLoaiNguoiDung = nguoiDung.MaLoaiNguoiDung,
+                    MaLoaiNguoiDung = listLoaiNguoidung[0].MaLoaiNguoiDung,
                     TenDangNhap = nguoiDung.TenDangNhap,
                     TenNguoiDung = nguoiDung.TenNguoiDung,
                     Sdt = nguoiDung.Sdt.Trim().ToLower(),
