@@ -16,9 +16,10 @@
 
                     @foreach (var item in ViewBag.listcate)
                     {
-                        <li><a href="">@item.TenThuongHieu</a></li>
+                        <li><a href="@Url.Action("ThuongHieu", "NguoiDungs", new { MaTH = item.MaThuongHieu })">@item.TenThuongHieu</a></li>
                     }}
-            }
+                    
+                }
         </ul>
     </li>
     <li><a href="">Tin tức</a></li>

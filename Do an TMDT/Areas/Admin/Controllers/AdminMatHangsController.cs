@@ -254,6 +254,11 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             var matHang = await _context.MatHangs.FindAsync(id);
             var matHangAnhs =  _context.MatHangAnhs.Where(m => m.MaMatHang == id);
             _context.MatHangs.Remove(matHang);
+            var giohang = _context.ChiTietGioHangs.Where(x => x.MaMatHang == id).ToList();
+            foreach (var item in giohang)
+            {
+                _context.ChiTietGioHangs.Remove(item);
+            }
             foreach(var item in matHangAnhs) 
                 _context.MatHangAnhs.Remove(item);
             await _context.SaveChangesAsync();

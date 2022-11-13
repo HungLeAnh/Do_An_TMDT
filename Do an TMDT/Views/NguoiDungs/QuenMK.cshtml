@@ -1,9 +1,9 @@
-﻿
+﻿@model Do_an_TMDT.Models.NguoiDung
+
 @{
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Do_an_TMDT.Models.NguoiDung
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +25,7 @@
 
     <section class="bread-crumb">
         <div class="container">
-            <div class="nd-main-title-breadcrumb text-center">Đăng nhập tài khoản</div>
+            <div class="nd-main-title-breadcrumb text-center">Đăng ký tài khoản</div>
             <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
                 <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
                     <a itemprop="item" href="/" title="Trang chủ">
@@ -35,26 +35,27 @@
                 </li>
 
                 <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                    <strong itemprop="name">Đăng nhập tài khoản</strong>
+                    <strong itemprop="name">Đăng ký tài khoản</strong>
                     <meta itemprop="position" content="2">
                 </li>
 
             </ul>
-            @{
-
-                if (@ViewBag.mess != null)
-                {
-                    <div class="col">
-                        <div class="alert alert-danger col-lg-2" role="alert">
-                            @ViewBag.mess
-                        </div>
-                    </div>
-                }
-            }
         </div>
+
     </section>
 
+    @{
 
+        if (@ViewBag.mess != null)
+        {
+            <div class="col">
+                <div class="alert alert-danger col-lg-4" role="alert">
+                    @ViewBag.mess
+                </div>
+            </div>
+        }
+
+    }
 
 
 
@@ -64,15 +65,15 @@
                 <div id="login" class="row">
                     <div class="col-lg-12 col-md-12 account-content order-lg-last order-md-last order-sm-first order-first">
                         <ul class="auth-block__menu-list p-0">
-                            <li class="active">
-                                <a href="" title="Đăng nhập">Đăng nhập</a>
-                            </li>
                             <li>
-                                <a asp-controller="NguoiDungs"  asp-action="dangky">Đăng ký</a>
+                                <a asp-controller="NguoiDungs" asp-action="dangnhap" title="Đăng nhập">Đăng nhập</a>
+                            </li>
+                            <li class="active">
+                                <a href="#" title="Đăng ký">Đăng ký</a>
                             </li>
                         </ul>
                         <div id="nd-login">
-                            <form accept-charset="utf-8" asp-action="dangnhap" id="customer_register"
+                            <form accept-charset="utf-8" asp-action="QuenMK" id="customer_register"
                                   method="post">
                                 <input name="FormType" type="hidden" value="customer_register">
                                 <input name="utf8" type="hidden" value="true"><input type="hidden"
@@ -84,26 +85,16 @@
                                     <div class="row">
 
 
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label asp-for="Email" class="control-label"> Nhập Họ Và Tên</label>
-                                                <input placeholder="Nhập Tên Đăng Nhập" required="" asp-for="Email" class="form-control" />
-                                                <span asp-validation-for="Email" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-
-
-
                                         <div class="form-group">
-                                            <label asp-for="MatKhauHash" class="control-label">Nhập mật Khẩu</label>
-                                            <input type="password" asp-for="MatKhauHash" required="" class="form-control" />
-                                            <span asp-validation-for="MatKhauHash" class="text-danger"></span>
+                                            <label asp-for="Email" class="control-label">Nhập Mã Xác thực</label>
+                                            <input asp-for="Email" required="" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
                                         </div>
+
 
                                         <div class="col-md-12 text-center margin-top-10">
-                                            <button type="submit" value="Đăng nhập" class="btn-style btn-blues">
-                                                Đăng Nhập
+                                            <button type="submit" value="Đăng ký" class="btn-style btn-blues">
+                                                Lấy mật khẩu mới
                                             </button>
                                         </div>
                                     </div>
@@ -112,9 +103,7 @@
                             <div class="clearfix"></div>
                             <div class="line-break">
                                 <span>hoặc đăng nhập qua</span>
-
                             </div>
-                            <a asp-action="quenMK">Bạn quên mật khẩu?</a>
                             <div class="social-login text-center">
                                 <a href="" class="social-login--facebook" onclick="loginFacebook()">
                                     <img width="129px"
@@ -188,5 +177,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
 
