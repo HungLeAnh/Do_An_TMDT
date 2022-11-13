@@ -7,8 +7,6 @@
 @section Styles{
 <link href="~/Adminassets/summernote/summernote-bs4.css" rel="stylesheet" />
 <link href="~/Adminassets/summernote/summernote.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
 }
 <div class="page-header">
     <h2 class="header-title">@ViewData["Title"] : </h2>
@@ -117,7 +115,7 @@
         <div class="tab-pane fade" id="MatHang-Mota">
             <div class="card">
                 <div class="card-body">
-                    <textarea id="summernote" asp-for="MoTa"></textarea>
+                    <textarea class="summernote" asp-for="MoTa"></textarea>
                     <span asp-validation-for="MoTa" class="text-danger"></span>
                 </div>
             </div>
@@ -154,10 +152,8 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="~/Adminassets/vendors/select2/select2.min.js"></script>
     <script src="~/Adminassets/summernote/summernote-bs4.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <script>
         @* script của multiple upload *@

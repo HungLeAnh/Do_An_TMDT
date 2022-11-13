@@ -28,7 +28,6 @@
             <table class="table table-hover e-commerce-table">
                 <thead>
                     <tr>
-                        <th>Mã người dùng</th>
                         <th>Tên người dùng</th>
                         <th>Ảnh đại diện</th>
                         <th>Email</th>
@@ -43,15 +42,19 @@
                         {
                             <tr>
                                 <td>
-                                    @item.MaNguoiDung
-                                </td>
-                                <td>
                                     <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
                                         <h6 class="m-b-0 m-l-10">@item.TenNguoiDung</h6>
                                     </div>
                                 </td>
-                                <td>@item.AnhDaiDien</td>
+                                <td>
+                                    <img class="img-fluid rounded" onerror="src='/images/duphong.webp'"
+                                         src="~/@if(@item.AnhDaiDien!=null)
+                                                {
+                                                    @item.AnhDaiDien
+                                                }"
+                                         style="max-width: 60px;">
+                                </td>
                                 <td>@item.Email</td>
                                 <td>@item.Sdt</td>
                                 <td>

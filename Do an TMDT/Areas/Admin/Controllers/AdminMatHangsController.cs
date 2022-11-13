@@ -17,10 +17,12 @@ using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Http;
 using static System.Net.WebRequestMethods;
 using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AdminMatHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
@@ -332,6 +334,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             var matHang = await _context.MatHangs.FindAsync(id);
             matHang.DangDuocHienThi = false;
              _context.MatHangs.Update(matHang);
+            
+            var theoDoi = await _context.TheoDois.Where(m => m.MaMatHang == id).ToListAsync();
+            foreach(var item in theoDoi) 
+                _context.TheoDois.Remove(item);
+
+            var chiTietGioHang = await _context.ChiTietGioHangs.Where(m => m.MaMatHang == id).ToListAsync();
+            foreach (var item in chiTietGioHang)
+                _context.ChiTietGioHangs.Remove(item);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
