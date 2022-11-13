@@ -162,6 +162,28 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var donhang = _context.DonHangs.Where(x => x.MaNguoiDung == id).ToList();
+            foreach (var item in donhang)
+            {
+                _context.DonHangs.Remove(item);
+            }
+            var nguoi_DC = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == id).ToList();
+            foreach (var item in nguoi_DC)
+            {
+                _context.NguoiDungDiaChis.Remove(item);
+            }
+            var giohang = _context.GioHangs.Where(x => x.MaNguoiDung == id).ToList();
+            var Tcgiohang = _context.ChiTietGioHangs.Where(x => x.MaGioHang == giohang[0].MaGioHang).ToList();
+            foreach (var item in Tcgiohang)
+            {
+                _context.ChiTietGioHangs.Remove(item);
+            }
+          
+            foreach (var item in giohang)
+            {
+                _context.GioHangs.Remove(item);
+            }
+           
             var nguoiDung = await _context.NguoiDungs.FindAsync(id);
             _context.NguoiDungs.Remove(nguoiDung);
             await _context.SaveChangesAsync();

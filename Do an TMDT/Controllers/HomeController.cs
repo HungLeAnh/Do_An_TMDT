@@ -78,7 +78,7 @@ namespace Do_an_TMDT.Controllers
         }
         public IActionResult Loadsanpham(int? page , int MaLoai)
         {
-            page = 1;
+          
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 8;
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
