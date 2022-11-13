@@ -138,7 +138,7 @@
                         <img onerror="this.src='images/duphong.webp'" src="@if(item.listSPs.MatHangAnhs.Count()>0){@item.MatHangAnhs[1].Anh}" width="250px" alt="">
                     </a>
                     <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
-                    <button><ion-icon name="cart-outline"></ion-icon></button>
+                    <button><a href="@Url.Action("dangnhap", "NguoiDungs", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
                 </div>
 
             </div>
