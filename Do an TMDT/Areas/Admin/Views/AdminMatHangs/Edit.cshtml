@@ -36,6 +36,7 @@
     <input type="hidden" asp-for="MaMatHang" />    
     <input type="hidden" asp-for="SoLuongDaBan" />
     <input type="hidden" asp-for="SoSao" />
+    <input type="hidden" asp-for="DangDuocHienThi" />
 
     <div class="page-header no-gutters has-tab">
         <ul class="nav nav-tabs">
@@ -80,11 +81,13 @@
 
                     <div class="form-group">
                         <label asp-for="MaKichCo" class="control-label font-weight-semibold">Kích cỡ</label>
-                        <select asp-for="MaKichCo" class="form-control" asp-items="ViewBag.KichCo"></select>
+                        <input id="kichCo" name="kichCo" type="text" class="form-control" value="@ViewBag.KichCo" />
+                        <span asp-validation-for="MaKichCo" class="text-danger"></span>
+
                     </div>
                     <div class="form-group">
                         <label asp-for="MaMauSac" class="control-label font-weight-semibold">Màu sắc</label>
-                        <select asp-for="MaMauSac" class="form-control" asp-items="ViewBag.MauSac"></select>
+                        <input id="mauSac" name="mauSac" type="text" class="form-control" value="@ViewBag.MauSac"/>
                     </div>
                 </div>
             </div>
@@ -107,10 +110,6 @@
                     <div class="form-group">
                         <label asp-for="DangDuocBan" class="font-weight-semibold">Đang được bán</label>
                         <input class="form-check-inline" asp-for="DangDuocBan">
-                    </div>
-                    <div class="form-group">
-                        <label class="font-weight-semibold ">Đang được hiển thị</label>
-                        <input class="form-check-inline" asp-for="DangDuocHienThi" />
                     </div>
                 </div>
             </div>
