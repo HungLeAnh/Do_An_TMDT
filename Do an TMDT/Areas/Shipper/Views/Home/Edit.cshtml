@@ -1,0 +1,27 @@
+﻿@model Do_an_TMDT.Models.DonHang
+
+@{
+    ViewData["Title"] = "Cập nhật đơn hàng";
+    Layout = "~/Areas/Shipper/Views/Shared/_ShipperLayout.cshtml";
+}
+
+<h1>Cập nhật đơn hàng</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label asp-for="TinhTrang" class="control-label">Cập nhật tình trạng đơn hàng</label>
+                <input asp-for="TinhTrang" class="form-control" />
+                <span asp-validation-for="TinhTrang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Xác nhận" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Trở lại danh sách</a>
+</div>

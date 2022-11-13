@@ -31,8 +31,8 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             var pageSize = 10;
             var lsCustomers = new List<NguoiDung>();
             lsCustomers = await _context.NguoiDungs
-                .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng") ||
-                            m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Shipper")
+                .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                            m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")
                       )
                 .Include(n => n.MaLoaiNguoiDungNavigation).ToListAsync();
 

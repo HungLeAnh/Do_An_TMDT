@@ -158,4 +158,9 @@
     <None Include="wwwroot\js\TestNewPw.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Shipper\Data\" />
+    <Folder Include="Areas\Shipper\Models\" />
+  </ItemGroup>
+
 </Project>

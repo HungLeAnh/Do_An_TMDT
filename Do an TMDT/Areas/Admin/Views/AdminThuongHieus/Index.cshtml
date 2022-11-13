@@ -62,7 +62,7 @@
                                 <i class="fas fa-trash-alt btn btn-danger "></i>
                             </a>
                             <form asp-area="Admin" asp-controller="AdminThuongHieus" asp-action="Delete" asp-route-id="@item.MaThuongHieu">
-
+                                @Html.AntiForgeryToken()
                                 <div class="modal fade" id="deleteModal-@item.MaThuongHieu" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content">

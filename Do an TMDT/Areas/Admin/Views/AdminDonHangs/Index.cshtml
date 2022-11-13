@@ -1,7 +1,7 @@
 ﻿@using PagedList.Core.Mvc
 @model PagedList.Core.IPagedList<Do_an_TMDT.Models.DonHang>
 @{
-    ViewData["Title"] = "Quản lý hóa đơn";
+    ViewData["Title"] = "Quản lý đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -31,15 +31,14 @@
                         <select class="custom-select" style="min-width: 200px;" id="trangthaidonhang" name="trangthaidonhang" asp-items="ViewBag.TrangThai">
                             <option selected>All</option>
                         </select>
-@*                        @Html.DropDownList("trangthaidonhang", (IEnumerable<SelectListItem>) ViewBag.TrangThai, "All")
-*@                    </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 text-right">
-                <button class="btn btn-primary">
-                    <i class="anticon anticon-file-excel m-r-5"></i>
-                    <span>Export</span>
-                </button>
+                <a class="btn btn-primary btn-tone" asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Update">
+                    <i class="anticon anticon-edit"></i>
+                    Gán đơn hàng cho shipper
+                </a>
             </div>
         </div>
         <div class="table-responsive">
@@ -75,36 +74,64 @@
                                 </td>
 
                                 <td>@item.TongTien</td>
-                                <td>@item.NgayXuatDonHang</td>
+                                <td>@item.NgayXuatDonHang.Value.Date</td>
                                 <td>
-                                    @if (item.TinhTrang == "Đã Giao")
+                                    @if (item.TinhTrang.Equals("Đã Giao", StringComparison.OrdinalIgnoreCase))
                                    {
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-success badge-dot m-r-10"></div>
                                             <div>Đã Giao</div>
                                         </div>
                                    }
-                                   else if(item.TinhTrang == "Đang Giao")
+                                    else if (item.TinhTrang.Equals("Đang Giao", StringComparison.OrdinalIgnoreCase))
                                    {
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-warning badge-dot m-r-10"></div>
                                             <div>Đang Giao</div>
                                         </div>
                                    }
+                                    else if (item.TinhTrang.Equals("Chưa Giao", StringComparison.OrdinalIgnoreCase))
+                                   {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
+                                            <div>Chưa Giao</div>
+                                        </div>
+                                   }
                                 </td>
                                 <td>
                                     @if (item.MaNguoiGiaoHang != null)
                                     {
-                                        @Html.DisplayFor(modelItem => item.MaNguoiGiaoHang)
+                                        @item.MaNguoiGiaoHangNavigation.TenNguoiDung
                                     }
                                 </td>
                                 <td class="text-right">
-                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
-                                        <i class="anticon anticon-edit"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-hover btn-sm btn-rounded">
-                                        <i class="anticon anticon-delete"></i>
-                                    </button>
+                                    <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaDonHang">
+                                        <i class="fas fa-trash-alt btn btn-danger "></i>
+                                    </a>
+                                    <form asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Delete" asp-route-id="@item.MaDonHang">
+                                        @Html.AntiForgeryToken()
+                                        <div class="modal fade" id="deleteModal-@item.MaDonHang" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Xóa Đơn Hàng:</h5>
+                                                        <button type="button" class="close" data-dismiss="modal">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <div class="warning">Bạn muốn xóa đơn hàng này?</div>
+                                                        <div class="text-danger "> @item.MaDonHang : @item.MaDonHang</div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default btn-tone" data-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-danger btn-tone">Xóa</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                        }
