@@ -1,92 +1,192 @@
 ﻿@model Do_an_TMDT.Models.MatHang
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa mặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+@section Styles{
+<link href="~/Adminassets/summernote/summernote-bs4.css" rel="stylesheet" />
+<link href="~/Adminassets/summernote/summernote.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-<h1>Edit</h1>
-
-<h4>MatHang</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MaMatHang" />
-            <div class="form-group">
-                <label asp-for="TenMatHang" class="control-label"></label>
-                <input asp-for="TenMatHang" class="form-control" />
-                <span asp-validation-for="TenMatHang" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GiaBan" class="control-label"></label>
-                <input asp-for="GiaBan" class="form-control" />
-                <span asp-validation-for="GiaBan" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DangDuocBan" /> @Html.DisplayNameFor(model => model.DangDuocBan)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoSao" class="control-label"></label>
-                <input asp-for="SoSao" class="form-control" />
-                <span asp-validation-for="SoSao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoLuong" class="control-label"></label>
-                <input asp-for="SoLuong" class="form-control" />
-                <span asp-validation-for="SoLuong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoLuongDaBan" class="control-label"></label>
-                <input asp-for="SoLuongDaBan" class="form-control" />
-                <span asp-validation-for="SoLuongDaBan" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="DangDuocHienThi" /> @Html.DisplayNameFor(model => model.DangDuocHienThi)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNhaCungCap" class="control-label"></label>
-                <select asp-for="MaNhaCungCap" class="form-control" asp-items="ViewBag.MaNhaCungCap"></select>
-                <span asp-validation-for="MaNhaCungCap" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaThuongHieu" class="control-label"></label>
-                <select asp-for="MaThuongHieu" class="form-control" asp-items="ViewBag.MaThuongHieu"></select>
-                <span asp-validation-for="MaThuongHieu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaDanhMuc" class="control-label"></label>
-                <select asp-for="MaDanhMuc" class="form-control" asp-items="ViewBag.MaDanhMuc"></select>
-                <span asp-validation-for="MaDanhMuc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaKichCo" class="control-label"></label>
-                <select asp-for="MaKichCo" class="form-control" asp-items="ViewBag.MaKichCo"></select>
-                <span asp-validation-for="MaKichCo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaMauSac" class="control-label"></label>
-                <select asp-for="MaMauSac" class="form-control" asp-items="ViewBag.MaMauSac"></select>
-                <span asp-validation-for="MaMauSac" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+}
+<div class="page-header">
+    <h2 class="header-title">@ViewData["Title"] : </h2>
+    <div class="header-sub-title">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item list-inline-item">
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Index">Quản lý mặt hàng</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </nav>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+<form asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Edit" method="post" enctype="multipart/form-data" >
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="MaMatHang" />    
+    <input type="hidden" asp-for="SoLuongDaBan" />
+    <input type="hidden" asp-for="SoSao" />
 
+    <div class="page-header no-gutters has-tab">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#MatHang-luachon">Thông tin cơ bản</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#MatHang-luachonthem">Thông tin chi tiết</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#MatHang-Mota">Mô tả</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#MatHang-Anh">Ảnh</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content m-t-15">
+        <div class="tab-pane fade show active" id="MatHang-luachon">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="TenMatHang" class="font-weight-semibold">Tên mặt hàng</label>
+                        <input type="text" class="form-control" asp-for="TenMatHang">
+                        <span asp-validation-for="TenMatHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GiaNhap" class="font-weight-semibold">Giá nhập</label>
+                        <input asp-for="GiaNhap" type="text" class="form-control">
+                        <span asp-validation-for="GiaNhap" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GiaBan" class="font-weight-semibold">Giá bán</label>
+                        <input asp-for="GiaBan" type="text" class="form-control">
+                        <span asp-validation-for="GiaBan" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SoLuong" class="control-label font-weight-semibold">Số lượng</label>
+                        <input asp-for="SoLuong" class="form-control" />
+                        <span asp-validation-for="SoLuong" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="MaKichCo" class="control-label font-weight-semibold">Kích cỡ</label>
+                        <select asp-for="MaKichCo" class="form-control" asp-items="ViewBag.KichCo"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaMauSac" class="control-label font-weight-semibold">Màu sắc</label>
+                        <select asp-for="MaMauSac" class="form-control" asp-items="ViewBag.MauSac"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="MatHang-luachonthem">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="MaNhaCungCap" class="control-label font-weight-semibold">Nhà cung cấp</label>
+                        <select asp-for="MaNhaCungCap" class="form-control" asp-items="ViewBag.NhaCungCap"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaThuongHieu" class="control-label font-weight-semibold">Thương hiệu</label>
+                        <select asp-for="MaThuongHieu" class="form-control" asp-items="ViewBag.ThuongHieu"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MaDanhMuc" class="control-label font-weight-semibold">Danh mục</label>
+                        <select asp-for="MaDanhMuc" class="form-control" asp-items="ViewBag.DanhMuc"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DangDuocBan" class="font-weight-semibold">Đang được bán</label>
+                        <input class="form-check-inline" asp-for="DangDuocBan">
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-semibold ">Đang được hiển thị</label>
+                        <input class="form-check-inline" asp-for="DangDuocHienThi" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="MatHang-Mota">
+            <div class="card">
+                <div class="card-body">
+                    <textarea id="summernote" asp-for="MoTa"></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="MatHang-Anh">
+            <div class="card">
+                <h2>Thay ảnh mặt hàng bằng ảnh mới :</h2>
+                @Html.TextBox("files", "", new { type = "file", multiple = "multiple", accept = "image/*" })
+                <br />
+                <div class="filearray">
+                    @if (Model.MatHangAnhs!=null)
+                    {
+                        var matHangAnh = Model.MatHangAnhs.ToList();
+                        @for (var i = 0; i < matHangAnh.Count(); i++) 
+                        {
+                            var anh = matHangAnh[i].Anh;
+                            <img width='150' height='100' src='/@anh' onerror="src='/images/duphong.webp'">
+                        }
+                    }
+                </div>
+                <br />
+            </div>
+        </div>
+        
+    </div>
+    <div class="form-group">
+            <input type="submit" value="Lưu" class="btn btn-primary" />
+        <a asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Index" class="btn btn-primary">Quay Lại</a>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="~/Adminassets/summernote/summernote-bs4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <script>
+        @* script của multiple upload *@
+        $(document).ready(function () {
+            $("#files").on('change', function () {
+                $(".filearray").empty();
+                for (let i = 0; i < this.files.length; ++i) {
+                    let filereader = new FileReader();
+                    let $img = jQuery.parseHTML("<img width='150' height='100' src=''>");
+                    filereader.onload = function () {
+                        $img[0].src = this.result;
+                    };
+                    filereader.readAsDataURL(this.files[i]);
+                    $(".filearray").append($img);
+                }
+            });
+        });
+
+        jQuery(document).ready(function () {
+            $('.summernote').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5'],
+                height: 200,
+                minHeight: null,
+                maxHeight: null,
+                focus: true
+            });
+        });
+    </script>
+
+}

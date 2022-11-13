@@ -5,15 +5,22 @@
     ViewData["Title"] = "Quản lý mặt hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
 <div class="page-header">
-    <h2 class="header-title">@ViewBag.Title</h2><br />
+    <h2 class="header-title">@ViewData["Title"] : </h2>
     <div class="header-sub-title">
-        <nav class="breadcrumb breadcrumb-dash">
-            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-            <span class="breadcrumb-item active">Quản lý mặt hàng</span>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-dash list-inline">
+                <li class="breadcrumb-item list-inline-item">
+                    <i class="anticon anticon-home m-r-5"></i>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="breadcrumb-item active list-inline-item" aria-current="page">
+                    @ViewData["Title"]
+                </li>
+            </ol>
         </nav>
     </div>
+
 </div>
 <div class="card">
     <div class="card-body">
@@ -28,13 +35,10 @@
                 </div>
             </div>
             <div class="col-lg-4 text-right" >
-                <button class="btn btn-primary btn-tone">
-                    <a asp-area="Admin" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Create">
-                        <i class="anticon anticon-plus-circle m-r-5"></i>
-                        <span>Thêm mặt hàng</span>
-                    </a>                        
-                </button>
-
+                <a class="btn btn-primary btn-tone" asp-area="Admin" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Create">
+                    <i class="anticon anticon-plus-circle m-r-5"></i>
+                    <span>Thêm mặt hàng</span>
+                </a>                        
             </div>
         </div>
         <div class="table-responsive">
@@ -45,10 +49,10 @@
                         <th>Tên Mặt Hàng</th>
                         <th>Ảnh</th>
                         <th>Giá bán</th>
-                        <th>Đang được bán</th>
                         <th>Số sao</th>
                         <th>Số lượng</th>
                         <th>Số lượng đã bán</th>
+                        <th>Đang được bán</th>
                         <th>Đang được hiển thị</th>
                         <th>Danh mục</th>
 
@@ -76,9 +80,6 @@
                                 @item.GiaBan.ToString("#,##0") VND
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DangDuocBan)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => item.SoSao)
                             </td>
                             <td>
@@ -86,6 +87,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.SoLuongDaBan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DangDuocBan)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.DangDuocHienThi)
@@ -97,14 +101,14 @@
 
                             <td>
                                 <div class="btn-group btn-group-sm ">
-                                    <a asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Edit" asp-route-id="@item.MaMatHang">
+                                    <a class="m-10" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Edit" asp-route-id="@item.MaMatHang">
                                         <i class="fas fa-pen btn btn-primary "></i>
                                     </a>
-                                    <a asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Details" asp-route-id="@item.MaMatHang">
+                                    <a class="m-10" asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Details" asp-route-id="@item.MaMatHang">
                                         <i class="fas fa-clipboard-list btn btn-warning "></i>
                                     </a>
                                     <!-- Button trigger modal -->
-                                    <a data-toggle="modal" data-target="#deleteModal-@item.MaMatHang">
+                                    <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaMatHang">
                                         <i class="fas fa-trash-alt btn btn-danger "></i>
                                     </a>
                                     <form asp-area="Admin" asp-controller="AdminMatHangs" asp-action="Delete" asp-route-id="@item.MaMatHang">

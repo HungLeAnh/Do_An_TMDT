@@ -17,6 +17,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Google;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 namespace Do_an_TMDT
 {
@@ -76,7 +77,7 @@ namespace Do_an_TMDT
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -100,6 +101,7 @@ namespace Do_an_TMDT
                 );
             });
 
+            app.UseNotyf();
         }
     }
 }

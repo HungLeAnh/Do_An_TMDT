@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -13,21 +15,32 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
     public class AdminShippersController : Controller
     {
         private readonly WEBBANGIAYContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminShippersController(WEBBANGIAYContext context)
+        public AdminShippersController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
+
         }
 
         // GET: Admin/AdminShippers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var wEBBANGIAYContext = _context.NguoiDungs
-                .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng")|| 
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var lsCustomers = new List<NguoiDung>();
+            lsCustomers = await _context.NguoiDungs
+                .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng") ||
                             m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Shipper")
                       )
-                .Include(n => n.MaLoaiNguoiDungNavigation);
-            return View(await wEBBANGIAYContext.ToListAsync());
+                .Include(n => n.MaLoaiNguoiDungNavigation).ToListAsync();
+
+            PagedList<NguoiDung> models = new PagedList<NguoiDung>(lsCustomers.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+
+            return View(models);
         }
 
         // GET: Admin/AdminShippers/Details/5

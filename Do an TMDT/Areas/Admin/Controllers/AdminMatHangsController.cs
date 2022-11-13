@@ -94,6 +94,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 .Include(m => m.MaMauSacNavigation)
                 .Include(m => m.MaNhaCungCapNavigation)
                 .Include(m => m.MaThuongHieuNavigation)
+                .Include(m => m.MatHangAnhs)
                 .FirstOrDefaultAsync(m => m.MaMatHang == id);
             if (matHang == null)
             {
@@ -105,15 +106,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
 
         // GET: Admin/AdminMatHangs/Create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            IFormFile formFile = null;
+            //IFormFile formFile = null;
             ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc");
             ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1");
             ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac");
             ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap");
             ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu");
-            return View(formFile);
+            return View();//formFile
         }
         // POST: Admin/AdminMatHangs/Create
         [HttpPost]
@@ -169,16 +170,20 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var matHang = await _context.MatHangs.FindAsync(id);
+            var matHang =  await _context.MatHangs
+                            .Include(m => m.MatHangAnhs)
+                            .Where(m =>m.MaMatHang == id).FirstOrDefaultAsync();             
             if (matHang == null)
             {
                 return NotFound();
             }
-            ViewData["MaDanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "Slug", matHang.MaDanhMuc);
-            ViewData["MaKichCo"] = new SelectList(_context.KichCos, "MaKichCo", "MaKichCo", matHang.MaKichCo);
-            ViewData["MaMauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "MaMauSac", matHang.MaMauSac);
-            ViewData["MaNhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "Std", matHang.MaNhaCungCap);
-            ViewData["MaThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "Slug", matHang.MaThuongHieu);
+
+            ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc", matHang.MaDanhMuc);
+            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1", matHang.MaKichCo);
+            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac", matHang.MaMauSac);
+            ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", matHang.MaNhaCungCap);
+            ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu", matHang.MaThuongHieu);
+            ViewData["MatHangAnh"] = new SelectList(_context.MatHangAnhs, "MaAnh", "Anh", matHang.MatHangAnhs);
             return View(matHang);
         }
 
@@ -187,7 +192,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaMatHang,TenMatHang,GiaBan,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")] MatHang matHang)
+        public async Task<IActionResult> Edit(int id, [Bind("MaMatHang,TenMatHang,GiaBan,GiaNhap,DangDuocBan,SoSao,SoLuong,SoLuongDaBan,MoTa,DangDuocHienThi,MaNhaCungCap,MaThuongHieu,MaDanhMuc,MaKichCo,MaMauSac")] MatHang matHang, IFormFile[] files)
         {
             if (id != matHang.MaMatHang)
             {
@@ -198,8 +203,40 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             {
                 try
                 {
+                    if(files != null && files.Length > 0)
+                    {
+                        var oldMatHangAnh = _context.MatHangAnhs.Where(m => m.MaMatHang == id).ToList();
+                        foreach (var anh in oldMatHangAnh)
+                        {
+                            _context.Remove(anh);
+                        }
+                        await _context.SaveChangesAsync();
+
+                    }
+
                     _context.Update(matHang);
                     await _context.SaveChangesAsync();
+
+
+                    string tenMatHang = Utilities.ToTitleCase(matHang.TenMatHang);
+                    if (files != null)
+                    {
+                        foreach (var file in files)
+                        {
+
+                            MatHangAnh matHangAnh = new MatHangAnh();
+                            matHangAnh.MaMatHang = matHang.MaMatHang;
+                            string extension = Path.GetExtension(file.FileName);
+                            string image = Utilities.SEOUrl(tenMatHang) + DateTime.Now.Ticks + extension;
+                            matHangAnh.Anh = await Utilities.UploadFile(file, @"products", image.ToLower());
+                            if (string.IsNullOrEmpty(matHangAnh.Anh)) matHangAnh.Anh = "images/duphong.webp";
+
+                            _context.Add(matHangAnh);
+                        }
+
+                    }
+                    await _context.SaveChangesAsync();
+                    _notyfService.Success("Chỉnh sửa thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -214,11 +251,13 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaDanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "Slug", matHang.MaDanhMuc);
-            ViewData["MaKichCo"] = new SelectList(_context.KichCos, "MaKichCo", "MaKichCo", matHang.MaKichCo);
-            ViewData["MaMauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "MaMauSac", matHang.MaMauSac);
-            ViewData["MaNhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "Std", matHang.MaNhaCungCap);
-            ViewData["MaThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "Slug", matHang.MaThuongHieu);
+            ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc", matHang.MaDanhMuc);
+            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1", matHang.MaKichCo);
+            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac", matHang.MaMauSac);
+            ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", matHang.MaNhaCungCap);
+            ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu", matHang.MaThuongHieu);
+            ViewData["MatHangAnh"] = new SelectList(_context.MatHangAnhs, "MaAnh", "Anh", matHang.MatHangAnhs);
+
             return View(matHang);
         }
 

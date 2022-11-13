@@ -22,7 +22,7 @@ namespace Do_an_TMDT.Controllers
         }
 
         // GET: NguoiDungs2
-        public async Task<IActionResult> ChiTietNG()
+        public IActionResult ChiTietNG()
         {
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             if (taikhoanID != null)
@@ -35,7 +35,7 @@ namespace Do_an_TMDT.Controllers
             
 
         }
-        public async Task<IActionResult> DonHang()
+        public IActionResult DonHang()
         {
             
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
@@ -120,7 +120,7 @@ namespace Do_an_TMDT.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMK(int id, [Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
+        public IActionResult EditMK(int id, [Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
 
 
@@ -175,14 +175,15 @@ namespace Do_an_TMDT.Controllers
             //}
             //ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
             //
+            
             ViewBag.mess = "sai mật khẩu";
-                return View();
+            return View();
 
 
         }
 
         
-        public async Task<IActionResult> SoDiaChi()
+        public IActionResult SoDiaChi()
         {
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();

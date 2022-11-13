@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
 using Do_an_TMDT.Extension;
 using Do_an_TMDT.Helpper;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -18,10 +20,13 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
     public class AdminNguoiDungsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
+        public INotyfService _notyfService { get; }
 
-        public AdminNguoiDungsController(WEBBANGIAYContext context)
+        public AdminNguoiDungsController(WEBBANGIAYContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
+
         }
 
         // GET: Admin/AdminNguoiDungs
