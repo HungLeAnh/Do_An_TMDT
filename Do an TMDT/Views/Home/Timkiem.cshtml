@@ -15,7 +15,7 @@
 
                     @foreach (var item in ViewBag.listcate)
                     {
-                        <li><a href="">@item.TenThuongHieu</a></li>
+                        <li><a href="@Url.Action("ThuongHieu", "Home", new { MaTH = item.MaThuongHieu })">@item.TenThuongHieu</a></li>
                     }}
             }
         </ul>
@@ -60,31 +60,7 @@
                 <a href=""><ion-icon name="cart-outline"></ion-icon></a>
                 <section class="giohang">
                     <form action="">
-                        <table>
-                            <thead>
-
-                                <tr>
-                                    <th>Sản phẩm</th>
-                                    <th>Tên</th>
-                                    <th>Giá</th>
-                                    <th>SL</th>
-                                    <th>Chọn</th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><img src="image/sp2_1.webp" alt=""></td>
-                                    <td>LeBron 19</td>
-                                    <td><p><span>19000</span><sup>đ</sup></p></td>
-                                    <td><input type="number" value="1" min="0"></td>
-                                    <td>xóa</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="tong">
-                            <p>Tổng:<span>19000</span><sup>đ</sup></p>
-                        </div>
+                       
                     </form>
                 </section>
             </li>

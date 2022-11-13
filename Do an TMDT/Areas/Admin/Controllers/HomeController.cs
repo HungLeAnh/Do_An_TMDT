@@ -7,6 +7,7 @@ using Do_an_TMDT.ViewModels;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -50,6 +51,9 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 AnhTop5SanPham.Add(obj.Anh);
             }
             ViewBag.AnhTop5SanPham = AnhTop5SanPham;
+            int idND = (int)HttpContext.Session.GetInt32("Ten");
+            var NG = _context.NguoiDungs.Where(x => x.MaNguoiDung == idND).FirstOrDefault();
+            ViewBag.NG = NG;
             return View();
         }
         public decimal ThongKeTongDoanhThu()
