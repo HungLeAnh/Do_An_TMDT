@@ -362,7 +362,7 @@ namespace Do_an_TMDT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> QuenMK([Bind("Email")] NguoiDung nguoiDung)
         {
-            var ng = _context.NguoiDungs.Where(x => x.Email == nguoiDung.Email).ToList();
+            var ng = _context.NguoiDungs.Where(x => x.Email == nguoiDung.Email).FirstOrDefault();
             if (ng != null)
             {
                 Random ran = new Random();
@@ -393,18 +393,12 @@ namespace Do_an_TMDT.Controllers
 
                 string salt = Utilities.GetRandomKey();
 
-                NguoiDung khachhang = new NguoiDung
-                {
-                    MaLoaiNguoiDung = ng[0].MaLoaiNguoiDung,
-                    MaNguoiDung=ng[0].MaNguoiDung,
-                    TenDangNhap = ng[0].TenDangNhap,
-                    TenNguoiDung = ng[0].TenNguoiDung,
-                    Sdt = ng[0].Sdt,
-                    Email = ng[0].Email,
-                    MatKhauHash = (rad + salt.Trim()).ToMD5(),
-                    Salt = salt
-                };
-                _context.Update(khachhang);
+               
+                  
+                    ng.MatKhauHash = (rad + salt.Trim()).ToMD5();
+                    ng.Salt = salt;
+                
+                _context.NguoiDungs.Update(ng);
                 await _context.SaveChangesAsync();
                 
                     return RedirectToAction(nameof(dangnhap));
