@@ -373,7 +373,7 @@ namespace Do_an_TMDT.Controllers
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
                 DiaChi = sl.DiaChi,
                 Sdt = khachhang[0].Sdt,
-                TinhTrang = "Đang Giao",
+                TinhTrang = "Chưa Giao",
                 DaThanhToan = true,
                 TongTien = thanhtien + 80000,
                 NgayXuatDonHang = DateTime.Now

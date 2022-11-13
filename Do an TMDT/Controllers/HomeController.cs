@@ -24,7 +24,58 @@ namespace Do_an_TMDT.Controllers
             _context = context;
 
         }
+        public IActionResult ThuongHieu(int MaTH)
+        {
 
+            HomeVM model = new HomeVM();
+            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
+            ViewBag.listcate = listcate;
+            var listSP = _context.MatHangs.AsNoTracking()
+                .Where(x => x.DangDuocBan == true)
+                .Where(x=>x.MaThuongHieu==MaTH)
+                .ToList();
+            List<MatHangHome> listSPW = new List<MatHangHome>();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+
+            foreach (var item in listSP)
+            {
+
+                MatHangHome mh = new MatHangHome();
+
+                mh.listSPs = item;
+                foreach (var item_anh in listanh)
+                {
+                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                foreach (var item_TH in listTH)
+                {
+                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
+                }
+                listSPW.Add(mh);
+                model.MatHangs = listSPW;
+
+                if (HttpContext.Session.GetInt32("Ten") != null)
+                {
+
+                    ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+                }
+                else
+                {
+                    ViewBag.Id = 0;
+                }
+
+
+            }
+            
+            HttpContext.Session.SetInt32("IDSP", MaTH);
+            return View(model);
+
+        }
         public IActionResult Loadsanpham(int? page , int MaLoai)
         {
             page = 1;

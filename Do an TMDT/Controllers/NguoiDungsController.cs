@@ -26,8 +26,51 @@ namespace Do_an_TMDT.Controllers
             _context = context;
             _notyfService = notyfService;
         }
-        
 
+        public IActionResult ThuongHieu(int MaTH)
+        {
+
+            HomeVM model = new HomeVM();
+            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
+            ViewBag.listcate = listcate;
+            var listSP = _context.MatHangs.AsNoTracking()
+                .Where(x => x.DangDuocBan == true)
+                .Where(x => x.MaThuongHieu == MaTH)
+                .ToList();
+            List<MatHangHome> listSPW = new List<MatHangHome>();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+
+            foreach (var item in listSP)
+            {
+
+                MatHangHome mh = new MatHangHome();
+
+                mh.listSPs = item;
+                foreach (var item_anh in listanh)
+                {
+                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                foreach (var item_TH in listTH)
+                {
+                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
+                }
+                listSPW.Add(mh);
+                model.MatHangs = listSPW;
+                int i = (int)HttpContext.Session.GetInt32("Ten");
+                ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+                
+
+            }
+
+            
+            return View(model);
+
+        }
         public IActionResult Loadsanpham()
         {
             HomeVM model = new HomeVM();
@@ -264,7 +307,6 @@ namespace Do_an_TMDT.Controllers
 
         public IActionResult OTP()
         {
-
             return View();
         }
 
@@ -311,6 +353,78 @@ namespace Do_an_TMDT.Controllers
             return View();
 
         }
+        public IActionResult QuenMK()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> QuenMK([Bind("Email")] NguoiDung nguoiDung)
+        {
+            var ng = _context.NguoiDungs.Where(x => x.Email == nguoiDung.Email).ToList();
+            if (ng != null)
+            {
+                Random ran = new Random();
+                int rad = ran.Next(100000, 999999);
+                HttpContext.Session.SetInt32("OTP", rad);
+                var mess = new MimeMessage();
+                mess.From.Add(new MailboxAddress("Trần Bửu Quyến", "tranbuuquyen2002@gmail.com"));
+                mess.To.Add(new MailboxAddress("Xác Thực", nguoiDung.Email));
+                mess.Subject = "Xác Thực Email";
+                mess.Body = new TextPart("plain")
+                {
+                    Text = "Mật Khẩu mới:" + rad
+
+                };
+                
+                using (var client = new SmtpClient())
+                {
+
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                    client.Send(mess);
+                    client.Disconnect(true);
+
+                }
+               
+
+
+
+                string salt = Utilities.GetRandomKey();
+
+                NguoiDung khachhang = new NguoiDung
+                {
+                    MaLoaiNguoiDung = ng[0].MaLoaiNguoiDung,
+                    MaNguoiDung=ng[0].MaNguoiDung,
+                    TenDangNhap = ng[0].TenDangNhap,
+                    TenNguoiDung = ng[0].TenNguoiDung,
+                    Sdt = ng[0].Sdt,
+                    Email = ng[0].Email,
+                    MatKhauHash = (rad + salt.Trim()).ToMD5(),
+                    Salt = salt
+                };
+                _context.Update(khachhang);
+                await _context.SaveChangesAsync();
+                
+                    return RedirectToAction(nameof(dangnhap));
+
+                }
+                else
+                {
+                    ViewBag.mess = "Email không chính xác";
+                    return View();
+                }
+
+
+            return View();
+
+        }
+        private bool NguoiDungExists(int id)
+        {
+            return _context.NguoiDungs.Any(e => e.MaNguoiDung == id);
+        }
+
         public IActionResult Timkiem(NguoiDung timkiem)
         {
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
@@ -321,6 +435,10 @@ namespace Do_an_TMDT.Controllers
             {
                 timkiem.TenNguoiDung = timkiem.TenNguoiDung.ToLower();
                 listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(timkiem.TenNguoiDung)).ToList();
+            }
+            else
+            {
+                return View();
             }
             List<MatHangHome> listSPW = new List<MatHangHome>();
             var listanh = _context.MatHangAnhs
