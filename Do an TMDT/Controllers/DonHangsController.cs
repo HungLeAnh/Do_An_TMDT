@@ -167,8 +167,8 @@ namespace Do_an_TMDT.Controllers
 
             int sl1 = (int)HttpContext.Session.GetInt32("sl");
             ViewBag.Tong = sl1 * model.MatHangs[0].listSPs.GiaBan;
-            ViewBag.ThanhTien = sl1 * model.MatHangs[0].listSPs.GiaBan + 800000;
-            decimal tong= sl1 * model.MatHangs[0].listSPs.GiaBan + 800000;
+            ViewBag.ThanhTien = sl1 * model.MatHangs[0].listSPs.GiaBan ;
+            decimal tong= sl1 * model.MatHangs[0].listSPs.GiaBan;
             DonHang donhang = new DonHang
             {
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
@@ -176,7 +176,7 @@ namespace Do_an_TMDT.Controllers
                 Sdt = khachhang[0].Sdt,
                 TinhTrang = "Chưa Giao",
                 DaThanhToan = true,
-                TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan + 80000,
+                TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
                 NgayXuatDonHang = DateTime.Now
             };
 
