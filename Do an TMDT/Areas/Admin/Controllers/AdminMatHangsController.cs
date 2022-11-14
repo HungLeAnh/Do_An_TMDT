@@ -17,6 +17,7 @@ using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Http;
 using static System.Net.WebRequestMethods;
 using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -333,6 +334,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             matHang.DangDuocHienThi = false;
             matHang.DangDuocBan = false;
              _context.MatHangs.Update(matHang);
+            
+            var theoDoi = await _context.TheoDois.Where(m => m.MaMatHang == id).ToListAsync();
+            foreach(var item in theoDoi) 
+                _context.TheoDois.Remove(item);
+
+            var chiTietGioHang = await _context.ChiTietGioHangs.Where(m => m.MaMatHang == id).ToListAsync();
+            foreach (var item in chiTietGioHang)
+                _context.ChiTietGioHangs.Remove(item);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

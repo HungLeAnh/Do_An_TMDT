@@ -27,15 +27,12 @@
             <table class="table table-hover e-commerce-table">
                 <thead>
                     <tr>
-                        <th>Mã người dùng</th>
                         <th>Tên người dùng</th>
                         <th>Ảnh đại diện</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Loại người dùng</th>
-                        <th>
-                            
-                        </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,23 +42,24 @@
                         {
                             <tr>
                                 <td>
-                                    @item.MaNguoiDung
-                                </td>
-                                <td>
                                     <div class="d-flex align-items-center">
                                         <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
                                         <h6 class="m-b-0 m-l-10">@item.TenNguoiDung</h6>
                                     </div>
                                 </td>
-                                <td>@item.AnhDaiDien</td>
+                                <td>
+                                    <img class="img-fluid rounded" onerror="src='/images/duphong.webp'"
+                                        src="~/@if(@item.AnhDaiDien!=null)
+                                        {
+                                            @item.AnhDaiDien
+                                        }"
+                                        style="max-width: 60px;">
+                                </td>
                                 <td>@item.Email</td>
                                 <td>@item.Sdt</td>
                                 <td>@item.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung</td>              
                                 <td>
                                     <div class="btn-group btn-group-sm ">
-                                        <a class="m-10" asp-area="Admin" asp-controller="AdminShippers" asp-action="Edit" asp-route-id="@item.MaNguoiDung">
-                                            <i class="fas fa-pen btn btn-primary "></i>
-                                        </a>
                                         <a class="m-10" asp-area="Admin" asp-controller="AdminShippers" asp-action="Details" asp-route-id="@item.MaNguoiDung">
                                             <i class="fas fa-clipboard-list btn btn-warning "></i>
                                         </a>
