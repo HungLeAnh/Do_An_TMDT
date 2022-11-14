@@ -17,13 +17,15 @@
         if (ViewBag.Id == 0)
         {
             <a asp-controller="Home" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Trang chủ</a></li>
         }
         else
         {
             <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
         }
     }
-    <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
+
     <li><a href="">Giới Thiệu</a></li>
     <li>
         <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>

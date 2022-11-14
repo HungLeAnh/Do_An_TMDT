@@ -163,8 +163,16 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var donhang = _context.DonHangs.Where(x => x.MaNguoiGiaoHang == id).ToList();
+            foreach (var item in donhang)
+            {
+                item.MaNguoiGiaoHang = null;
+                _context.DonHangs.Update(item);
+            }
+           
             var nguoiDung = await _context.NguoiDungs.FindAsync(id);
             _context.NguoiDungs.Remove(nguoiDung);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

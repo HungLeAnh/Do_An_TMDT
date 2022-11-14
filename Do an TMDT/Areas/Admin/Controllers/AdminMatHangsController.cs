@@ -331,6 +331,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             var matHang = await _context.MatHangs.FindAsync(id);
             matHang.DangDuocHienThi = false;
+            matHang.DangDuocBan = false;
              _context.MatHangs.Update(matHang);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
