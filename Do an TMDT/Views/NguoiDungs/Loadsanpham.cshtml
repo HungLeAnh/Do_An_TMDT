@@ -160,14 +160,16 @@
 <div class="menu_sp">
     @{int i = 0;
     }
-    @if (ViewBag.mathang != null)
+    @if (ViewBag.mathang != null )
     {
         @foreach (var item in @ViewBag.mathang)
         {
-
+            @if (i <= 8)
+            {
             <div class="menu_sp-item">
 
-                <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+                <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
+                {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
                 <div class="item_text">
                     <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
                 </div>
@@ -180,14 +182,16 @@
                 </div>
 
                 <div class="layer2">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count>0){@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
+                    {@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
                     <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
                     <button><a href="@Url.Action("AddCart", "GioHang", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
                 </div>
 
             </div>
-            i++;
-        }
+                    i++;
+                }
+            }
 
     }
 

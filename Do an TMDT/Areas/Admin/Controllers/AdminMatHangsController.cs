@@ -332,6 +332,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             var matHang = await _context.MatHangs.FindAsync(id);
             matHang.DangDuocHienThi = false;
+            matHang.DangDuocBan = false;
              _context.MatHangs.Update(matHang);
             
             var theoDoi = await _context.TheoDois.Where(m => m.MaMatHang == id).ToListAsync();
