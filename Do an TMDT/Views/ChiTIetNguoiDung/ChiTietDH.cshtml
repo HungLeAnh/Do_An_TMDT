@@ -36,6 +36,17 @@
     </div>
 
 </section>
+@{
+
+    if (@ViewBag.sus != null)
+    {
+        <div class="col">
+            <div class="alert alert-success col-lg-2" role="alert">
+                @ViewBag.sus
+            </div>
+        </div>
+    }
+}
 <section class="NoidungChinh">
     <div class="Noidung1">
         <div class="title_hello">
@@ -60,55 +71,44 @@
                 <thead>
                     <tr>
                         <th>Đơn hàng</th>
-                        <th>Tình Trạng Đơn Hàng</th>
-                        <th>Địa chỉ</th>
-                        <th>Giá trị đơn hàng</th>
-                        <th>TT thanh toán</th>
+                        <th>Mã Mặt Hàng</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @{if (ViewBag.donhang != null)
-                        { @foreach (var item in ViewBag.donhang)
-                        {
-                    <tr>
-                        <td>@item.MaDonHang</td>
-                        <td>@item.TinhTrang</td>
-                        <td>@item.DiaChi</td>
-                        <td>@item.TongTien</td>
-                        @{
-                            @if (item.DaThanhToan == null || item.DaThanhToan == false)
-                            {
-                                <td>Chưa Thanh Toán</td>
-                            }
-                            else
-                            {
+                    @{if (ViewBag.chitietdonhang != null)
+                        { @foreach (var item in ViewBag.chitietdonhang)
+{
+                                <tr>
+                                    <td>@item.MaDonHang</td>
+                                    <td>@item.MaMatHang</td>
+                                    <td>@item.Gia</td>
+                                    <td>@item.SoLuong</td>
 
-                                <td>Đã Thanh Toán</td>
-                            }
-
+                                </tr>
+}
                         }
-
-
-
-
-
-                        <td>
-                            <div class="btn-group btn-group-sm ">
-                                <a href="@Url.Action("ChiTietDH", "ChiTietNguoiDung", new { MaDH = item.MaDonHang })">
-                                    <i class="fas fa-pen btn btn-primary "></i>
-                                </a>
-                                <a href="@Url.Action("Delete", "ChiTietNguoiDung", new { id = item.MaDonHang })">
-                                    <i class="fas fa-trash-alt btn btn-danger "></i>
-                                </a>
-
-                            </div>
-                        </td>
-                    </tr>
-                            }
-                    }
                     }
             </table>
+            <form asp-action="ChiTietDH">
+                @{if (ViewBag.tinhtrang == "Chưa xác nhận")
+
+                    {
+
+                        <div class="form-group">
+                            <input type="submit" value="Xác Nhận" class="btn btn-primary" />
+                        </div>}
+                    else
+                    {
+                        <div class="form-group">
+                            <input type="button" value="Đã xác nhận" class="btn btn-primary" />
+                        </div>
+                    }
+                }
+
+            </form>
         </div>
     </div>
 

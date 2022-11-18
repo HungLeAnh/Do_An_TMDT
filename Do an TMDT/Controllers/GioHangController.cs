@@ -373,15 +373,16 @@ namespace Do_an_TMDT.Controllers
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
                 DiaChi = sl.DiaChi,
                 Sdt = khachhang[0].Sdt,
-                TinhTrang = "Chưa Giao",
+                TinhTrang = "Chưa xác nhận",
                 DaThanhToan = true,
-                TongTien = thanhtien + 80000,
+                TongTien = thanhtien,
                 NgayXuatDonHang = DateTime.Now
             };
             ViewBag.giohang = cartNew;
             _context.Add(donhang);
             await _context.SaveChangesAsync();
-            var listDH = _context.DonHangs.Where(x => x.NgayXuatDonHang == donhang.NgayXuatDonHang).ToList();
+            var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
+            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == curdonhang.MaDonHang).ToList();
             foreach (var item in itemcartsNew)
             {
                 if (item.SanPham.SoLuong - item.CT_GH.SoLuong < 0)
@@ -411,6 +412,15 @@ namespace Do_an_TMDT.Controllers
                 };
 
                 _context.Update(mathang);
+                await _context.SaveChangesAsync();
+                ChiTietDonHang ctdonhang = new ChiTietDonHang
+                {
+                    MaDonHang = curdonhang.MaDonHang,
+                    MaMatHang = item.SanPham.MaMatHang,
+                    Gia = item.SanPham.GiaBan,
+                    SoLuong = item.CT_GH.SoLuong
+                };
+                _context.Update(ctdonhang);
                 await _context.SaveChangesAsync();
 
 
