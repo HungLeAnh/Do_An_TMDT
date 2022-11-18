@@ -79,7 +79,7 @@ namespace Do_an_TMDT.Controllers
             ViewData["DiaChi"] = new SelectList(_context.NguoiDungDiaChis, "DiaChi", "DiaChi");
             int sl = (int)HttpContext.Session.GetInt32("sl");
             ViewBag.Tong = sl * model.MatHangs[0].listSPs.GiaBan;
-            ViewBag.ThanhTien = sl * model.MatHangs[0].listSPs.GiaBan + 800000;
+      
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
             ViewBag.Id = HttpContext.Session.GetInt32("Ten");
@@ -174,15 +174,26 @@ namespace Do_an_TMDT.Controllers
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
                 DiaChi = sl.DiaChi,
                 Sdt = khachhang[0].Sdt,
-                TinhTrang = "Chưa Giao",
+                TinhTrang = "Chưa xác nhận",
                 DaThanhToan = true,
                 TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
                 NgayXuatDonHang = DateTime.Now
             };
 
             _context.Add(donhang);
-          
-                MatHang mathang = new MatHang
+            await _context.SaveChangesAsync();
+            var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
+           
+            ChiTietDonHang ctdonhang = new ChiTietDonHang
+            {
+                MaDonHang = curdonhang.MaDonHang,
+                MaMatHang = model.MatHangs[0].listSPs.MaMatHang,
+                Gia = model.MatHangs[0].listSPs.GiaBan,
+                SoLuong = sl1
+            };
+            _context.Add(ctdonhang);
+            await _context.SaveChangesAsync();
+            MatHang mathang = new MatHang
                 {
                     MaMatHang = Convert.ToInt32(MaSp),
                     TenMatHang = model.MatHangs[0].listSPs.TenMatHang,

@@ -51,6 +51,59 @@ namespace Do_an_TMDT.Controllers
 
 
         }
+        public async Task<IActionResult> ChiTietDH(int MaDH)
+        {
+
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+            HttpContext.Session.SetInt32("MaDH",MaDH);
+            if (taikhoanID != null)
+            {
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                ViewBag.khachhang = khachhang[0];
+                var donhang2 = _context.DonHangs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                ViewBag.donhang = donhang2;
+             
+            }
+            var donhang = _context.DonHangs.Where(x => x.MaDonHang == MaDH).FirstOrDefault();
+            ViewBag.tinhtrang = donhang.TinhTrang;
+            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
+            ViewBag.chitietdonhang = listsp_donhang;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChiTietDH([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
+        {
+
+            int MaDH= (int)HttpContext.Session.GetInt32("MaDH");
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+        
+            if (taikhoanID != null)
+            {
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                ViewBag.khachhang = khachhang[0];
+                var donhang2 = _context.DonHangs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
+                ViewBag.donhang = donhang2;
+
+            }
+            var donhang = _context.DonHangs.Where(x => x.MaDonHang == MaDH).FirstOrDefault();
+                 ViewBag.tinhtrang = donhang.TinhTrang;
+            if (donhang.TinhTrang == "Chưa xác nhận")
+            {
+               
+                donhang.TinhTrang = "Đã xác nhận";
+                _context.Update(donhang);
+                await _context.SaveChangesAsync();
+            }
+           
+            ViewBag.sus = "Đã xác nhận thành công";
+           
+            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
+            ViewBag.chitietdonhang = listsp_donhang;
+            return View();
+        }
+      
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -284,6 +337,48 @@ namespace Do_an_TMDT.Controllers
 
 
         }
+       
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var thuongHieu = _context.DonHangs
+                .FirstOrDefault(m => m.MaDonHang == id);
+            HttpContext.Session.SetInt32("MaDH", id);
+            if (thuongHieu == null)
+            {
+                return NotFound();
+            }
+            ViewBag.xoa = thuongHieu;
+
+            return View();
+        }
+
+        // POST: Admin/AdminThuongHieus/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed()
+        {
+            int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
+            var thuongHieu = await _context.DonHangs.FindAsync(MaDH);
+           
+            if(thuongHieu.TinhTrang=="Chưa xác nhận")
+            {
+                _context.Remove(thuongHieu);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(DonHang));
+            }
+            ViewBag.xoa = thuongHieu;
+            ViewBag.mess = "Đơn hàng đã đóng gói hoặc đã xác nhận không thể xóa";
+            return View();
+
+
+
+        }
+
 
     }
 }
