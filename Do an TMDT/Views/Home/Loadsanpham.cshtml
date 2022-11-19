@@ -60,7 +60,6 @@
                 <a href=""><ion-icon name="cart-outline"></ion-icon></a>
                 <section class="giohang">
                     <form action="">
-                        
                     </form>
                 </section>
             </li>
@@ -117,41 +116,61 @@
 
         @foreach (var item in Model.MatHangs)
         {
-            @if (i <= 8)
+            @if (i <8)
             {
 
-            <div class="menu_sp-item">
+                <div class="menu_sp-item">
 
-                <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count() > 0)
+                    <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count() > 0)
                 {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
 
-                <div class="item_text">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
-                </div>
-                <div class="item_daban">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
-                </div>
-                <br>
-                <div class="item_gia">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
-                </div>
+                    <div class="item_text">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+                    </div>
+                    <div class="item_daban">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+                    </div>
+                    <br>
+                    <div class="item_gia">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+                    </div>
 
-                <div class="layer2">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">
-                        <img onerror="this.src='images/duphong.webp'" src="@if (item.listSPs.MatHangAnhs.Count() > 0)
+                    <div class="layer2">
+                        <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">
+                            <img onerror="this.src='images/duphong.webp'" src="@if (item.listSPs.MatHangAnhs.Count() > 0)
                         {@item.MatHangAnhs[1].Anh}" width="250px" alt="">
-                    </a>
-                    <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
-                    <button><a href="@Url.Action("dangnhap", "NguoiDungs", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
-                </div>
+                        </a>
+                        <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+                        <button><a href="@Url.Action("dangnhap", "NguoiDungs", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
+                    </div>
 
-            </div>
-                    i++;
-                }
+                </div>
+                i++;
             }
+        }
 
     }
 
+</div>
+<a asp-action="Loadhet"><button  id="them">Xem Tất Cả</button></a>
+<div class="phukien">
+    <div class="tieude">
+        <h1>PHỤ KIỆN</h1>
+        <p>Tất cả phụ kiện có tại ND Shoes  </p>
+    </div>
+    <div class="lon">
+        <div class="trai">
+            <img src="~/images/phukien_1.webp" alt="">
+        </div>
+        <div class="phai">
+            <div class="anh_phai">
+                <img src="~/images/phukien_2.webp" alt="">
+            </div>
+            <div class="anh_phai">
+                <img src="~/images/p.webp" alt="">
+            </div>
+        </div>
+    </div>
 </div>
 <div aria-label="Page navigation example">
     <ul class="pagination">
