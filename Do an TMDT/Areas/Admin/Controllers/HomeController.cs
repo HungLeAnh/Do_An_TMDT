@@ -26,8 +26,11 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             DateTime HienTai = DateTime.Now;
             ViewBag.TongDoanhThu = string.Format("{0:0,0}", ThongKeTongDoanhThu());
-            if(ThongKeDoanhThuTheoNam(HienTai.Year-1) != 0)
-                ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(HienTai.Year) - ThongKeDoanhThuTheoNam(HienTai.Year - 1)) / ThongKeDoanhThuTheoNam(HienTai.Year - 1) * 100);
+            ViewBag.TangTruong = 0;
+            if (ThongKeDoanhThuTheoNam(HienTai.Year - 2) != 0)
+            {
+                ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(HienTai.Year - 1) - ThongKeDoanhThuTheoNam(HienTai.Year - 2)) / ThongKeDoanhThuTheoNam(HienTai.Year - 2) * 100);
+            }
             ViewBag.SoDonHang = ThongKeTongDonHang();
             ViewBag.SoNguoiDung = ThongKeTongNguoiDung();
             ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0.00}", ThongKeDoanhThuTheoNam(HienTai.Year) / HienTai.Month);
@@ -59,14 +62,27 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
         public decimal ThongKeTongDoanhThu()
         {
-            decimal TongDoanhThu = _context.MatHangs.Sum(n => n.SoLuongDaBan * n.GiaBan).Value;
+            decimal TongDoanhThu = _context.MatHangs.Sum(n => n.SoLuongDaBan * (n.GiaBan - n.GiaNhap)).Value;
             return TongDoanhThu;
         }
         public decimal ThongKeDoanhThuTheoNam(int Nam)
         {
             if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam).Count() > 0)
             {
-                decimal TongDoanhThu = decimal.Parse(_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam).Sum(n => n.TongTien).ToString());
+                var lst = from s1 in (from s1 in _context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam)
+                                      join s2 in _context.ChiTietDonHangs on s1.MaDonHang equals s2.MaDonHang
+                                      select new
+                                      {
+                                          MaMatHang = s2.MaMatHang,
+                                          TongTien = s1.TongTien,
+                                          SoLuongDaBan = s2.SoLuong
+                                      })
+                          join s2 in _context.MatHangs on s1.MaMatHang equals s2.MaMatHang
+                          select new
+                          {
+                              DoanhThu = s1.TongTien - s1.SoLuongDaBan * s2.GiaNhap
+                          };
+                decimal TongDoanhThu = decimal.Parse(lst.Sum(n => n.DoanhThu).ToString());
                 return TongDoanhThu;
             }
             return 0;
@@ -80,9 +96,23 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
             if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang).Count() > 0)
             {
-                return "$" + _context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang).Sum(n => n.TongTien).ToString();
+                var lst = from s1 in (from s1 in _context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang)
+                                      join s2 in _context.ChiTietDonHangs on s1.MaDonHang equals s2.MaDonHang
+                                      select new
+                                      {
+                                          MaMatHang = s2.MaMatHang,
+                                          TongTien = s1.TongTien,
+                                          SoLuongDaBan = s2.SoLuong
+                                      })
+                          join s2 in _context.MatHangs on s1.MaMatHang equals s2.MaMatHang
+                          select new
+                          {
+                              DoanhThu = s1.TongTien - s1.SoLuongDaBan * s2.GiaNhap
+                          };
+                decimal DoanhThu = decimal.Parse(lst.Sum(n => n.DoanhThu).ToString());
+                return DoanhThu.ToString();
             }
-            return "$0";
+            return "0";
         }
         public int ThongKeTongDonHang()
         {
