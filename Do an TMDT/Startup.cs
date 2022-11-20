@@ -47,6 +47,7 @@ namespace Do_an_TMDT
                     config.Position = NotyfPosition.TopRight;
                 }
             );
+            services.AddRazorPages();
             services.AddSession();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddGoogle(googleOptions =>
@@ -61,11 +62,12 @@ namespace Do_an_TMDT
                 {
                     p.Cookie.Name = "UserLoginCookie";
                     p.ExpireTimeSpan = TimeSpan.FromDays(1);
-                    //p.LoginPath = "/dang-nhap.html";
-                    //p.LogoutPath = "/dang-xuat/html";
+                    p.LoginPath = "/login";
+                    p.LogoutPath = "/dang-xuat/html";
                     p.AccessDeniedPath = "/not-found.html";
                 });
-                
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,6 +101,8 @@ namespace Do_an_TMDT
                     name: "default",
                     pattern: "{controller=Home}/{action=Loadsanpham}/{id?}"
                 );
+                endpoints.MapRazorPages();
+
             });
 
             app.UseNotyf();
