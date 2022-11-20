@@ -4,26 +4,24 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-        crossorigin="anonymous"></script>
+
 
 <link href="~/css/2.css" rel="stylesheet" />
 <link href="~/css/3.css" rel="stylesheet" />
 <ul class="menu">
     @{
-        if (ViewBag.Id == 0)
+        if (ViewBag.Id != 0)
         {
-            <a asp-controller="Home" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
         }
         else
         {
-            <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <a asp-controller="Home" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Trang chủ</a></li>
         }
     }
-    <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
+
     <li><a href="">Giới Thiệu</a></li>
     <li>
         <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
@@ -43,7 +41,7 @@
                 </div>
             </li>
             @{
-                if (ViewBag.Id != 0)
+                if (ViewBag.Id == 0)
                 {
                     <li>
                         <a href=""><ion-icon name="person-outline"></ion-icon></a>
@@ -56,7 +54,7 @@
                 }
             }
             @{
-                if (ViewBag.Id == 0)
+                if (ViewBag.Id != 0)
                 {
                     <li>
                         <a href=""><ion-icon name="person-outline"></ion-icon></a>

@@ -158,13 +158,14 @@
     <h1>SẢN PHẨM MỚI</h1>
 </div>
 <div class="menu_sp">
+    <div class="chua">
     @{int i = 0;
     }
     @if (ViewBag.mathang != null )
     {
         @foreach (var item in @ViewBag.mathang)
         {
-            @if (i <= 8)
+            @if (i < 8)
             {
             <div class="menu_sp-item">
 
@@ -194,7 +195,27 @@
             }
 
     }
+    </div>
 
+</div>
+<div class="phukien">
+    <div class="tieude">
+        <h1>PHỤ KIỆN</h1>
+        <p>Tất cả phụ kiện có tại ND Shoes  </p>
+    </div>
+    <div class="lon">
+        <div class="trai">
+            <img src="~/images/phukien_1.webp" alt="">
+        </div>
+        <div class="phai">
+            <div class="anh_phai">
+                <img src="~/images/phukien_2.webp" alt="">
+            </div>
+            <div class="anh_phai">
+                <img src="~/images/p.webp" alt="">
+            </div>
+        </div>
+    </div>
 </div>
 <script src="~/Adminassets/summernote/summernote-bs4.js"></script>
 @await Component.InvokeAsync("Notyf")

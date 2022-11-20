@@ -100,15 +100,22 @@
                         <div class="form-group">
                             <input type="submit" value="Xác Nhận" class="btn btn-primary" />
                         </div>}
-                    else
-                    {
-                        <div class="form-group">
-                            <input type="button" value="Đã xác nhận" class="btn btn-primary" />
-                        </div>
-                    }
-                }
+                   else if (ViewBag.tinhtrang == "Đã giao")
 
-            </form>
+                        {
+
+                            <div class="form-group">
+                                <input type="submit" value="Xác Nhận đã nhận" class="btn btn-primary" />
+                            </div>}
+                        else
+                        {
+                            <div class="form-group">
+                                <input type="button" value="Đã xác nhận" class="btn btn-primary" />
+                            </div>
+                        }
+                    }
+
+                </form>
         </div>
     </div>
 

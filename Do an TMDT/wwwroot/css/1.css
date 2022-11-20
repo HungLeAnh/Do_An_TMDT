@@ -278,7 +278,7 @@ h1::after
 .menu_sp
 {
     width: 1200px;
-    height: 700px;
+    height: 1000px;
     margin-left: 180px;
     margin-top: 20px;
     
@@ -508,7 +508,7 @@ margin-top: 20px;
 }
 .phukien
 {
-    height: 1000px;
+    height: 600px;
     margin-bottom: 10px;
 }
 .lon{
@@ -553,6 +553,15 @@ margin-top: 20px;
 .sub-icon>li:last-child
 {
     opacity: 0;
+}
+#them:hover {
+    background-color: #ee6457;
+}
+
+#them {
+    background-color: #D92414;
+    border: none;
+    box-shadow: 2px 2px 0 0 black;
 }
 @media (max-width:852px) {
     .menu>a>img{

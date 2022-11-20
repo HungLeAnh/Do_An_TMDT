@@ -58,13 +58,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model!=null)
-                   {
-                       foreach (var item in Model)
-                       {
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
                             <tr>
                                 <td>
-                                        @item.MaNguoiDungNavigation.TenNguoiDung
+                                    @item.MaNguoiDungNavigation.TenNguoiDung
                                 </td>
                                 <td>
                                     @item.DiaChi
@@ -77,26 +77,47 @@
                                 <td>@item.NgayXuatDonHang.Value.Date</td>
                                 <td>
                                     @if (item.TinhTrang.Equals("Đã Giao", StringComparison.OrdinalIgnoreCase))
-                                   {
+                                    {
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-success badge-dot m-r-10"></div>
                                             <div>Đã Giao</div>
                                         </div>
-                                   }
+                                    }
                                     else if (item.TinhTrang.Equals("Đang Giao", StringComparison.OrdinalIgnoreCase))
-                                   {
+                                    {
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-warning badge-dot m-r-10"></div>
                                             <div>Đang Giao</div>
                                         </div>
-                                   }
-                                    else if (item.TinhTrang.Equals("Chưa Giao", StringComparison.OrdinalIgnoreCase))
-                                   {
+                                    }
+                                    else if (item.TinhTrang.Equals("Đơn hàng thành công", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-success badge-dot m-r-10"></div>
+                                            <div>Thành công</div>
+                                        </div>
+                                    }
+                                    else if (item.TinhTrang.Equals("Đã đóng gói", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-warning badge-dot m-r-10"></div>
+                                            <div>Đã đóng gói</div>
+                                        </div>
+                                    }
+                                    else if (item.TinhTrang.Equals("Chưa xác nhận", StringComparison.OrdinalIgnoreCase))
+                                    {
                                         <div class="d-flex align-items-center">
                                             <div class="badge badge-danger badge-dot m-r-10"></div>
-                                            <div>Chưa Giao</div>
+                                            <div>Chưa Xác Nhận</div>
                                         </div>
-                                   }
+                                    }
+                                    else if (item.TinhTrang.Equals("Đã xác nhận", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger badge-dot m-r-10"></div>
+                                            <div>Đã xác nhận</div>
+                                        </div>
+                                    }
                                 </td>
                                 <td>
                                     @if (item.MaNguoiGiaoHang != null)
@@ -104,10 +125,18 @@
                                         @item.MaNguoiGiaoHangNavigation.TenNguoiDung
                                     }
                                 </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm ">
+                                        <a class="m-10" asp-action="Details" asp-controller="AdminDonHangs" asp-route-id="@item.MaDonHang">
+                                            <i class="fas fa-pen btn btn-primary "></i>
+                                        </a>
+                                        <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaDonHang">
+                                            <i class="fas fa-trash-alt btn btn-danger "></i>
+                                        </a>
+                                    </div>
+                                </td>
                                 <td class="text-right">
-                                    <a class="m-10" data-toggle="modal" data-target="#deleteModal-@item.MaDonHang">
-                                        <i class="fas fa-trash-alt btn btn-danger "></i>
-                                    </a>
+
                                     <form asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Delete" asp-route-id="@item.MaDonHang">
                                         @Html.AntiForgeryToken()
                                         <div class="modal fade" id="deleteModal-@item.MaDonHang" role="dialog">
@@ -137,9 +166,9 @@
                                     </form>
                                 </td>
                             </tr>
-                       }
-                   }
-                    
+                        }
+                    }
+
 
                 </tbody>
             </table>

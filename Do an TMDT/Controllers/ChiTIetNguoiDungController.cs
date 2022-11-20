@@ -95,7 +95,14 @@ namespace Do_an_TMDT.Controllers
                 _context.Update(donhang);
                 await _context.SaveChangesAsync();
             }
-           
+            if (donhang.TinhTrang == "Đã giao")
+            {
+
+                donhang.TinhTrang = "Đơn hàng thành công";
+                donhang.DaThanhToan = true;
+                _context.Update(donhang);
+                await _context.SaveChangesAsync();
+            }
             ViewBag.sus = "Đã xác nhận thành công";
            
             var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
