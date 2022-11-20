@@ -54,6 +54,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
             }
             return Json(new { status = "success", redirectUrl = url });
         }
+      
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -61,26 +62,62 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                 return NotFound();
             }
 
-            var donHang = await _context.DonHangs.FindAsync(id);
+            var donHang = await _context.DonHangs
+                .Include(d => d.MaNguoiDungNavigation)
+                .Include(d => d.MaNguoiGiaoHangNavigation)
+                .FirstOrDefaultAsync(m => m.MaDonHang == id);
             if (donHang == null)
             {
                 return NotFound();
             }
-            ViewData["MaNguoiDung"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "Email", donHang.MaNguoiDung);
-            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs, "MaNguoiDung", "Email", donHang.MaNguoiGiaoHang);
-            return View(donHang);
+            ViewBag.tinhtrang = donHang.TinhTrang;
+            HttpContext.Session.SetInt32("MaDH", (int)id);
+            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                        .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                               m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                     "MaNguoiDung", "MaNguoiDung");
+            ViewBag.donhang = donHang;
+
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TinhTrang")] DonHang donHang)
+        public async Task<IActionResult> Edit()
         {
-            var DonHang = _context.DonHangs.Find(id);
-            DonHang.TinhTrang = donHang.TinhTrang;
-            _context.Update(DonHang);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            int id = (int)HttpContext.Session.GetInt32("MaDH");
+
+
+            var donhang = _context.DonHangs.Where(x => x.MaDonHang == id).FirstOrDefault();
+            ViewBag.tinhtrang = donhang.TinhTrang;
+            if (donhang.TinhTrang == "Đang giao")
+            {
+
+                donhang.TinhTrang = "Đã giao";
+                _context.Update(donhang);
+                await _context.SaveChangesAsync();
+            }
+
+            ViewBag.sus = "Đã giao thành công";
+
+            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
+            var donHang = await _context.DonHangs
+              .Include(d => d.MaNguoiDungNavigation)
+              .Include(d => d.MaNguoiGiaoHangNavigation)
+              .FirstOrDefaultAsync(m => m.MaDonHang == id);
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            ViewBag.tinhtrang = donHang.TinhTrang;
+
+            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                        .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                               m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                     "MaNguoiDung", "MaNguoiDung");
+            ViewBag.donhang = donHang;
+            return View();
         }
-        private bool DonHangExists(int id)
+            private bool DonHangExists(int id)
         {
             return _context.DonHangs.Any(e => e.MaDonHang == id);
         }

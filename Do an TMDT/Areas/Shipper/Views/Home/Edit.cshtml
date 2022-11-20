@@ -1,27 +1,96 @@
 ﻿@model Do_an_TMDT.Models.DonHang
 
 @{
-    ViewData["Title"] = "Cập nhật đơn hàng";
+    ViewData["Title"] = "Details";
     Layout = "~/Areas/Shipper/Views/Shared/_ShipperLayout.cshtml";
 }
+<link href="~/adminassets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
 
-<h1>Cập nhật đơn hàng</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div class="form-group">
-                <label asp-for="TinhTrang" class="control-label">Cập nhật tình trạng đơn hàng</label>
-                <input asp-for="TinhTrang" class="form-control" />
-                <span asp-validation-for="TinhTrang" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Xác nhận" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<!-- Core css -->
+
+<h1> Chi Tiết Đơn Hàng</h1>
+@{
+
+    if (@ViewBag.sus != null)
+    {
+        <div class="col">
+            <div class="alert alert-success col-lg-2" role="alert">
+                @ViewBag.sus
+            </div>
+        </div>
+    }
+}
 <div>
-    <a asp-action="Index">Trở lại danh sách</a>
+    <h4> Đơn Hàng</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Địa Chỉ:
+        </dt>
+        <dd class="col-sm-10">
+            
+            @ViewBag.donhang.DiaChi
+        </dd>
+        <dt class="col-sm-2">
+            Số điện thoại:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.Sdt
+        </dd>
+        <dt class="col-sm-2">
+            Tình trạng đơn Hàng:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.TinhTrang
+        </dd>
+        <dt class="col-sm-2">
+            Tình trạng Thanh Toán:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.DaThanhToan
+        </dd>
+        <dt class="col-sm-2">
+            Tổng:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.TongTien
+        </dd>
+        <dt class="col-sm-2">
+            Ngày xuất đơn:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.NgayXuatDonHang)
+        </dd>
+        <dt class="col-sm-2">
+            Email người mua:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.MaNguoiDungNavigation.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Email người giao hàng:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.donhang.MaNguoiGiaoHangNavigation.Email)
+        </dd>
+    </dl>
 </div>
+<form asp-action="Edit">
+    @{if (ViewBag.tinhtrang == "Đang giao")
+
+        {
+
+            <div class="form-group">
+                <input type="submit" value="Đã giao" class="btn btn-primary" />
+            </div>}
+
+    }
+
+</form>
+

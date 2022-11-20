@@ -175,7 +175,7 @@ namespace Do_an_TMDT.Controllers
                 DiaChi = sl.DiaChi,
                 Sdt = khachhang[0].Sdt,
                 TinhTrang = "Chưa xác nhận",
-                DaThanhToan = true,
+                DaThanhToan = false,
                 TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
                 NgayXuatDonHang = DateTime.Now
             };
