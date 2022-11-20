@@ -105,7 +105,13 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
             return View(objLoginModel);
         }
-
+        public async Task<IActionResult> Logout()
+        {
+            //SignOutAsync is Extension method for SignOut    
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //Redirect to home page    
+            return LocalRedirect("/");
+        }
 
     }
 }
