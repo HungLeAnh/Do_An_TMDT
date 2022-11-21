@@ -179,7 +179,7 @@
                 </div>
                 <br>
                 <div class="item_gia">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @string.Format("{0:0,0}", item.listSPs.GiaBan) VND</a>
                 </div>
 
                 <div class="layer2">

@@ -25,7 +25,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         public IActionResult Index()
         {
             DateTime HienTai = DateTime.Now;
-            ViewBag.TongDoanhThu = string.Format("{0:0,0}", ThongKeTongDoanhThu());
+            ViewBag.TongDoanhThu = string.Format("{0:0,0} VND", ThongKeTongDoanhThu());
             ViewBag.TangTruong = 0;
             if (ThongKeDoanhThuTheoNam(HienTai.Year - 2) != 0)
             {
@@ -33,19 +33,19 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
             ViewBag.SoDonHang = ThongKeTongDonHang();
             ViewBag.SoNguoiDung = ThongKeTongNguoiDung();
-            ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0.00}", ThongKeDoanhThuTheoNam(HienTai.Year) / HienTai.Month);
-            ViewBag.TongDoanhThuThang1 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(1, HienTai.Year));
-            ViewBag.TongDoanhThuThang2 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(2, HienTai.Year));
-            ViewBag.TongDoanhThuThang3 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(3, HienTai.Year));
-            ViewBag.TongDoanhThuThang4 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(4, HienTai.Year));
-            ViewBag.TongDoanhThuThang5 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(5, HienTai.Year));
-            ViewBag.TongDoanhThuThang6 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(6, HienTai.Year));
-            ViewBag.TongDoanhThuThang7 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(7, HienTai.Year));
-            ViewBag.TongDoanhThuThang8 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(8, HienTai.Year));
-            ViewBag.TongDoanhThuThang9 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(9, HienTai.Year));
-            ViewBag.TongDoanhThuThang10 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(10, HienTai.Year));
-            ViewBag.TongDoanhThuThang11 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(11, HienTai.Year));
-            ViewBag.TongDoanhThuThang12 = string.Format("{0:0,0}", ThongKeDoanhThuTheoThang(12, HienTai.Year));
+            ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(HienTai.Year) / HienTai.Month);
+            ViewBag.TongDoanhThuThang1 = Convert.ToInt32(ThongKeDoanhThuTheoThang(1, HienTai.Year));
+            ViewBag.TongDoanhThuThang2 = Convert.ToInt32(ThongKeDoanhThuTheoThang(2, HienTai.Year));
+            ViewBag.TongDoanhThuThang3 = Convert.ToInt32(ThongKeDoanhThuTheoThang(3, HienTai.Year));
+            ViewBag.TongDoanhThuThang4 = Convert.ToInt32(ThongKeDoanhThuTheoThang(4, HienTai.Year));
+            ViewBag.TongDoanhThuThang5 = Convert.ToInt32(ThongKeDoanhThuTheoThang(5, HienTai.Year));
+            ViewBag.TongDoanhThuThang6 = Convert.ToInt32(ThongKeDoanhThuTheoThang(6, HienTai.Year));
+            ViewBag.TongDoanhThuThang7 = Convert.ToInt32(ThongKeDoanhThuTheoThang(7, HienTai.Year));
+            ViewBag.TongDoanhThuThang8 = Convert.ToInt32(ThongKeDoanhThuTheoThang(8, HienTai.Year));
+            ViewBag.TongDoanhThuThang9 = Convert.ToInt32(ThongKeDoanhThuTheoThang(9, HienTai.Year));
+            ViewBag.TongDoanhThuThang10 = Convert.ToInt32(ThongKeDoanhThuTheoThang(10, HienTai.Year));
+            ViewBag.TongDoanhThuThang11 = Convert.ToInt32(ThongKeDoanhThuTheoThang(11, HienTai.Year));
+            ViewBag.TongDoanhThuThang12 = Convert.ToInt32(ThongKeDoanhThuTheoThang(12, HienTai.Year));
             ViewBag.TongDoanhThuNamHienTai = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(HienTai.Year));
             ViewBag.Top5SanPham = Top5SanPham();
             List<string> AnhTop5SanPham = new List<string>();
@@ -55,9 +55,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 AnhTop5SanPham.Add(obj.Anh);
             }
             ViewBag.AnhTop5SanPham = AnhTop5SanPham;
-            int idND = (int)HttpContext.Session.GetInt32("Ten");
-            var NG = _context.NguoiDungs.Where(x => x.MaNguoiDung == idND).FirstOrDefault();
-            ViewBag.NG = NG;
+
             return View();
         }
         public decimal ThongKeTongDoanhThu()
@@ -87,13 +85,8 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
             return 0;
         }
-        public string ThongKeDoanhThuTheoThang(int Thang, int Nam)
+        public decimal ThongKeDoanhThuTheoThang(int Thang, int Nam)
         {
-            DateTime HienTai = DateTime.Now;
-            if (Thang > HienTai.Month)
-            {
-                return "Chưa có dữ liệu";
-            }
             if (_context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang).Count() > 0)
             {
                 var lst = from s1 in (from s1 in _context.DonHangs.Where(n => n.NgayXuatDonHang.Value.Year == Nam && n.NgayXuatDonHang.Value.Month == Thang)
@@ -110,9 +103,9 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                               DoanhThu = s1.TongTien - s1.SoLuongDaBan * s2.GiaNhap
                           };
                 decimal DoanhThu = decimal.Parse(lst.Sum(n => n.DoanhThu).ToString());
-                return DoanhThu.ToString();
+                return DoanhThu;
             }
-            return "0";
+            return 0;
         }
         public int ThongKeTongDonHang()
         {

@@ -90,9 +90,9 @@
                                             <td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
                                             <td>@cart.SanPham.TenMatHang</td>
                                             <td> @cart.CT_GH.Gia</td>
-                                            <td><input type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
+                                            <td>Số lượng: <input type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
                                             <td>@cart.tong</td>
-                                            <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
+                                            <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang })">Xóa</a></td>
                                         </tr>
                                     }
                                     <tr>
@@ -125,14 +125,15 @@
                                 <a asp-controller="NguoiDungs" asp-action="Loadsanpham">Thoát</a>
                             </div>
                             </div>
-                            <div class="khungDienTT">
-                                
-                                <input type="text" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
-                                <input type="text" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
-                                <input type="text" placeholder="Địa chỉ" value="@ViewBag.Email">
-                                <select asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></select>
-                                
-                            </div>
+                        <div class="khungDienTT">
+                            <label>Họ Tên Người Nhận</label><br>
+                            <input type="text" asp-for="TenNguoiNhan" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
+                            <label>SDT Người Nhận</label><br>
+                            <input type="text" asp-for="SDT" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
+                            <label>Địa chỉ Người Nhận</label><br>
+                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></input>
+
+                        </div>
                       
                        
          
@@ -150,8 +151,7 @@
                             <div class="CachThucThanhToan">
                                 <input type="radio" id="tt_tien" name="fav_thanhtoan" value="TT_TienMat">
                                 <label for="tt_tien">Thanh toán khi nhận hàng</label><br>
-                                <input type="radio" id="tt_paypal" name="fav_thanhtoan" value="TT_Paypal">
-                                <label for="tt_paypal">Paypal</label><br>
+                              
                             </div>
                         </div>
                     </div>
@@ -163,31 +163,33 @@
                     <div class="sanphamtrongDonHang">
                         <div class="sp_1">
 
-                            @{if (Model.MatHangs[0].MatHangAnhs.Count >0)
+                            @{if (Model.MatHangs[0].MatHangAnhs.Count > 0)
                                 {
-                                <img onerror="this.src='~/images/duphong.webp'" src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" height="50" width="50" >
+                                    <img onerror="this.src='~/images/duphong.webp'" src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" height="50" width="50">
                                 }
                                 else
                                 {
-                                    
-                                 <img src="~/images/duphong.webp" height="50" width="50" >
-                                 }
+
+                                    <img src="~/images/duphong.webp" height="50" width="50">
                                 }
-                                <p class="ten_sp" style="line-height:50px;">@Model.MatHangs[0].listSPs.TenMatHang</p>
-                                <p class="gia_sp" style="line-height:50px;">@Model.MatHangs[0].listSPs.GiaBan <sup>đ</sup></p>
-                                <a ><ion-icon name="close-outline"></ion-icon></a>
-                            </div>
+                            }
+                            <p class="ten_sp" style="line-height:50px; width:200px;">@Model.MatHangs[0].listSPs.TenMatHang</p>
+                            <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px" >SL:@ViewBag.sl</p>
+
+                            <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) <sup>VND</sup></p>
+                            <a><ion-icon name="close-outline"></ion-icon></a>
+                        </div>
                     </div>
                     <div class="tinhTien">
                         <div class="tongTienSp">
                             <p class="ten_phi">Tạm tính</p>
-                            <p class="phi">@ViewBag.Tong<sup>đ</sup></p>
+                            <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
                         </div>
                     </div>
                     <div class="TongTien">
                         <div class="Hang_chot_tien">
                             <p class="gia_cuoi">Tổng cộng</p>
-                            <p class="phi">@ViewBag.Tong<sup>đ</sup></p>
+                            <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
                         </div>
                         <div class="khung1_2_5_2">
                             <div class="back_voHang">

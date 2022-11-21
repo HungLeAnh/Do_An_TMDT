@@ -18,6 +18,7 @@ namespace Do_an_TMDT.Models
         public string DiaChi { get; set; }
         public string Sdt { get; set; }
         public string TinhTrang { get; set; }
+        public string TenNguoiNhan { get; set; }
         public bool DaThanhToan { get; set; }
         public decimal TongTien { get; set; }
         public int? MaNguoiGiaoHang { get; set; }

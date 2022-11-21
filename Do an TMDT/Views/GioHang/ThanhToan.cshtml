@@ -90,14 +90,14 @@
                                         <tr>
                                             <td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
                                             <td>@cart.SanPham.TenMatHang</td>
-                                            <td> @cart.CT_GH.Gia</td>
+                                            <td> @string.Format("{0:0,0}", cart.CT_GH.Gia)</td>
                                             <td><input type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
-                                            <td>@cart.tong</td>
+                                            <td>@string.Format("{0:0,0}", cart.tong)</td>
                                             <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
                                         </tr>
                                     }
                                     <tr>
-                                        <td colspan="2">Tổng:@ViewBag.thanhtien</td>
+                                        <td colspan="2">Tổng:@string.Format("{0:0,0}", ViewBag.thanhtien)</td>
                                         <td colspan="5">
                                             <button type="submit">Thanh Toán</button>
                                         </td>
@@ -140,10 +140,10 @@
                         </div>
                         <div class="khungDienTT">
 
-                            <input type="text" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
-                            <input type="text" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
-                            <input type="text" placeholder="Địa chỉ" value="@ViewBag.Email">
-                            <select asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></select>
+
+                            <input type="text" asp-for="TenNguoiNhan" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
+                            <input type="text" asp-for="SDT" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
+                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi">
 
                         </div>
 
@@ -163,8 +163,7 @@
                             <div class="CachThucThanhToan">
                                 <input type="radio" id="tt_tien" name="fav_thanhtoan" value="TT_TienMat">
                                 <label for="tt_tien">Thanh toán khi nhận hàng</label><br>
-                                <input type="radio" id="tt_paypal" name="fav_thanhtoan" value="TT_Paypal">
-                                <label for="tt_paypal">Paypal</label><br>
+                                
                             </div>
                         </div>
                     </div>

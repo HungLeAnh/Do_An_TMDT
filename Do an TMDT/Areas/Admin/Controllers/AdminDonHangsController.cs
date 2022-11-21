@@ -257,10 +257,22 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+             var ChiTietDH = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
+
+
+   
+                foreach (var item in ChiTietDH)
+                {
+                    _context.Remove(item);
+                    await _context.SaveChangesAsync();
+                }
             var donHang = await _context.DonHangs.FindAsync(id);
             _context.DonHangs.Remove(donHang);
             await _context.SaveChangesAsync();
+           
+
             return RedirectToAction(nameof(Index));
+
         }
 
         private bool DonHangExists(int id)

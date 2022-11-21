@@ -40,7 +40,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Người nhận
+                            Người đặt
                         </th>
                         <th>Địa chỉ</th>
                         <th>Số điện thoại</th>
@@ -67,7 +67,7 @@
                                     @item.Sdt
                                 </td>
 
-                                <td>@item.TongTien</td>
+                                <td>@string.Format("{0:0,0}", item.TongTien) VND</td>
                                 <td>@item.NgayXuatDonHang.Value.Date</td>
                                 <td>
                                     @if (item.TinhTrang.Equals("Đã Giao", StringComparison.OrdinalIgnoreCase))
