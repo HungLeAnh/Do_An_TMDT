@@ -49,6 +49,7 @@ namespace Do_an_TMDT
             );
             services.AddRazorPages();
             services.AddSession();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddGoogle(googleOptions =>
                 {
@@ -58,14 +59,24 @@ namespace Do_an_TMDT
                 }
                 )
              
-                .AddCookie(p =>
+                .AddCookie("AdminLogin",p =>
                 {
-                    p.Cookie.Name = "UserLoginCookie";
+                    p.Cookie.Name = "AdminLoginCookie";
                     p.ExpireTimeSpan = TimeSpan.FromDays(1);
-                    p.LoginPath = "/login";
-                    p.LogoutPath = "/dang-xuat/html";
+                    p.LoginPath = $"/Admin/login";
+                    p.LogoutPath = $"/Admin/logout";
+                    p.AccessDeniedPath = "/not-found.html";
+                })
+
+                .AddCookie("ShipperLogin",p =>
+                {
+                    p.Cookie.Name = "ShipperLoginCookie";
+                    p.ExpireTimeSpan = TimeSpan.FromDays(1);
+                    p.LoginPath = $"/Shipper/login";
+                    p.LogoutPath = $"/Shipper/logout";
                     p.AccessDeniedPath = "/not-found.html";
                 });
+            
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
         }

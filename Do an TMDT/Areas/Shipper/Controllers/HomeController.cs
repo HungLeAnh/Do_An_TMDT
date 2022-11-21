@@ -14,10 +14,13 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Do_an_TMDT.Areas.Shipper.Controllers
 {
     [Area("shipper")]
+    [Authorize(AuthenticationSchemes = "ShipperLogin")]
+
     public class HomeController : Controller
     {
         public INotyfService _notyfService { get; }
