@@ -107,6 +107,7 @@ namespace Do_an_TMDT.Controllers
             cartNew.item = itemcartsNew;
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
+            ViewBag.sl = sl;
             HttpContext.Session.SetInt32("thanhtien", thanhtien);
             return View(model);
         }
@@ -173,7 +174,8 @@ namespace Do_an_TMDT.Controllers
             {
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
                 DiaChi = sl.DiaChi,
-                Sdt = khachhang[0].Sdt,
+                TenNguoiNhan=sl.TenNguoiNhan,
+                Sdt = sl.SDT,
                 TinhTrang = "Chưa xác nhận",
                 DaThanhToan = false,
                 TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,

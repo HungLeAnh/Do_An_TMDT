@@ -49,7 +49,7 @@
             Tổng:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TongTien)
+            @string.Format("{0:0,0}",Model.TongTien) VND
         </dd>
         <dt class="col-sm-2">
             Ngày xuất đơn:
@@ -62,6 +62,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MaNguoiDungNavigation.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Người Nhận:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenNguoiNhan)
         </dd>
         <dt class="col-sm-2">
             Email người giao hàng:

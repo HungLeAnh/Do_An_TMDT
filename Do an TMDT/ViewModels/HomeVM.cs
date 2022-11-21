@@ -14,5 +14,10 @@ namespace Do_an_TMDT.ViewModels
         public int SoLuong { get; set; }
         public string DiaChi { get; set; }
         public string key { get; set; }
+        public string TenNguoiNhan { get; set; }
+        public string Email { get; set; }
+        public string SDT { get; set; }
+
+
     }
 }

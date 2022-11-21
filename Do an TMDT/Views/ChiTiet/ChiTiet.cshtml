@@ -205,14 +205,8 @@
 
             <p>Mã: <b>@Model.MatHangs[0].listSPs.MaMatHang</b></p>
         </span>
-        <div class="gia"><p id="gia">@Model.MatHangs[0].listSPs.GiaBan</p><p>vnd</p></div>
-        <div class="mau">
-            <p>Màu sắc: <b id="hienthi">Trắng</b></p>
-            <div class="chonmau">
-                <button onclick="document.getElementById('hienthi').innerHTML='Trắng'" class="trang"></button>
-                <button onclick="document.getElementById('hienthi').innerHTML='Đen'" class="den"></button>
-            </div>
-        </div>
+        <div class="gia"><p id="gia">@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) </p><p>&nbsp;VND</p></div>
+       
         <div class="nhapdulieu">
             <form asp-action="ChiTiet">
                 <div class="soluong">
@@ -220,7 +214,7 @@
                     <button type="button" onclick="tru()">-</button>
 
 
-                        <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="1" min="0" max="500">
+                        <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="0" min="0" >
                  
 
 
@@ -303,10 +297,11 @@
     }
     function Tong() {
         let x = Number(document.getElementById("id1").value);
-        let y = Number(document.getElementById("gia").innerHTML);
+        let y = Number(document.getElementById("gia").innerHTML.replace(/[,]+/g, ""));
         let z = x * y;
 
-        document.getElementById("tong").innerHTML = z ;
+        document.getElementById("tong").innerHTML = z.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+
         console.log(z)
 
 
