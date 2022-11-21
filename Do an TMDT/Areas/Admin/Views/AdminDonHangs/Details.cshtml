@@ -71,6 +71,13 @@
         </dd>
     </dl>
 </div>
+<div class="form-group">
+    <label asp-for="MaNguoiGiaoHang" class="control-label">
+        Họ tên shipper giao đơn hàng:  @{if (ViewBag.Ten != null)
+            {@ViewBag.Ten}}
+    </label>
+
+</div>
 <form asp-action="Details">
     @{if (ViewBag.tinhtrang == "Chưa xác nhận")
 
@@ -100,12 +107,16 @@
                 <select asp-for="MaNguoiDung" class="form-control" id="MaNguoiGiaoHang" asp-items="ViewBag.MaNguoiGiaoHang"></select>
             </div>
             <div class="form-group">
-                <label asp-for="MaNguoiGiaoHang" class="control-label">Họ tên shipper giao đơn hàng</label>
-                <input class="form-control" value="@{if (ViewBag.Ten != null){@ViewBag.Ten}}" />
+                <label asp-for="MaNguoiGiaoHang" class="control-label">
+                    Họ tên shipper giao đơn hàng:  @{if (ViewBag.Ten != null)
+                        {@ViewBag.Ten}}
+                </label>
+
             </div>
             <div class="form-group">
                 <input type="submit" id="giaoviec" value="Giao việc" class="btn btn-success" />
-              
+
+
                 <a asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Index" class="btn btn-primary">Quay Lại</a>
             </div>
         }

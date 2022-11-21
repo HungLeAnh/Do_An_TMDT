@@ -71,7 +71,7 @@
                 <thead>
                     <tr>
                         <th>Đơn hàng</th>
-                        <th>Mã Mặt Hàng</th>
+                        <th>Tên Mặt Hàng</th>
                         <th>Giá</th>
                         <th>Số Lượng</th>
 
@@ -82,10 +82,10 @@
                         { @foreach (var item in ViewBag.chitietdonhang)
 {
                                 <tr>
-                                    <td>@item.MaDonHang</td>
-                                    <td>@item.MaMatHang</td>
-                                    <td>@item.Gia</td>
-                                    <td>@item.SoLuong</td>
+                                    <td>@item.CT_DH.MaDonHang</td>
+                                    <td>@item.SanPham.TenMatHang</td>
+                                    <td>@item.CT_DH.Gia</td>
+                                    <td>@item.CT_DH.SoLuong</td>
 
                                 </tr>
 }

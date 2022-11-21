@@ -87,6 +87,11 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                                                                m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
                                                      "MaNguoiDung", "MaNguoiDung");
 
+            var ng = await _context.NguoiDungs.FindAsync(donHang.MaNguoiGiaoHang);
+            if (ng != null)
+            {
+                ViewBag.Ten = ng.TenNguoiDung;
+            }
             return View(donHang);
         }
         [HttpPost]
@@ -143,14 +148,16 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiDung")] DonHang donHang,String id)
         {
 
+           
+                int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
+                var DonHang = _context.DonHangs.Find(MaDH);
+                DonHang.MaNguoiGiaoHang = donHang.MaNguoiDung;
+                DonHang.TinhTrang = "Đang giao";
+                _context.Update(DonHang);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             
-            int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
-            var DonHang = _context.DonHangs.Find(MaDH);
-            DonHang.MaNguoiGiaoHang = donHang.MaNguoiDung;
-            DonHang.TinhTrang = "Đang giao";
-            _context.Update(DonHang);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
         }
         // POST: Admin/AdminDonHangs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
