@@ -67,7 +67,15 @@ namespace Do_an_TMDT.Controllers
             var donhang = _context.DonHangs.Where(x => x.MaDonHang == MaDH).FirstOrDefault();
             ViewBag.tinhtrang = donhang.TinhTrang;
             var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
-            ViewBag.chitietdonhang = listsp_donhang;
+            List<CTDH> ct = new List<CTDH>();
+            foreach (var item in listsp_donhang)
+            {
+                CTDH ct2 = new CTDH();
+                ct2.CT_DH = item;
+                ct2.SanPham = await _context.MatHangs.FindAsync(item.MaMatHang);
+                ct.Add(ct2);
+            }
+            ViewBag.chitietdonhang = ct;
             return View();
         }
         [HttpPost]
@@ -106,7 +114,15 @@ namespace Do_an_TMDT.Controllers
             ViewBag.sus = "Đã xác nhận thành công";
            
             var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
-            ViewBag.chitietdonhang = listsp_donhang;
+            List<CTDH> ct = new List<CTDH>();
+            foreach(var item in listsp_donhang)
+            {
+                CTDH ct2 = new CTDH();
+                ct2.CT_DH = item;
+                ct2.SanPham = await _context.MatHangs.FindAsync(item.MaMatHang);
+                ct.Add(ct2);
+            }
+            ViewBag.chitietdonhang = ct;
             return View();
         }
       
@@ -371,11 +387,20 @@ namespace Do_an_TMDT.Controllers
         {
             int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
             var thuongHieu = await _context.DonHangs.FindAsync(MaDH);
+            var ChiTietDH =  _context.ChiTietDonHangs.Where(x=>x.MaDonHang==MaDH).ToList();
            
-            if(thuongHieu.TinhTrang=="Chưa xác nhận")
+
+            if (thuongHieu.TinhTrang=="Chưa xác nhận")
             {
+                foreach (var item in ChiTietDH)
+                {
+                    _context.Remove(item);
+                    await _context.SaveChangesAsync();
+                }
+                
                 _context.Remove(thuongHieu);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(DonHang));
             }
             ViewBag.xoa = thuongHieu;
