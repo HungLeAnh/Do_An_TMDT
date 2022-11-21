@@ -70,7 +70,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                 {
                     string hashPassword = (objLoginModel.Password + userInDatabase.Salt.Trim()).ToMD5();
 
-                    if (hashPassword != userInDatabase.MatKhauHash &&
+                    if (hashPassword == userInDatabase.MatKhauHash &&
                         (userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Shipper", System.StringComparison.OrdinalIgnoreCase) ||
                         userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng", System.StringComparison.OrdinalIgnoreCase) ||
                         userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Nhân viên", System.StringComparison.OrdinalIgnoreCase)))
@@ -90,7 +90,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                         {
                             IsPersistent = false,
                         });
-                        return LocalRedirect(objLoginModel.ReturnUrl);
+                         return RedirectToAction("", "Home", new { id = userInDatabase.MaNguoiDung, area = "Shipper" });
                     }
                     else
                     {
