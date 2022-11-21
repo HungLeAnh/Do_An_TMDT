@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
     public class HomeController : Controller
     {
         public INotyfService _notyfService { get; }

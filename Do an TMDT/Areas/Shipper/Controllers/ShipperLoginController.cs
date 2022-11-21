@@ -15,26 +15,28 @@ using Microsoft.EntityFrameworkCore;
 using Do_an_TMDT.ViewModels;
 using Do_an_TMDT.Extension;
 
-namespace Do_an_TMDT.Areas.Admin.Controllers
+namespace Do_an_TMDT.Areas.Shipper.Controllers
 {
-    [Area("Admin")]
-    [AllowAnonymous]
-    public class AdminLoginController : Controller
-    {
+    [Area("Shipper")]
 
-        private readonly ILogger<AdminLoginController> _logger;
+    [AllowAnonymous]
+    public class ShipperLoginController : Controller
+    {
+        private readonly ILogger<ShipperLoginController> _logger;
         private readonly WEBBANGIAYContext _context;
         public INotyfService _notyfService { get; }
-
-        public AdminLoginController(WEBBANGIAYContext context,ILogger<AdminLoginController> logger, INotyfService notyfService)
+        public ShipperLoginController(WEBBANGIAYContext context, ILogger<ShipperLoginController> logger, INotyfService notyfService)
         {
             _context = context;
             _logger = logger;
             _notyfService = notyfService;
         }
-
+        public IActionResult Index()
+        {
+            return View();
+        }
         [AllowAnonymous]
-        [Route("Admin/login", Name = "AdminLogin")]
+        [Route("Shipper/login", Name ="ShipperLogin",Order = 1)]
         public IActionResult Login(string ReturnUrl = "")
         {
 
@@ -45,7 +47,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        [Route("Admin/login", Name = "AdminLogin")]
+        [Route("Shipper/login", Name = "ShipperLogin",Order =1)]
         public async Task<IActionResult> Login(LoginViewModel objLoginModel)
         {
             if (ModelState.IsValid)
@@ -55,7 +57,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 if (Utilities.IsValidEmail(objLoginModel.UserName))
                 {
                     userInDatabase = await _context.NguoiDungs.Where(x => x.Email == objLoginModel.UserName)
-                                                                .Include(x=>x.MaLoaiNguoiDungNavigation)
+                                                                .Include(x => x.MaLoaiNguoiDungNavigation)
                                                                 .FirstOrDefaultAsync();
                 }
                 else
@@ -68,10 +70,10 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 {
                     string hashPassword = (objLoginModel.Password + userInDatabase.Salt.Trim()).ToMD5();
 
-                    if (hashPassword != userInDatabase.MatKhauHash && 
-                        (userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Admin",System.StringComparison.OrdinalIgnoreCase)||
-                        userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Quản lí", System.StringComparison.OrdinalIgnoreCase)||
-                        userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Quản lý", System.StringComparison.OrdinalIgnoreCase) ))
+                    if (hashPassword != userInDatabase.MatKhauHash &&
+                        (userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Shipper", System.StringComparison.OrdinalIgnoreCase) ||
+                        userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Người Giao Hàng", System.StringComparison.OrdinalIgnoreCase) ||
+                        userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Nhân viên", System.StringComparison.OrdinalIgnoreCase)))
                     {
                         //A claim is a statement about a subject by an issuer and    
                         //represent attributes of the subject that are useful in the context of authentication and authorization operations.
@@ -84,7 +86,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                         //Initialize a new instance of the ClaimsPrincipal with ClaimsIdentity    
                         var principal = new ClaimsPrincipal(identity);
                         //SignInAsync is a Extension method for Sign in a principal for the specified scheme.    
-                        await HttpContext.SignInAsync("AdminLogin", principal, new AuthenticationProperties()
+                        await HttpContext.SignInAsync("ShipperLogin", principal, new AuthenticationProperties()
                         {
                             IsPersistent = false,
                         });
@@ -105,13 +107,14 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             }
             return View(objLoginModel);
         }
+        [Route("ShipperLogout",Name ="ShipperLogout")]
         public async Task<IActionResult> Logout()
         {
             //SignOutAsync is Extension method for SignOut    
-            await HttpContext.SignOutAsync("AdminLogin");
+            await HttpContext.SignOutAsync("ShipperLogin");
             //Redirect to home page    
             return LocalRedirect("/");
         }
-
     }
+
 }
