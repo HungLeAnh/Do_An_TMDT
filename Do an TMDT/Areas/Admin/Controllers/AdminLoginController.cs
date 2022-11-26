@@ -68,7 +68,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 {
                     string hashPassword = (objLoginModel.Password + userInDatabase.Salt.Trim()).ToMD5();
 
-                    if (hashPassword != userInDatabase.MatKhauHash && 
+                    if (hashPassword == userInDatabase.MatKhauHash && 
                         (userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Admin",System.StringComparison.OrdinalIgnoreCase)||
                         userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Quản lí", System.StringComparison.OrdinalIgnoreCase)||
                         userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.Equals("Quản lý", System.StringComparison.OrdinalIgnoreCase) ))

@@ -13,7 +13,6 @@ namespace Do_an_TMDT.Areas.Admin.ViewModels {
         [Display(Name = "Mật khẩu")]
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
-        [MinLength(5, ErrorMessage = "Bạn cần đặt mật khẩu tối thiểu 5 ký tự")]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }
