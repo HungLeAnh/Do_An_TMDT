@@ -234,11 +234,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             {
                 matHang.MoTa = "";
             }
-            if (ModelState.IsValid)
+            var mathangDB = _context.MatHangs.AsNoTracking()
+                                            .Where(m => m.MaMatHang == id)
+                                            .Include(m => m.MaMauSacNavigation)
+                                            .Include(m => m.MaKichCoNavigation).FirstOrDefault();
+            if (ModelState.IsValid && mauSac!="" && kichCo!=0)
             {
                 try
                 {
-                    if(files != null && files.Length > 0)
+                    if (files != null && files.Length > 0)
                     {
                         var oldMatHangAnh = _context.MatHangAnhs.Where(m => m.MaMatHang == id).ToList();
                         foreach (var anh in oldMatHangAnh)
@@ -255,7 +259,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                     {
                         matHang.MaKichCo = hasKichCo.MaKichCo;
                     }
-                    else
+                    else 
                     {
                         KichCo newKichCo = new KichCo();
                         newKichCo.KichCo1 = kichCo;
@@ -315,9 +319,10 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            _notyfService.Error("Chỉnh sửa không thành công");
             ViewData["DanhMuc"] = new SelectList(_context.DanhMucs, "MaDanhMuc", "TenDanhMuc", matHang.MaDanhMuc);
-            ViewData["KichCo"] = new SelectList(_context.KichCos, "MaKichCo", "KichCo1", matHang.MaKichCo);
-            ViewData["MauSac"] = new SelectList(_context.MauSacs, "MaMauSac", "TenMauSac", matHang.MaMauSac);
+            ViewData["KichCo"] = mathangDB.MaKichCoNavigation.KichCo1;
+            ViewData["MauSac"] = mathangDB.MaMauSacNavigation.TenMauSac;
             ViewData["NhaCungCap"] = new SelectList(_context.NhaCungCaps, "MaNhaCungCap", "TenNhaCungCap", matHang.MaNhaCungCap);
             ViewData["ThuongHieu"] = new SelectList(_context.ThuongHieus, "MaThuongHieu", "TenThuongHieu", matHang.MaThuongHieu);
             ViewData["MatHangAnh"] = new SelectList(_context.MatHangAnhs, "MaAnh", "Anh", matHang.MatHangAnhs);
