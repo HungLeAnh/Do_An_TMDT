@@ -269,7 +269,11 @@ namespace Do_an_TMDT.Controllers
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
             ViewBag.diachi = listdiachi;
-            return View();
+          
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).FirstOrDefault();
+                ViewBag.khachhang = khachhang;
+                return View();
+           
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
