@@ -9,6 +9,7 @@ using Do_an_TMDT.Models;
 using Do_an_TMDT.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Do_an_TMDT.Extension;
+using PagedList.Core;
 
 namespace Do_an_TMDT.Controllers
 {
@@ -27,25 +28,29 @@ namespace Do_an_TMDT.Controllers
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             if (taikhoanID != null)
             {
-                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-                ViewBag.khachhang = khachhang[0];
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).FirstOrDefault();
+                ViewBag.khachhang = khachhang;
                 return View();
             }
             return View();
             
 
         }
-        public IActionResult DonHang()
+        public async Task<IActionResult> DonHang(int? page)
         {
-            
+
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 3;
+            var lsdonhang = await _context.DonHangs.Where(m => m.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToListAsync();
+            PagedList<DonHang> model = new PagedList<DonHang>(lsdonhang.AsQueryable(), pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
             if (taikhoanID != null)
-            {
-                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-                ViewBag.khachhang = khachhang[0];
-                var donhang = _context.DonHangs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-                ViewBag.donhang = donhang;
-                return View();
+            {                
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).FirstOrDefault();
+                ViewBag.khachhang = khachhang;
+                return View(model);
             }
             return View();
 
@@ -58,8 +63,8 @@ namespace Do_an_TMDT.Controllers
             HttpContext.Session.SetInt32("MaDH",MaDH);
             if (taikhoanID != null)
             {
-                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-                ViewBag.khachhang = khachhang[0];
+                var khachhang = _context.NguoiDungs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).FirstOrDefault();
+                ViewBag.khachhang = khachhang;
                 var donhang2 = _context.DonHangs.AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
                 ViewBag.donhang = donhang2;
              

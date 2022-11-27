@@ -50,7 +50,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             ViewBag.CurrentPage = pageNumber;
             ViewBag.CurrentTinhTrang = tinhTrang;
 
-            var lsTinhTrang = _context.DonHangs.Distinct().Select(m => new SelectListItem() { Text = m.TinhTrang, Value = m.TinhTrang, Selected = (m.TinhTrang == tinhTrang ? true : false) });
+            var lsTinhTrang = _context.DonHangs.Select(m => new SelectListItem() { Text = m.TinhTrang, Value = m.TinhTrang, Selected = (m.TinhTrang == tinhTrang) }).Distinct();
             ViewBag.TrangThai = lsTinhTrang;//new SelectList(lsDonHang.Select(m => m.TinhTrang).Distinct(), tinhTrang);
             return View(model);
 

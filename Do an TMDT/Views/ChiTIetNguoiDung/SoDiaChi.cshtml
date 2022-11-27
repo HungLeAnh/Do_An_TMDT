@@ -50,7 +50,7 @@
         <ul class="noidung1_1">
             <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
             <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
-            <li><a class="noidungInfo">Đổi mật khẩu</a></li>
+            <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id = @ViewBag.khachhang.MaNguoiDung })">Đổi mật khẩu</a></li>
             <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
             <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>

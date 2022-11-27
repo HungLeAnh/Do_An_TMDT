@@ -37,81 +37,87 @@
     </div>
 
 </section>
-<h1>Xóa ĐƠn Hàng</h1>
 
-<h3>Bạn có muốn xóa đơn hàng này không?</h3>
-<div>
-    <h4> Đơn hàng</h4>
-    <hr />
-    @{
+<div class="container">
+    <div class="row clajustify-content-sm-center">
+        <div class="col-sm-4">
+            <h1>Xóa Đơn Hàng</h1>
+            <h3>Bạn có muốn xóa đơn hàng này không?</h3>
+            <h4> Đơn hàng</h4>
+        
+            <hr />
+            @{
 
-        if (@ViewBag.mess != null)
-        {
-            <div class="col">
-                <div class="alert alert-danger col-lg-2" role="alert">
-                    @ViewBag.mess
-                </div>
-            </div>
-        }
-    }
-    <div class="container">
-        <div class="row justify-content-sm-center">
-            <div class="col-sm-8">
-                <div class="row m-10 ">
-                    <div class="col-sm-6 border border-dark ">
-                        Mã Đơn Hàng
+                if (@ViewBag.mess != null)
+                {
+                    <div class="col">
+                        <div class="alert alert-danger col-lg-2" role="alert">
+                            @ViewBag.mess
+                        </div>
                     </div>
-                    <div class="col-sm-6 border border-dark ">
-                        @ViewBag.xoa.MaDonHang
-                    </div>
-
-                </div>
-
-                <div class="row m-10">
-                    <div class="col-sm-6 border border-dark ">
-                        Mã Người dùng
-                    </div>
-
-                    <div class="col-sm-6 border border-dark ">
-                        @ViewBag.xoa.MaNguoiDung
-                    </div>
-
-                </div>
-                <div class="row m-10">
-                    <div class="col-sm-6 border border-dark ">
-                        Địa chỉ
-                    </div>
-
-                    <div class="col-sm-6 border border-dark ">
-                        @ViewBag.xoa.DiaChi
-                    </div>
-
-                </div>
-                <div class="row m-10">
-                    <div class="col-sm-6 border border-dark ">
-                        Tình Trạng
-                    </div>
-
-                    <div class="col-sm-6 border border-dark ">
-                        @ViewBag.xoa.TinhTrang
-                    </div>
-
-                </div>
-                <div class="row m-10">
-                    <div class="col-sm-6 border border-dark ">
-                        Tổng Tiền
-                    </div>
-
-                    <div class="col-sm-6 border border-dark ">
-                        @ViewBag.xoa.TongTien
-                    </div>
-
-                </div>
-            </div>
+                }
+                }
         </div>
+        <div class="container">
+            <div class="row justify-content-sm-center">
+                <div class="col-sm-8">
+                    <div class="row m-10 ">
+                        <div class="col-sm-6 border border-dark ">
+                            Mã Đơn Hàng
+                        </div>
+                        <div class="col-sm-6 border border-dark ">
+                            @ViewBag.xoa.MaDonHang
+                        </div>
 
-        <form asp-action="Delete">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    </div>
 
-        </form>
+                    <div class="row m-10">
+                        <div class="col-sm-6 border border-dark ">
+                            Mã Người dùng
+                        </div>
+
+                        <div class="col-sm-6 border border-dark ">
+                            @ViewBag.xoa.MaNguoiDung
+                        </div>
+
+                    </div>
+                    <div class="row m-10">
+                        <div class="col-sm-6 border border-dark ">
+                            Địa chỉ
+                        </div>
+
+                        <div class="col-sm-6 border border-dark ">
+                            @ViewBag.xoa.DiaChi
+                        </div>
+
+                    </div>
+                    <div class="row m-10">
+                        <div class="col-sm-6 border border-dark ">
+                            Tình Trạng
+                        </div>
+
+                        <div class="col-sm-6 border border-dark ">
+                            @ViewBag.xoa.TinhTrang
+                        </div>
+
+                    </div>
+                    <div class="row m-10">
+                        <div class="col-sm-6 border border-dark ">
+                            Tổng Tiền
+                        </div>
+
+                        <div class="col-sm-6 border border-dark ">
+                            @ViewBag.xoa.TongTien
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+
+            </form>
+        </div>
     </div>
+</div>

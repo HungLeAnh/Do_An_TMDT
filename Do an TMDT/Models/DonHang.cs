@@ -14,7 +14,7 @@ namespace Do_an_TMDT.Models
         }
 
         public int MaDonHang { get; set; }
-        public int MaNguoiDung { get; set; }
+        public int? MaNguoiDung { get; set; }
         public string DiaChi { get; set; }
         public string Sdt { get; set; }
         public string TinhTrang { get; set; }

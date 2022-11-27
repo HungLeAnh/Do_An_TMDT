@@ -58,7 +58,14 @@
                         {
                             <tr>
                                 <td>
-                                    @item.MaNguoiDungNavigation.TenNguoiDung
+                                    @if(@item.MaNguoiDungNavigation!=null)
+                                    {
+                                        @item.MaNguoiDungNavigation.TenNguoiDung
+                                    }
+                                    else
+                                    {
+                                        <p>NULL</p>
+                                    }
                                 </td>
                                 <td>
                                     @item.DiaChi
@@ -145,7 +152,7 @@
                                                     <div class="modal-body text-center">
                                                         <div class="warning">Bạn muốn xóa đơn hàng này?</div>
                                                         <div class="text-danger ">Mã đơn hàng : @item.MaDonHang </div>
-                                                        <div class="text-danger ">Người nhận : @item.MaNguoiDungNavigation.TenNguoiDung </div>
+                                                        <div class="text-danger ">Người nhận : @if (@item.MaNguoiDungNavigation != null) { @item.MaNguoiDungNavigation.TenNguoiDung} </div>
                                                         <div class="text-danger ">Địa chỉ : @item.DiaChi </div>
                                                         <div class="text-danger ">Tổng tiền : @item.TongTien </div>
 

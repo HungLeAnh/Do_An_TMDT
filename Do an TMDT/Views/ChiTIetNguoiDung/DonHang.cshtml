@@ -1,5 +1,7 @@
-﻿@model Do_an_TMDT.Models.NguoiDung
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<Do_an_TMDT.Models.DonHang>
 @{
+    int CurrentPage = ViewBag.CurrentPage;
     ViewData["Title"] = "DonHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -49,7 +51,7 @@
             <li><a class="noidungInfo" asp-action="ChiTietNG">Thông tin tài khoản</a></li>
             <li><a class="noidungInfo_active" asp-action="DonHang">Đơn hàng của bạn</a></li>
             <li><a class="noidungInfo" href="@Url.Action("EditMK", new { id = @ViewBag.khachhang.MaNguoiDung })">Đổi mật khẩu</a></li>
-            <li><a asp-action="SoDiaChi">Số địa chỉ(0)</a></li>
+            <li><a asp-action="SoDiaChi">Số địa chỉ</a></li>
             <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
         </ul>
     </div>
@@ -68,47 +70,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{if (ViewBag.donhang != null)
-                        { @foreach (var item in ViewBag.donhang)
-                        {
-                    <tr>
-                        <td>@item.MaDonHang</td>
-                        <td>@item.TinhTrang</td>
-                        <td>@item.DiaChi</td>
-                        <td>@item.TongTien</td>
-                        @{
-                            @if (item.DaThanhToan == null || item.DaThanhToan == false)
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.MaDonHang</td>
+                            <td>@item.TinhTrang</td>
+                            <td>@item.DiaChi</td>
+                            <td>@item.TongTien</td>
+                            @{
+                                    @if (@item.DaThanhToan == null || item.DaThanhToan == false)
                             {
-                                <td>Chưa Thanh Toán</td>
+                                        <td>Chưa Thanh Toán</td>
                             }
                             else
                             {
 
-                                <td>Đã Thanh Toán</td>
+                                        <td>Đã Thanh Toán</td>
                             }
 
-                        }
-
-
-
-
-
-                        <td>
-                            <div class="btn-group btn-group-sm ">
-                                <a href="@Url.Action("ChiTietDH", "ChiTietNguoiDung", new { MaDH = item.MaDonHang })">
-                                    <i class="fas fa-pen btn btn-primary "></i>
-                                </a>
-                                <a href="@Url.Action("Delete", "ChiTietNguoiDung", new { id = item.MaDonHang })">
-                                    <i class="fas fa-trash-alt btn btn-danger "></i>
-                                </a>
-
-                            </div>
-                        </td>
-                    </tr>
                             }
+                            <td>
+                                <div class="btn-group btn-group-sm ">
+                                    <a href="@Url.Action("ChiTietDH", "ChiTietNguoiDung", new { MaDH = item.MaDonHang })">
+                                        <i class="fas fa-pen btn btn-primary "></i>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "ChiTietNguoiDung", new { id = item.MaDonHang })">
+                                        <i class="fas fa-trash-alt btn btn-danger "></i>
+                                    </a>
+
+                                </div>
+                            </td>
+                        </tr>
                     }
-                    }
+                </tbody>
             </table>
+        </div>
+        <div aria-label="Page navigation example">
+            <ul class="pagination">
+                <pager class="pager-container" list="Model" asp-area="" asp-controller="ChiTIetNguoiDung" asp-action="DonHang" />
+            </ul>
         </div>
     </div>
 
