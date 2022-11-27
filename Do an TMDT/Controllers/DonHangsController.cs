@@ -108,6 +108,11 @@ namespace Do_an_TMDT.Controllers
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
             ViewBag.sl = sl;
+            var loi = HttpContext.Session.GetString("loi");
+            if (loi != null)
+            {
+                ViewBag.error =loi;
+            }    
             HttpContext.Session.SetInt32("thanhtien", thanhtien);
             return View(model);
         }
@@ -170,32 +175,34 @@ namespace Do_an_TMDT.Controllers
             ViewBag.Tong = sl1 * model.MatHangs[0].listSPs.GiaBan;
             ViewBag.ThanhTien = sl1 * model.MatHangs[0].listSPs.GiaBan ;
             decimal tong= sl1 * model.MatHangs[0].listSPs.GiaBan;
-            DonHang donhang = new DonHang
+            if (sl.DiaChi != null&&sl.TenNguoiNhan!=null&&sl.SDT!=null)
             {
-                MaNguoiDung = Convert.ToInt32(taikhoanID),
-                DiaChi = sl.DiaChi,
-                TenNguoiNhan=sl.TenNguoiNhan,
-                Sdt = sl.SDT,
-                TinhTrang = "Chưa xác nhận",
-                DaThanhToan = false,
-                TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
-                NgayXuatDonHang = DateTime.Now
-            };
+                DonHang donhang = new DonHang
+                {
+                    MaNguoiDung = Convert.ToInt32(taikhoanID),
+                    DiaChi = sl.DiaChi,
+                    TenNguoiNhan = sl.TenNguoiNhan,
+                    Sdt = sl.SDT,
+                    TinhTrang = "Chưa xác nhận",
+                    DaThanhToan = false,
+                    TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
+                    NgayXuatDonHang = DateTime.Now
+                };
 
-            _context.Add(donhang);
-            await _context.SaveChangesAsync();
-            var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
-           
-            ChiTietDonHang ctdonhang = new ChiTietDonHang
-            {
-                MaDonHang = curdonhang.MaDonHang,
-                MaMatHang = model.MatHangs[0].listSPs.MaMatHang,
-                Gia = model.MatHangs[0].listSPs.GiaBan,
-                SoLuong = sl1
-            };
-            _context.Add(ctdonhang);
-            await _context.SaveChangesAsync();
-            MatHang mathang = new MatHang
+                _context.Add(donhang);
+                await _context.SaveChangesAsync();
+                var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
+
+                ChiTietDonHang ctdonhang = new ChiTietDonHang
+                {
+                    MaDonHang = curdonhang.MaDonHang,
+                    MaMatHang = model.MatHangs[0].listSPs.MaMatHang,
+                    Gia = model.MatHangs[0].listSPs.GiaBan,
+                    SoLuong = sl1
+                };
+                _context.Add(ctdonhang);
+                await _context.SaveChangesAsync();
+                MatHang mathang = new MatHang
                 {
                     MaMatHang = Convert.ToInt32(MaSp),
                     TenMatHang = model.MatHangs[0].listSPs.TenMatHang,
@@ -215,22 +222,31 @@ namespace Do_an_TMDT.Controllers
 
                 _context.Update(mathang);
                 await _context.SaveChangesAsync();
-            var mess = new MimeMessage();
-            mess.From.Add(new MailboxAddress("Đơn Hàng:#"+donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
-            mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
-            mess.Subject = "Đơn hàng của bạn";
-            var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h1>Đơn hàng:#"+ donhang.MaDonHang+ "</h1>"+"<br><h3>Tên Người dùng:</h3>"+khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + model.MatHangs[0].listSPs.TenMatHang + "<br><h3>Số Lượng:<h3>" + sl1+"<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + tong;
-            mess.Body = bodyBuilder.ToMessageBody();
-            
-            using (var client = new SmtpClient())
+
+                var mess = new MimeMessage();
+                mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
+                mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
+                mess.Subject = "Đơn hàng của bạn";
+                var bodyBuilder = new BodyBuilder();
+                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + model.MatHangs[0].listSPs.TenMatHang + "<br><h3>Số Lượng:<h3>" + sl1 + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + tong;
+                mess.Body = bodyBuilder.ToMessageBody();
+
+                using (var client = new SmtpClient())
+                {
+
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                    client.Send(mess);
+                    client.Disconnect(true);
+
+                }
+            }
+            else
             {
-
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
-                client.Send(mess);
-                client.Disconnect(true);
-
+                var loi = "Vui Lòng NHập Đầy Đủ Thông Tin !";
+                HttpContext.Session.SetString("loi",loi);
+              
+                return RedirectToAction("ThanhToan");
             }
             HttpContext.Session.SetInt32("sl", 0);
             return RedirectToAction("Loadsanpham","NguoiDungs");

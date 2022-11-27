@@ -113,101 +113,112 @@
 
     </ul>
     <div class="khungThanhToan">
+        @{
+
+            if (@ViewBag.error != null)
+            {
+                <div class="col">
+                    <div class="alert alert-danger col-lg-4" role="alert">
+                        @ViewBag.error
+                    </div>
+                </div>
+            }
+        }
         <form asp-action="ThanhToan">
-        <section>
-            <div class="khung1">
-                <div class="khung1_1">
-                    <div class="khung1_1_1">
-                        <div class="tieude_TT">
-                            <h3>Thông tin nhận hàng</h3>
-                            <div class="exit_TT">
-                                <ion-icon name="arrow-forward-outline"></ion-icon>
-                                <a asp-controller="NguoiDungs" asp-action="Loadsanpham">Thoát</a>
+            <section>
+                <div class="khung1">
+                    <div class="khung1_1">
+                        <div class="khung1_1_1">
+                            <div class="tieude_TT">
+                                <h3>Thông tin nhận hàng</h3>
+                                <div class="exit_TT">
+                                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                                    <a asp-controller="NguoiDungs" asp-action="Loadsanpham">Thoát</a>
+                                </div>
                             </div>
+                            <div class="khungDienTT">
+                                <label>Họ Tên Người Nhận</label><br>
+                                <input type="text" asp-for="TenNguoiNhan" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
+                                <label>SDT Người Nhận</label><br>
+                                <input type="text" asp-for="SDT" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
+                                <label>Địa chỉ Người Nhận</label><br>
+                                <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></input>
+
                             </div>
-                        <div class="khungDienTT">
-                            <label>Họ Tên Người Nhận</label><br>
-                            <input type="text" asp-for="TenNguoiNhan" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
-                            <label>SDT Người Nhận</label><br>
-                            <input type="text" asp-for="SDT" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
-                            <label>Địa chỉ Người Nhận</label><br>
-                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></input>
+
+
 
                         </div>
-                      
-                       
-         
-                    </div>
-                    <div class="khung1_1_2">
-                        <div class="VanChuyen">
-                            <h3>Cách vận chuyển</h3>
-                            <div class="CachThucVanChuyen">
-                                <input type="radio" id="VCh" name="fav_vanchuyen" value="CachVanChuyen">
-                                <label for="VCh">Giao hàng tận nơi</label>
+                        <div class="khung1_1_2">
+                            <div class="VanChuyen">
+                                <h3>Cách vận chuyển</h3>
+                                <div class="CachThucVanChuyen">
+                                    <input type="radio" id="VCh" name="fav_vanchuyen" value="CachVanChuyen">
+                                    <label for="VCh">Giao hàng tận nơi</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="KThanhToan">
-                            <h3>Cách thức thanh toán</h3>
-                            <div class="CachThucThanhToan">
-                                <input type="radio" id="tt_tien" name="fav_thanhtoan" value="TT_TienMat">
-                                <label for="tt_tien">Thanh toán khi nhận hàng</label><br>
-                              
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="khung1_2">
-                    <div class="tongDonHang">
-                        <h3>Đơn hàng</h3>
-                    </div>
-                    <div class="sanphamtrongDonHang">
-                        <div class="sp_1">
+                            <div class="KThanhToan">
+                                <h3>Cách thức thanh toán</h3>
+                                <div class="CachThucThanhToan">
+                                    <input type="radio" id="tt_tien" name="fav_thanhtoan" value="TT_TienMat">
+                                    <label for="tt_tien">Thanh toán khi nhận hàng</label><br>
 
-                            @{if (Model.MatHangs[0].MatHangAnhs.Count > 0)
-                                {
-                                    <img onerror="this.src='~/images/duphong.webp'" src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" height="50" width="50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="khung1_2">
+                        <div class="tongDonHang">
+                            <h3>Đơn hàng</h3>
+                        </div>
+                        <div class="sanphamtrongDonHang">
+                            <div class="sp_1">
+
+                                @{if (Model.MatHangs[0].MatHangAnhs.Count > 0)
+                                    {
+                                        <img onerror="this.src='~/images/duphong.webp'" src="~/@Model.MatHangs[0].MatHangAnhs[0].Anh" height="50" width="50">
+                                    }
+                                    else
+                                    {
+
+                                        <img src="~/images/duphong.webp" height="50" width="50">
+                                    }
                                 }
-                                else
-                                {
+                                <p class="ten_sp" style="line-height:50px; width:200px;">@Model.MatHangs[0].listSPs.TenMatHang</p>
+                                <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px">SL:@ViewBag.sl</p>
 
-                                    <img src="~/images/duphong.webp" height="50" width="50">
-                                }
-                            }
-                            <p class="ten_sp" style="line-height:50px; width:200px;">@Model.MatHangs[0].listSPs.TenMatHang</p>
-                            <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px" >SL:@ViewBag.sl</p>
-
-                            <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) <sup>VND</sup></p>
-                            <a><ion-icon name="close-outline"></ion-icon></a>
-                        </div>
-                    </div>
-                    <div class="tinhTien">
-                        <div class="tongTienSp">
-                            <p class="ten_phi">Tạm tính</p>
-                            <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
-                        </div>
-                    </div>
-                    <div class="TongTien">
-                        <div class="Hang_chot_tien">
-                            <p class="gia_cuoi">Tổng cộng</p>
-                            <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
-                        </div>
-                        <div class="khung1_2_5_2">
-                            <div class="back_voHang">
-                                <ion-icon name="chevron-back-outline"></ion-icon>
-                                <a asp-controller="GioHang" asp-action="ViewCart">Quay về vỏ hàng</a>
-                            </div>
-                            <div class="btn_datHang">
-                                <button type="submit" >Đặt hàng</button>
+                                <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) <sup>VND</sup></p>
+                                <a><ion-icon name="close-outline"></ion-icon></a>
                             </div>
                         </div>
+                        <div class="tinhTien">
+                            <div class="tongTienSp">
+                                <p class="ten_phi">Tạm tính</p>
+                                <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
+                            </div>
+                        </div>
+                        <div class="TongTien">
+                            <div class="Hang_chot_tien">
+                                <p class="gia_cuoi">Tổng cộng</p>
+                                <p class="phi">@string.Format("{0:0,0}", ViewBag.Tong)<sup>VND</sup></p>
+                            </div>
+                            <div class="khung1_2_5_2">
+                                <div class="back_voHang">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                    <a asp-controller="GioHang" asp-action="ViewCart">Quay về vỏ hàng</a>
+                                </div>
+                                <div class="btn_datHang">
+                                    <button type="submit">Đặt hàng</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
 
                 </div>
 
-
-            </div>
-
-        </section>
+            </section>
         </form>
 
 

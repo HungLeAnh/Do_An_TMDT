@@ -115,17 +115,8 @@ namespace Do_an_TMDT.Controllers
 
 
             }
-            if (MaLoai == null)
-            {
-                MaLoai = listcate[0].MaThuongHieu;
-            }
-            int j = 0;
-            foreach (var item2 in model.MatHangs.Where(x => x.listSPs.MaThuongHieu == MaLoai).ToList())
-            {
-                model.MatHangs[j] = item2; ;
-                j++;
-            }
-            ViewBag.TH = model.MatHangs;
+           
+     
             int i = 0;
             HttpContext.Session.SetInt32("Ten", i);
             

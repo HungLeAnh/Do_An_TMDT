@@ -5,7 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
 <link href="~/css/2.css" rel="stylesheet" />
 <link href="~/css/3.css" rel="stylesheet" />
 <ul class="menu">
@@ -206,7 +210,7 @@
             <p>Mã: <b>@Model.MatHangs[0].listSPs.MaMatHang</b></p>
         </span>
         <div class="gia"><p id="gia">@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) </p><p>&nbsp;VND</p></div>
-       
+
         <div class="nhapdulieu">
             <form asp-action="ChiTiet">
                 <div class="soluong">
@@ -214,8 +218,8 @@
                     <button type="button" onclick="tru()">-</button>
 
 
-                        <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="0" min="0" >
-                 
+                    <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="0" min="0">
+
 
 
 
