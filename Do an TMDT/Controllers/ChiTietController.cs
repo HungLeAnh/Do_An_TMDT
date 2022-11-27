@@ -126,16 +126,24 @@ namespace Do_an_TMDT.Controllers
             }
             if (sl.SoLuong <= model.MatHangs[0].listSPs.SoLuong)
             {
-                if (id == "them")
+                if (sl.SoLuong > 0)
                 {
-                    HttpContext.Session.SetInt32("sl", sl.SoLuong);
+                    if (id == "them")
+                    {
+                        HttpContext.Session.SetInt32("sl", sl.SoLuong);
 
-                    return RedirectToAction("AddCart", "GioHang");
+                        return RedirectToAction("AddCart", "GioHang");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetInt32("sl", sl.SoLuong);
+                        return RedirectToAction("ThanhToan", "DonHangs");
+                    }
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("sl", sl.SoLuong);
-                    return RedirectToAction("ThanhToan", "DonHangs");
+                    ViewBag.eror = "Số lượng sản phẩm phải lớn hơn không!";
+                    return View(model);
                 }
             }
             else{
