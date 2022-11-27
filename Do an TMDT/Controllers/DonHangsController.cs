@@ -207,6 +207,7 @@ namespace Do_an_TMDT.Controllers
                     MaMatHang = Convert.ToInt32(MaSp),
                     TenMatHang = model.MatHangs[0].listSPs.TenMatHang,
                     GiaBan = model.MatHangs[0].listSPs.GiaBan,
+                    GiaNhap = model.MatHangs[0].listSPs.GiaNhap,
                     DangDuocBan = true,
                     SoSao = model.MatHangs[0].listSPs.SoSao,
                     SoLuong = model.MatHangs[0].listSPs.SoLuong - sl1,
