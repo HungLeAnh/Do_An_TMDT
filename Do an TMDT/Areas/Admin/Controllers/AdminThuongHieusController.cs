@@ -73,6 +73,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             {
                 _context.Add(thuongHieu);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Thêm mới thành công");
                 return RedirectToAction(nameof(Index));
             }
             return View(thuongHieu);
@@ -112,6 +113,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
                 {
                     _context.Update(thuongHieu);
                     await _context.SaveChangesAsync();
+                    _notyfService.Success("Chỉnh sửa thành công");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -155,6 +157,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             var thuongHieu = await _context.ThuongHieus.FindAsync(id);
             _context.ThuongHieus.Remove(thuongHieu);
             await _context.SaveChangesAsync();
+            _notyfService.Success("Xóa thành công");
             return RedirectToAction(nameof(Index));
         }
 
