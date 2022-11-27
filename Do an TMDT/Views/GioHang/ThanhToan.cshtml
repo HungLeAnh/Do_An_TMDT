@@ -139,13 +139,15 @@
                             </div>
                         </div>
                         <div class="khungDienTT">
-
-
+                            <label>Họ Tên Người Nhận</label><br>
                             <input type="text" asp-for="TenNguoiNhan" placeholder="Họ và tên" value="@ViewBag.TenND"><br>
+                            <label>SDT Người Nhận</label><br>
                             <input type="text" asp-for="SDT" placeholder="Số điện thoại" value="@ViewBag.SDT"><br>
-                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi">
+                            <label>Địa chỉ Người Nhận</label><br>
+                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi"></input>
 
                         </div>
+
 
 
 
@@ -175,38 +177,40 @@
                     <div class="sanphamtrongDonHang">
                         @foreach (var cart in ViewBag.giohang.item)
                         {
-                            <div class="sp_1">
+                        <div class="sp_1">
 
-                                @{if (cart.MatHangAnhs.Count > 0)
-                                    {
-                                        <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
-                                    }
-                                    else
-                                    {
-
-                                        <img src="~/images/duphong.webp" height="50" width="50">
-                                    }
+                            @{if (cart.MatHangAnhs.Count > 0)
+                                {
+                                    <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
                                 }
+                                else
+                                {
 
-                                <p class="ten_sp" style="line-height:50px;">@cart.SanPham.TenMatHang</p>
-                                <p style="line-height:50px;margin-right:20px">@cart.CT_GH.SoLuong</p>
-                                <p class="gia_sp" style="line-height:50px;">@cart.CT_GH.Gia<sup>đ</sup></p>
-                                <a  href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
-                            </div>
+                                    <img src="~/images/duphong.webp" height="50" width="50">
+                                }
+                            }
+
+                        <p class="ten_sp" style="line-height:50px; width:200px;">@cart.SanPham.TenMatHang</p>
+                        <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px">SL:@cart.CT_GH.SoLuong</p>
+
+                            <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", cart.CT_GH.Gia) <sup>VND</sup></p>
+                   
+                            <a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
+                        </div>
                         }
                     </div>
 
                     <div class="tinhTien">
                         <div class="tongTienSp">
                             <p class="ten_phi">Tạm tính</p>
-                            <p class="phi">@ViewBag.thanhtien<sup>đ</sup></p>
+                            <p class="phi">@string.Format("{0:0,0}", ViewBag.thanhtien)<sup>VND</sup></p>
                         </div>
                        
                     </div>
                     <div class="TongTien">
                         <div class="Hang_chot_tien">
                             <p class="gia_cuoi">Tổng cộng</p>
-                            <p class="phi">@ViewBag.thanhtien<sup>đ</sup></p>
+                            <p class="phi">@string.Format("{0:0,0}", ViewBag.thanhtien)<sup>VND</sup></p>
                         </div>
                         <div class="khung1_2_5_2">
                             <div class="back_voHang">
