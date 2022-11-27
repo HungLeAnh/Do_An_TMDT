@@ -15,6 +15,8 @@ using MailKit.Net.Smtp;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System;
 
 namespace Do_an_TMDT.Areas.Shipper.Controllers
 {
@@ -30,13 +32,16 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
             _context = context;
             _notyfService = notyfService;
         }
-        public async Task<IActionResult> Index(int? page, int id)
+        public async Task<IActionResult> Index(int? page)
         {
+            var manguoidung = Int32.Parse(User.Claims.First().Value);
+            var nguoiDung = _context.NguoiDungs.Find(manguoidung);
+
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 10;
             var lsDonHang = new List<DonHang>();
             lsDonHang = await _context.DonHangs
-                    .Where(x => x.TinhTrang.Equals("Đang giao") && x.MaNguoiGiaoHang.Equals(id))
+                    .Where(x => x.TinhTrang.Equals("Đang giao") && x.MaNguoiGiaoHang.Equals(nguoiDung.MaNguoiDung))
                     .Include(d => d.MaNguoiDungNavigation)
                     .Include(d => d.MaNguoiGiaoHangNavigation).ToListAsync();
             PagedList<DonHang> model = new PagedList<DonHang>(lsDonHang.AsQueryable(), pageNumber, pageSize);

@@ -78,6 +78,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                         //A claim is a statement about a subject by an issuer and    
                         //represent attributes of the subject that are useful in the context of authentication and authorization operations.
                         var claims = new List<Claim>() {
+                            new Claim(ClaimTypes.Sid,userInDatabase.MaNguoiDung.ToString()),
                             new Claim(ClaimTypes.Name, userInDatabase.TenNguoiDung),
                             new Claim(ClaimTypes.Role, userInDatabase.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung),
                         };
@@ -90,7 +91,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                         {
                             IsPersistent = false,
                         });
-                         return RedirectToAction("", "Home", new { id = userInDatabase.MaNguoiDung, area = "Shipper" });
+                         return RedirectToAction("", "Home", new { area = "Shipper" });
                     }
                     else
                     {

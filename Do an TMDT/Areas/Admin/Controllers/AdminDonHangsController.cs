@@ -85,7 +85,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
                                                         .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
                                                                m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
-                                                     "MaNguoiDung", "MaNguoiDung");
+                                                     "MaNguoiDung", "TenNguoiDung");
 
             var ng = await _context.NguoiDungs.FindAsync(donHang.MaNguoiGiaoHang);
             if (ng != null)
@@ -129,7 +129,7 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
                                                         .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
                                                                m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
-                                                     "MaNguoiDung", "MaNguoiDung");
+                                                     "MaNguoiDung", "TenNguoiDung");
             return View(donhang);
         }
 
@@ -140,18 +140,18 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
                                                         .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
                                                                m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
-                                                     "MaNguoiDung", "MaNguoiDung");
+                                                     "MaNguoiDung", "TenNguoiDung");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiDung")] DonHang donHang,String id)
+        public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiGiaoHang")] DonHang donHang,String id)
         {
 
            
                 int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
                 var DonHang = _context.DonHangs.Find(MaDH);
-                DonHang.MaNguoiGiaoHang = donHang.MaNguoiDung;
+                DonHang.MaNguoiGiaoHang = donHang.MaNguoiGiaoHang;
                 DonHang.TinhTrang = "Đang giao";
                 _context.Update(DonHang);
                 await _context.SaveChangesAsync();
