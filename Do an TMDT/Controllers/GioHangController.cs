@@ -120,7 +120,8 @@ namespace Do_an_TMDT.Controllers
                 ViewBag.giohang = cartNew;
                 HttpContext.Session.SetInt32("thanhtien", thanhtien);
                 HttpContext.Session.SetInt32("sl", 0);
-                return View();
+                HttpContext.Session.SetInt32("IDSP", 0);
+                return RedirectToAction("ViewCart");
             }
             else
             {
@@ -160,7 +161,8 @@ namespace Do_an_TMDT.Controllers
                 ViewBag.giohang = cartNew;
                 HttpContext.Session.SetInt32("sl", 0);
                 HttpContext.Session.SetInt32("thanhtien", thanhtien);
-                return View();
+                HttpContext.Session.SetInt32("IDSP", 0);
+                return RedirectToAction("ViewCart");
             }
         }
         public async Task<IActionResult> DeleteCart(int id)
@@ -372,7 +374,8 @@ namespace Do_an_TMDT.Controllers
             {
                 MaNguoiDung = Convert.ToInt32(taikhoanID),
                 DiaChi = sl.DiaChi,
-                Sdt = khachhang[0].Sdt,
+                Sdt = sl.SDT,
+                TenNguoiNhan=sl.TenNguoiNhan,
                 TinhTrang = "Chưa xác nhận",
                 DaThanhToan = false,
                 TongTien = thanhtien,
