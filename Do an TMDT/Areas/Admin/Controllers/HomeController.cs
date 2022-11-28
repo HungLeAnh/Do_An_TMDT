@@ -27,12 +27,12 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             int selectedyear=-1;
             Int32.TryParse(year, out selectedyear);
-            if (year == null && selectedyear==-1)
+            if (year == "" || selectedyear==-1)
             {
                 year = DateTime.Now.Year.ToString();
                 Int32.TryParse(year, out selectedyear); 
             }
-            var allyear = _context.DonHangs.Select(m => new SelectListItem() { Text = m.NgayXuatDonHang.Value.Year.ToString(), Value = m.NgayXuatDonHang.Value.Year.ToString(), Selected = (m.NgayXuatDonHang.Value.Year.ToString() == year) }).Distinct();
+            var allyear = _context.DonHangs.Select(m => new SelectListItem() { Text = m.NgayXuatDonHang.Value.Year.ToString(), Value = m.NgayXuatDonHang.Value.Year.ToString(), Selected = (m.NgayXuatDonHang.Value.Year == selectedyear) }).Distinct();
             ViewBag.allyear = allyear;
             ViewBag.TongDoanhThu = string.Format("{0:0,0} VND", ThongKeTongDoanhThu());
             ViewBag.TangTruong = 0;

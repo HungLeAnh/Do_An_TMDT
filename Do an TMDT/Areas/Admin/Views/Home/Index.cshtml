@@ -68,9 +68,12 @@
     </div>
 </div>
 <div class="row">
-    <select class="custom-select" style="min-width: 200px;" id="thongkenam" name="thongkenam" asp-items="ViewBag.allyear">
-        <option selected>All</option>
-    </select>
+    <div class="col-md-12 col-lg-12">
+        Thống kê theo năm:
+        <select class="custom-select" style="max-width 100px;" id="thongkenam" name="thongkenam" asp-items="ViewBag.allyear">
+            <option selected>All</option>
+        </select>
+    </div>
     <div class="col-md-12 col-lg-12">
         <canvas id="doanhthu"></canvas>
     </div>
