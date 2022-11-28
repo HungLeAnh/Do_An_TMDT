@@ -19,7 +19,7 @@ namespace Do_an_TMDT.Models
 
         public virtual DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual DbSet<ChiTietGioHang> ChiTietGioHangs { get; set; }
-        public virtual DbSet<DanhGia> DanhGia { get; set; }
+        public virtual DbSet<DanhGium> DanhGia { get; set; }
         public virtual DbSet<DanhMuc> DanhMucs { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
         public virtual DbSet<GioHang> GioHangs { get; set; }
@@ -38,7 +38,8 @@ namespace Do_an_TMDT.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY;Integrated Security=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=WEBBANGIAY; Integrated Security=True;");
             }
         }
 
@@ -95,7 +96,7 @@ namespace Do_an_TMDT.Models
                     .HasConstraintName("FK__ChiTietGi__MaMat__48CFD27E");
             });
 
-            modelBuilder.Entity<DanhGia>(entity =>
+            modelBuilder.Entity<DanhGium>(entity =>
             {
                 entity.HasKey(e => e.MaDanhGia);
 
@@ -157,9 +158,9 @@ namespace Do_an_TMDT.Models
 
                 entity.HasIndex(e => e.MaNguoiGiaoHang, "IX_DonHang_MaNguoiGiaoHang");
 
-                entity.Property(e => e.DiaChi)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.DiaChi).IsRequired();
+
+                entity.Property(e => e.NgayDuKien).HasColumnType("date");
 
                 entity.Property(e => e.NgayXuatDonHang).HasColumnType("date");
 
@@ -168,6 +169,8 @@ namespace Do_an_TMDT.Models
                     .HasMaxLength(10)
                     .HasColumnName("SDT")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.TenNguoiNhan).HasMaxLength(100);
 
                 entity.Property(e => e.TinhTrang)
                     .IsRequired()
@@ -178,7 +181,6 @@ namespace Do_an_TMDT.Models
                 entity.HasOne(d => d.MaNguoiDungNavigation)
                     .WithMany(p => p.DonHangMaNguoiDungNavigations)
                     .HasForeignKey(d => d.MaNguoiDung)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DonHang_NguoiDung");
 
                 entity.HasOne(d => d.MaNguoiGiaoHangNavigation)
@@ -376,7 +378,6 @@ namespace Do_an_TMDT.Models
 
                 entity.Property(e => e.DiaChi)
                     .IsRequired()
-                    .HasMaxLength(50)
                     .HasDefaultValueSql("(N'')");
 
                 entity.HasOne(d => d.MaNguoiDungNavigation)

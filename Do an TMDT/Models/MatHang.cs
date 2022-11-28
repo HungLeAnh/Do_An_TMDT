@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -13,7 +11,7 @@ namespace Do_an_TMDT.Models
         {
             ChiTietDonHangs = new HashSet<ChiTietDonHang>();
             ChiTietGioHangs = new HashSet<ChiTietGioHang>();
-            DanhGia = new HashSet<DanhGia>();
+            DanhGia = new HashSet<DanhGium>();
             MatHangAnhs = new HashSet<MatHangAnh>();
             TheoDois = new HashSet<TheoDoi>();
         }
@@ -21,15 +19,10 @@ namespace Do_an_TMDT.Models
         public int MaMatHang { get; set; }
         public string TenMatHang { get; set; }
         public decimal GiaBan { get; set; }
-        [DefaultValue(true)]
         public bool DangDuocBan { get; set; }
-        [DefaultValue(0)]
         public double SoSao { get; set; }
-        [Required]
         public int? SoLuong { get; set; }
-        [DefaultValue(0)]
         public int? SoLuongDaBan { get; set; }
-        [DefaultValue("")]
         public string MoTa { get; set; }
         public bool DangDuocHienThi { get; set; }
         public int MaNhaCungCap { get; set; }
@@ -46,7 +39,7 @@ namespace Do_an_TMDT.Models
         public virtual ThuongHieu MaThuongHieuNavigation { get; set; }
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual ICollection<ChiTietGioHang> ChiTietGioHangs { get; set; }
-        public virtual ICollection<DanhGia> DanhGia { get; set; }
+        public virtual ICollection<DanhGium> DanhGia { get; set; }
         public virtual ICollection<MatHangAnh> MatHangAnhs { get; set; }
         public virtual ICollection<TheoDoi> TheoDois { get; set; }
     }

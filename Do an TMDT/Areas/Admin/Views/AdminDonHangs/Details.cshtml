@@ -43,7 +43,7 @@
             Tình trạng Thanh Toán:
         </dt>
         <dd class="col-sm-10">
-            @if (Model.DaThanhToan ==true)
+            @if (Model.DaThanhToan == true)
             {
                 <span class="badge badge-pill badge-success align-items-center align-content-center justify-content-center">
                     <i class="anticon anticon-check align-middle"></i>
@@ -60,13 +60,13 @@
             Tổng:
         </dt>
         <dd class="col-sm-10">
-            @string.Format("{0:0,0}",Model.TongTien) VND
+            @string.Format("{0:0,0}", Model.TongTien) VND
         </dd>
         <dt class="col-sm-2">
             Ngày xuất đơn:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NgayXuatDonHang)
+            @String.Format("{0:dd/MM/yyyy}", Model.NgayXuatDonHang)
         </dd>
         <dt class="col-sm-2">
             Email người mua:
@@ -85,6 +85,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MaNguoiGiaoHangNavigation.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Ngày dự kiến giao hàng:
+        </dt>
+        <dd class="col-sm-10">
+            @String.Format("{0:dd/MM/yyyy}", Model.NgayDuKien)
         </dd>
     </dl>
 </div>

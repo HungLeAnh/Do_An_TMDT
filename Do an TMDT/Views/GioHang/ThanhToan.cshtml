@@ -115,13 +115,14 @@
 
 </ul>
 <div class="khungThanhToan">
+   
     @{
 
-        if (@ViewBag.eror != null)
+        if (@ViewBag.error != null)
         {
             <div class="col">
                 <div class="alert alert-danger col-lg-4" role="alert">
-                    @ViewBag.eror
+                    @ViewBag.error
                 </div>
             </div>
         }
@@ -165,7 +166,7 @@
                             <div class="CachThucThanhToan">
                                 <input type="radio" id="tt_tien" name="fav_thanhtoan" value="TT_TienMat">
                                 <label for="tt_tien">Thanh toán khi nhận hàng</label><br>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -177,26 +178,26 @@
                     <div class="sanphamtrongDonHang">
                         @foreach (var cart in ViewBag.giohang.item)
                         {
-                        <div class="sp_1">
+                            <div class="sp_1">
 
-                            @{if (cart.MatHangAnhs.Count > 0)
-                                {
-                                    <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
+                                @{if (cart.MatHangAnhs.Count > 0)
+                                    {
+                                        <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
+                                    }
+                                    else
+                                    {
+
+                                        <img src="~/images/duphong.webp" height="50" width="50">
+                                    }
                                 }
-                                else
-                                {
 
-                                    <img src="~/images/duphong.webp" height="50" width="50">
-                                }
-                            }
+                                <p class="ten_sp" style="line-height:50px; width:200px;">@cart.SanPham.TenMatHang</p>
+                                <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px">SL:@cart.CT_GH.SoLuong</p>
 
-                        <p class="ten_sp" style="line-height:50px; width:200px;">@cart.SanPham.TenMatHang</p>
-                        <p class="ten_sp" style="line-height:25px; width:50px; padding-top:12px">SL:@cart.CT_GH.SoLuong</p>
+                                <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", cart.CT_GH.Gia) <sup>VND</sup></p>
 
-                            <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", cart.CT_GH.Gia) <sup>VND</sup></p>
-                   
-                            <a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
-                        </div>
+                                <a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
+                            </div>
                         }
                     </div>
 
@@ -205,7 +206,7 @@
                             <p class="ten_phi">Tạm tính</p>
                             <p class="phi">@string.Format("{0:0,0}", ViewBag.thanhtien)<sup>VND</sup></p>
                         </div>
-                       
+
                     </div>
                     <div class="TongTien">
                         <div class="Hang_chot_tien">

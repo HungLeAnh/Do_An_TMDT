@@ -65,24 +65,36 @@
             Ngày xuất đơn:
         </dt>
         <dd class="col-sm-10">
-            @ViewBag.donhang.NgayXuatDonHang)
+            @String.Format("{0:dd/MM/yyyy}",ViewBag.donhang.NgayXuatDonHang)
         </dd>
         <dt class="col-sm-2">
             Email người mua:
         </dt>
         <dd class="col-sm-10">
-            @ViewBag.donhang.MaNguoiDungNavigation.Email)
+            @ViewBag.donhang.MaNguoiDungNavigation.Email
         </dd>
         <dt class="col-sm-2">
             Email người giao hàng:
         </dt>
         <dd class="col-sm-10">
-            @ViewBag.donhang.MaNguoiGiaoHangNavigation.Email)
+            @ViewBag.donhang.MaNguoiGiaoHangNavigation.Email
         </dd>
     </dl>
 </div>
 <form asp-action="Edit">
     @{if (ViewBag.tinhtrang == "Đang giao")
+
+        {
+
+            <div class="form-group">
+                <input type="submit" value="Đơn hàng sẽ được giao trong hôm nay" class="btn btn-primary" />
+            </div>}
+
+    }
+
+</form>
+<form asp-action="Edit">
+    @{if (ViewBag.tinhtrang == "Đơn hàng sẽ được giao trong hôm nay")
 
         {
 

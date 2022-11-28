@@ -330,6 +330,12 @@ namespace Do_an_TMDT.Controllers
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
             HttpContext.Session.SetInt32("thanhtien",thanhtien);
+            var loi = HttpContext.Session.GetString("loi");
+            if (loi != null)
+            {
+                ViewBag.error = loi;
+            }
+            HttpContext.Session.Remove("loi");
             return View();
         }
         [HttpPost]
@@ -369,86 +375,96 @@ namespace Do_an_TMDT.Controllers
                 thanhtien += it.tong;
             }
             cartNew.item = itemcartsNew;
-
-            DonHang donhang = new DonHang
+            if (sl.DiaChi != null && sl.TenNguoiNhan != null && sl.SDT != null)
             {
-                MaNguoiDung = Convert.ToInt32(taikhoanID),
-                DiaChi = sl.DiaChi,
-                Sdt = sl.SDT,
-                TenNguoiNhan=sl.TenNguoiNhan,
-                TinhTrang = "Chưa xác nhận",
-                DaThanhToan = false,
-                TongTien = thanhtien,
-                NgayXuatDonHang = DateTime.Now
-            };
-            ViewBag.giohang = cartNew;
-            _context.Add(donhang);
-            await _context.SaveChangesAsync();
-            var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
-            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == curdonhang.MaDonHang).ToList();
-            foreach (var item in itemcartsNew)
-            {
-                if (item.SanPham.SoLuong - item.CT_GH.SoLuong < 0)
+                DonHang donhang = new DonHang
                 {
-                    ViewBag.eror = item.SanPham.TenMatHang + " Còn lại " + item.SanPham.SoLuong;
+                    MaNguoiDung = Convert.ToInt32(taikhoanID),
+                    DiaChi = sl.DiaChi,
+                    Sdt = sl.SDT,
+                    TenNguoiNhan = sl.TenNguoiNhan,
+                    TinhTrang = "Chưa xác nhận",
+                    DaThanhToan = false,
+                    TongTien = thanhtien,
+                    NgayXuatDonHang = DateTime.Now
+                };
+                ViewBag.giohang = cartNew;
+                _context.Add(donhang);
+                await _context.SaveChangesAsync();
+                var curdonhang = _context.DonHangs.Where(x => x == donhang).FirstOrDefault();
+                var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == curdonhang.MaDonHang).ToList();
+                foreach (var item in itemcartsNew)
+                {
+                    if (item.SanPham.SoLuong - item.CT_GH.SoLuong < 0)
+                    {
+                        ViewBag.eror = item.SanPham.TenMatHang + " Còn lại " + item.SanPham.SoLuong;
 
-                    ViewData["DiaChi"] = new SelectList(_context.NguoiDungDiaChis, "DiaChi", "DiaChi");
-                    ViewBag.thanhtien = thanhtien;
-                    return View();
+                        ViewData["DiaChi"] = new SelectList(_context.NguoiDungDiaChis, "DiaChi", "DiaChi");
+                        ViewBag.thanhtien = thanhtien;
+                        return View();
+                    }
+                    MatHang mathang = new MatHang
+                    {
+                        MaMatHang = item.SanPham.MaMatHang,
+                        TenMatHang = item.SanPham.TenMatHang,
+                        GiaBan = item.SanPham.GiaBan,
+                        DangDuocBan = true,
+                        SoSao = item.SanPham.SoSao,
+                        SoLuong = item.SanPham.SoLuong - item.CT_GH.SoLuong,
+                        SoLuongDaBan = item.SanPham.SoLuongDaBan + item.CT_GH.SoLuong,
+                        MoTa = item.SanPham.MoTa,
+                        DangDuocHienThi = true,
+                        MaNhaCungCap = item.SanPham.MaNhaCungCap,
+                        MaThuongHieu = item.SanPham.MaThuongHieu,
+                        MaDanhMuc = item.SanPham.MaDanhMuc,
+                        MaKichCo = item.SanPham.MaKichCo,
+                        MaMauSac = item.SanPham.MaMauSac
+                    };
+
+                    _context.Update(mathang);
+                    await _context.SaveChangesAsync();
+                    ChiTietDonHang ctdonhang = new ChiTietDonHang
+                    {
+                        MaDonHang = curdonhang.MaDonHang,
+                        MaMatHang = item.SanPham.MaMatHang,
+                        Gia = item.SanPham.GiaBan,
+                        SoLuong = item.CT_GH.SoLuong
+                    };
+                    _context.Update(ctdonhang);
+                    await _context.SaveChangesAsync();
+
+
+
                 }
-                MatHang mathang = new MatHang
+
+                _notyfService.Success("Thanh toán thành công!");
+                var mess = new MimeMessage();
+                mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
+                mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
+                mess.Subject = "Đơn hàng của bạn";
+                var bodyBuilder = new BodyBuilder();
+                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + thanhtien;
+                mess.Body = bodyBuilder.ToMessageBody();
+
+                using (var client = new SmtpClient())
                 {
-                    MaMatHang = item.SanPham.MaMatHang,
-                    TenMatHang = item.SanPham.TenMatHang,
-                    GiaBan = item.SanPham.GiaBan,
-                    DangDuocBan = true,
-                    SoSao = item.SanPham.SoSao,
-                    SoLuong = item.SanPham.SoLuong - item.CT_GH.SoLuong,
-                    SoLuongDaBan = item.SanPham.SoLuongDaBan + item.CT_GH.SoLuong,
-                    MoTa = item.SanPham.MoTa,
-                    DangDuocHienThi = true,
-                    MaNhaCungCap = item.SanPham.MaNhaCungCap,
-                    MaThuongHieu = item.SanPham.MaThuongHieu,
-                    MaDanhMuc = item.SanPham.MaDanhMuc,
-                    MaKichCo = item.SanPham.MaKichCo,
-                    MaMauSac = item.SanPham.MaMauSac
-                };
 
-                _context.Update(mathang);
-                await _context.SaveChangesAsync();
-                ChiTietDonHang ctdonhang = new ChiTietDonHang
-                {
-                    MaDonHang = curdonhang.MaDonHang,
-                    MaMatHang = item.SanPham.MaMatHang,
-                    Gia = item.SanPham.GiaBan,
-                    SoLuong = item.CT_GH.SoLuong
-                };
-                _context.Update(ctdonhang);
-                await _context.SaveChangesAsync();
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                    client.Send(mess);
+                    client.Disconnect(true);
 
-
-
+                }
             }
-
-            _notyfService.Success("Thanh toán thành công!");
-            var mess = new MimeMessage();
-            mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
-            mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
-            mess.Subject = "Đơn hàng của bạn";
-            var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" +  "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + thanhtien;
-            mess.Body = bodyBuilder.ToMessageBody();
-
-            using (var client = new SmtpClient())
+            else
             {
+                var loi = "Vui Lòng NHập Đầy Đủ Thông Tin !";
+                HttpContext.Session.SetString("loi", loi);
 
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
-                client.Send(mess);
-                client.Disconnect(true);
-
+                return RedirectToAction("ThanhToan");
             }
-            return RedirectToAction("Loadsanpham","NguoiDungs");
+                return RedirectToAction("Loadsanpham", "NguoiDungs");
+            
 
         }
 

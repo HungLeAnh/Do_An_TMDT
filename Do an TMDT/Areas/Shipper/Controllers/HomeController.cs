@@ -100,30 +100,80 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
             if (donhang.TinhTrang == "Đang giao")
             {
 
+                donhang.TinhTrang = "Đơn hàng sẽ được giao trong hôm nay";
+                donhang.NgayDuKien = DateTime.Now;
+                _context.Update(donhang);
+                await _context.SaveChangesAsync();
+
+
+                ViewBag.sus = "Đã cập nhật thành công";
+
+                var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
+                var donHang = await _context.DonHangs
+                  .Include(d => d.MaNguoiDungNavigation)
+                  .Include(d => d.MaNguoiGiaoHangNavigation)
+                  .FirstOrDefaultAsync(m => m.MaDonHang == id);
+                if (donHang == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.tinhtrang = donHang.TinhTrang;
+
+                ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                            .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                                   m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                         "MaNguoiDung", "MaNguoiDung");
+                ViewBag.donhang = donHang;
+                return View();
+            }
+            else if (donhang.TinhTrang == "Đơn hàng sẽ được giao trong hôm nay")
+            {
+
                 donhang.TinhTrang = "Đã giao";
                 _context.Update(donhang);
                 await _context.SaveChangesAsync();
+
+
+                ViewBag.sus = "Đã giao thành công";
+
+                var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
+                var donHang = await _context.DonHangs
+                  .Include(d => d.MaNguoiDungNavigation)
+                  .Include(d => d.MaNguoiGiaoHangNavigation)
+                  .FirstOrDefaultAsync(m => m.MaDonHang == id);
+                if (donHang == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.tinhtrang = donHang.TinhTrang;
+
+                ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                            .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                                   m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                         "MaNguoiDung", "MaNguoiDung");
+                ViewBag.donhang = donHang;
+                return View();
             }
-
-            ViewBag.sus = "Đã giao thành công";
-
-            var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
-            var donHang = await _context.DonHangs
-              .Include(d => d.MaNguoiDungNavigation)
-              .Include(d => d.MaNguoiGiaoHangNavigation)
-              .FirstOrDefaultAsync(m => m.MaDonHang == id);
-            if (donHang == null)
+            else
             {
-                return NotFound();
-            }
-            ViewBag.tinhtrang = donHang.TinhTrang;
+                var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == id).ToList();
+                var donHang = await _context.DonHangs
+                  .Include(d => d.MaNguoiDungNavigation)
+                  .Include(d => d.MaNguoiGiaoHangNavigation)
+                  .FirstOrDefaultAsync(m => m.MaDonHang == id);
+                if (donHang == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.tinhtrang = donHang.TinhTrang;
 
-            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
-                                                        .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
-                                                               m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
-                                                     "MaNguoiDung", "MaNguoiDung");
-            ViewBag.donhang = donHang;
-            return View();
+                ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                            .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                                   m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                         "MaNguoiDung", "MaNguoiDung");
+                ViewBag.donhang = donHang;
+                return View();
+            }
         }
             private bool DonHangExists(int id)
         {

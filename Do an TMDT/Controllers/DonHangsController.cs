@@ -114,6 +114,7 @@ namespace Do_an_TMDT.Controllers
                 ViewBag.error =loi;
             }    
             HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.Remove("loi");
             return View(model);
         }
         [HttpPost]
@@ -186,7 +187,9 @@ namespace Do_an_TMDT.Controllers
                     TinhTrang = "Chưa xác nhận",
                     DaThanhToan = false,
                     TongTien = sl1 * model.MatHangs[0].listSPs.GiaBan,
-                    NgayXuatDonHang = DateTime.Now
+                    NgayXuatDonHang = DateTime.Now,
+                    NgayDuKien= DateTime.Today.AddDays(3)
+
                 };
 
                 _context.Add(donhang);
