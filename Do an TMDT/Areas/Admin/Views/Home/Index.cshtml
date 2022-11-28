@@ -69,6 +69,12 @@
 </div>
 <div class="row">
     <div class="col-md-12 col-lg-12">
+        Thống kê theo năm:
+        <select class="custom-select" style="max-width 100px;" id="thongkenam" name="thongkenam" asp-items="ViewBag.allyear">
+            <option selected>All</option>
+        </select>
+    </div>
+    <div class="col-md-12 col-lg-12">
         <canvas id="doanhthu"></canvas>
     </div>
     <div class="col-md-12 col-lg-4">
@@ -208,6 +214,51 @@
                 }]
             }
         })
+
+        $(document).ready(function () {
+            jQuery("#thongkenam").change(function () {
+                var thisyear = jQuery(this).children(":selected").attr("value");
+
+                $('#thongkenam option')
+                    .removeAttr('selected');
+                $("#thongkenam > [value='" + thisyear + "']").attr("selected", "true");
+                $.ajax({
+                    url: '/Admin/Home/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    data: {
+                        year: thisyear
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (results.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#keyword").keyup(function () {
+                var strkeyword = $('#keyword').val();
+                $.ajax({
+                    url: '/Admin/Search/FindProduct/',
+                    datatype: "json",
+                    type: "POST",
+                    data: { keyword: strkeyword },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
 
     </script>
 
