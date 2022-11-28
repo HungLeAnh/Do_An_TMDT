@@ -66,41 +66,45 @@
                         <th>Địa chỉ</th>
                         <th>Giá trị đơn hàng</th>
                         <th>TT thanh toán</th>
+                        <th>Ngày Dự Kiến Giao</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>@item.MaDonHang</td>
-                            <td>@item.TinhTrang</td>
-                            <td>@item.DiaChi</td>
-                            <td>@item.TongTien</td>
-                            @{
-                                    @if (@item.DaThanhToan == null || item.DaThanhToan == false)
+                    <tr>
+                        <td>@item.MaDonHang</td>
+                        <td>@item.TinhTrang</td>
+                        <td>@item.DiaChi</td>
+                        <td>@item.TongTien</td>
+                        @{
+                            @if (@item.DaThanhToan == null || item.DaThanhToan == false)
                             {
-                                        <td>Chưa Thanh Toán</td>
+                                <td>Chưa Thanh Toán</td>
                             }
                             else
                             {
 
-                                        <td>Đã Thanh Toán</td>
+                                <td>Đã Thanh Toán</td>
                             }
 
-                            }
-                            <td>
-                                <div class="btn-group btn-group-sm ">
-                                    <a href="@Url.Action("ChiTietDH", "ChiTietNguoiDung", new { MaDH = item.MaDonHang })">
-                                        <i class="fas fa-pen btn btn-primary "></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete", "ChiTietNguoiDung", new { id = item.MaDonHang })">
-                                        <i class="fas fa-trash-alt btn btn-danger "></i>
-                                    </a>
+                        }
+                        <td>@item.NgayDuKien</td>
+   
+                           <td>
+   
+                               <div class="btn-group btn-group-sm ">
+                                <a href="@Url.Action("ChiTietDH", "ChiTietNguoiDung", new { MaDH = item.MaDonHang })">
+                                    <i class="fas fa-pen btn btn-primary "></i>
+                                </a>
+                                <a href="@Url.Action("Delete", "ChiTietNguoiDung", new { id = item.MaDonHang })">
+                                    <i class="fas fa-trash-alt btn btn-danger "></i>
+                                </a>
 
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
