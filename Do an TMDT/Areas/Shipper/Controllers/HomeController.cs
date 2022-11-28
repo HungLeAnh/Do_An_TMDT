@@ -126,7 +126,7 @@ namespace Do_an_TMDT.Areas.Shipper.Controllers
                 ViewBag.donhang = donHang;
                 return View();
             }
-            else if (donhang.TinhTrang == "")
+            else if (donhang.TinhTrang == "Đơn hàng sẽ được giao trong hôm nay")
             {
 
                 donhang.TinhTrang = "Đã giao";

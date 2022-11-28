@@ -114,6 +114,7 @@ namespace Do_an_TMDT.Controllers
                 ViewBag.error =loi;
             }    
             HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.Remove("loi");
             return View(model);
         }
         [HttpPost]

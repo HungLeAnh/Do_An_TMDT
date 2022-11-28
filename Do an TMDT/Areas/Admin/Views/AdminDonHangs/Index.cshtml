@@ -75,7 +75,7 @@
                         </td>
 
                         <td>@string.Format("{0:0,0}", item.TongTien) VND</td>
-                        <td>@item.NgayXuatDonHang.Value.Date</td>
+                        <td>  @String.Format("{0:dd/MM/yyyy}",item.NgayXuatDonHang)</td>
                         <td>
                             @if (item.TinhTrang.Equals("Đã Giao", StringComparison.OrdinalIgnoreCase))
                             {
