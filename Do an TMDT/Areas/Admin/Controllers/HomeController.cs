@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Do_an_TMDT.Areas.Admin.Controllers
 {
@@ -22,31 +23,41 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string year="")
         {
-            DateTime HienTai = DateTime.Now;
+            int selectedyear=-1;
+            Int32.TryParse(year, out selectedyear);
+            if (year == null && selectedyear==-1)
+            {
+                year = DateTime.Now.Year.ToString();
+                Int32.TryParse(year, out selectedyear); 
+            }
+            var allyear = _context.DonHangs.Select(m => new SelectListItem() { Text = m.NgayXuatDonHang.Value.Year.ToString(), Value = m.NgayXuatDonHang.Value.Year.ToString(), Selected = (m.NgayXuatDonHang.Value.Year.ToString() == year) }).Distinct();
+            ViewBag.allyear = allyear;
             ViewBag.TongDoanhThu = string.Format("{0:0,0} VND", ThongKeTongDoanhThu());
             ViewBag.TangTruong = 0;
-            if (ThongKeDoanhThuTheoNam(HienTai.Year - 2) != 0)
+            if (ThongKeDoanhThuTheoNam(selectedyear - 2) != 0)
             {
-                ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(HienTai.Year - 1) - ThongKeDoanhThuTheoNam(HienTai.Year - 2)) / ThongKeDoanhThuTheoNam(HienTai.Year - 2) * 100);
+                ViewBag.TangTruong = string.Format("{0:0.00}", (ThongKeDoanhThuTheoNam(selectedyear - 1) - ThongKeDoanhThuTheoNam(selectedyear - 2)) / ThongKeDoanhThuTheoNam(selectedyear - 2) * 100);
             }
+
+
             ViewBag.SoDonHang = ThongKeTongDonHang();
             ViewBag.SoNguoiDung = ThongKeTongNguoiDung();
-            ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(HienTai.Year) / HienTai.Month);
-            ViewBag.TongDoanhThuThang1 = Convert.ToInt32(ThongKeDoanhThuTheoThang(1, HienTai.Year));
-            ViewBag.TongDoanhThuThang2 = Convert.ToInt32(ThongKeDoanhThuTheoThang(2, HienTai.Year));
-            ViewBag.TongDoanhThuThang3 = Convert.ToInt32(ThongKeDoanhThuTheoThang(3, HienTai.Year));
-            ViewBag.TongDoanhThuThang4 = Convert.ToInt32(ThongKeDoanhThuTheoThang(4, HienTai.Year));
-            ViewBag.TongDoanhThuThang5 = Convert.ToInt32(ThongKeDoanhThuTheoThang(5, HienTai.Year));
-            ViewBag.TongDoanhThuThang6 = Convert.ToInt32(ThongKeDoanhThuTheoThang(6, HienTai.Year));
-            ViewBag.TongDoanhThuThang7 = Convert.ToInt32(ThongKeDoanhThuTheoThang(7, HienTai.Year));
-            ViewBag.TongDoanhThuThang8 = Convert.ToInt32(ThongKeDoanhThuTheoThang(8, HienTai.Year));
-            ViewBag.TongDoanhThuThang9 = Convert.ToInt32(ThongKeDoanhThuTheoThang(9, HienTai.Year));
-            ViewBag.TongDoanhThuThang10 = Convert.ToInt32(ThongKeDoanhThuTheoThang(10, HienTai.Year));
-            ViewBag.TongDoanhThuThang11 = Convert.ToInt32(ThongKeDoanhThuTheoThang(11, HienTai.Year));
-            ViewBag.TongDoanhThuThang12 = Convert.ToInt32(ThongKeDoanhThuTheoThang(12, HienTai.Year));
-            ViewBag.TongDoanhThuNamHienTai = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(HienTai.Year));
+            ViewBag.DoanhThuTrungBinh = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(selectedyear) / 12);
+            ViewBag.TongDoanhThuThang1 = Convert.ToInt32(ThongKeDoanhThuTheoThang(1, selectedyear));
+            ViewBag.TongDoanhThuThang2 = Convert.ToInt32(ThongKeDoanhThuTheoThang(2, selectedyear));
+            ViewBag.TongDoanhThuThang3 = Convert.ToInt32(ThongKeDoanhThuTheoThang(3, selectedyear));
+            ViewBag.TongDoanhThuThang4 = Convert.ToInt32(ThongKeDoanhThuTheoThang(4, selectedyear));
+            ViewBag.TongDoanhThuThang5 = Convert.ToInt32(ThongKeDoanhThuTheoThang(5, selectedyear));
+            ViewBag.TongDoanhThuThang6 = Convert.ToInt32(ThongKeDoanhThuTheoThang(6, selectedyear));
+            ViewBag.TongDoanhThuThang7 = Convert.ToInt32(ThongKeDoanhThuTheoThang(7, selectedyear));
+            ViewBag.TongDoanhThuThang8 = Convert.ToInt32(ThongKeDoanhThuTheoThang(8, selectedyear));
+            ViewBag.TongDoanhThuThang9 = Convert.ToInt32(ThongKeDoanhThuTheoThang(9, selectedyear));
+            ViewBag.TongDoanhThuThang10 = Convert.ToInt32(ThongKeDoanhThuTheoThang(10, selectedyear));
+            ViewBag.TongDoanhThuThang11 = Convert.ToInt32(ThongKeDoanhThuTheoThang(11, selectedyear));
+            ViewBag.TongDoanhThuThang12 = Convert.ToInt32(ThongKeDoanhThuTheoThang(12, selectedyear));
+            ViewBag.TongDoanhThuNamHienTai = string.Format("{0:0,0}", ThongKeDoanhThuTheoNam(selectedyear));
             ViewBag.Top5SanPham = Top5SanPham();
             List<string> AnhTop5SanPham = new List<string>();
             foreach (var item in Top5SanPham().ToList())
@@ -57,6 +68,15 @@ namespace Do_an_TMDT.Areas.Admin.Controllers
             ViewBag.AnhTop5SanPham = AnhTop5SanPham;
 
             return View();
+        }
+        public IActionResult Filtter(string year ="")
+        {
+            var url = $"/Admin/Home?year={year.Trim()}";
+            if (year == "")
+            {
+                url = $"/Admin/Home";
+            }
+            return Json(new { status = "success", redirectUrl = url });
         }
         public decimal ThongKeTongDoanhThu()
         {
