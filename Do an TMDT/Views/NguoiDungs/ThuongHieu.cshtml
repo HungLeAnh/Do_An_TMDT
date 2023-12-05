@@ -1,0 +1,203 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul class="menu">
+    <a asp-controller="Home" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+    <li><a asp-controller="Home" asp-action="Loadsanpham">Trang chủ</a></li>
+    <li><a href="">Giới Thiệu</a></li>
+    <li>
+        <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
+        <ul class="sub-nav">
+            @{if (ViewBag.listcate != null)
+                {
+
+                    @foreach (var item in ViewBag.listcate)
+                    {
+                        <li><a href="@Url.Action("ThuongHieu", "Home", new { MaTH = item.MaThuongHieu })">@item.TenThuongHieu</a></li>
+                    }}
+            }
+        </ul>
+    </li>
+    <li><a href="">Tin tức</a></li>
+    <li><a href="">Liên hệ</a></li>
+    <a href="">
+        <ul class="sub-icon">
+            <li>
+                <a href="">
+                    <ion-icon name="search-outline"></ion-icon>
+                </a>
+                <form asp-action="Timkiem">
+                    <div class="search">
+
+                        <input type="text" asp-for="key" placeholder="Tìm kiếm sản phẩm">
+
+                    </div>
+                </form>
+            </li>
+
+
+            @{
+                if (ViewBag.Id != 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
+
+                            <li><a href="@Url.Action("ChiTietNG", "ChiTietNguoiDung", new { MaNd = ViewBag.Id})">Tài Khoản </a></li>
+                            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                }
+            }
+            @{
+                if (ViewBag.Id == 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
+
+                            <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
+                        </ul>
+                    </li>
+                }
+            }
+
+
+
+
+            <li>
+                <a href="">
+                    <ion-icon name="heart-outline"></ion-icon>
+                    <input class="after" id="trangyeuthich"></input>
+                </a>
+
+            </li>
+            <li>
+                <a href=""><ion-icon name="cart-outline"></ion-icon></a>
+                <section class="giohang">
+                    <form action="">
+                    </form>
+                </section>
+            </li>
+            <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
+        </ul>
+    </a>
+
+</ul>
+
+<div class="than">
+    <img src="~/images/Chinh.webp" width="100%" alt="">
+    <div class="xanh">
+        <div class="khoi">
+            <ion-icon name="airplane-outline"></ion-icon><br>
+            <span class="khoi_text">GIAO HÀNG TOÀN QUỐC </span>
+            <p>
+                Miễn phí vận chuyển với các đơn hàng trị giá trên 2.000.000Đ
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="call-outline"></ion-icon><br>
+            <span class="khoi_text">HỖ TRỢ ONLINE 24/24 </span>
+            <p>
+                Luôn hỗ trợ khách hàng 24/24 tất cả các ngày trong tuần
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="airplane-outline"></ion-icon><br>
+            <span class="khoi_text">
+                ĐỖI HÀNG DỄ DÀNG
+            </span>
+            <p>
+                Miễn phí đổi trả trong vòng 30 ngày đầu tiên cho tất cả các mặt hàng
+            </p>
+        </div>
+        <div class="khoi">
+            <ion-icon name="gift-outline"></ion-icon><br>
+            <span class="khoi_text">QUÀ TẶNG HẤP DẪN </span>
+            <p>
+                Chương trình khuyễn mãi cực lớn và hấp dẫn hàng tháng
+
+            </p>
+        </div>
+    </div>
+</div>
+<div class="tieude">
+    <h1>SẢN PHẨM MỚI</h1>
+</div>
+<div class="menu_sp">
+    @{int i = 0;
+    }
+    @if (Model.MatHangs != null)
+    {
+
+        @foreach (var item in Model.MatHangs)
+        {
+
+            <div class="menu_sp-item">
+                @if (item.MatHangAnhs.Count() > 0)
+                {
+                    <img onerror="this.src='images/duphong.webp'" src="~/@item.MatHangAnhs[0].Anh" width="250px" alt="">
+                }
+                else
+                {
+                    <img onerror="this.src='images/duphong.webp'" src="" width="250px" alt="">
+                }
+
+                <div class="item_text">
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+                </div>
+                <div class="item_daban">
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+                </div>
+                <br>
+                <div class="item_gia">
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @item.listSPs.GiaBan</a>
+                </div>
+
+                <div class="layer2">
+                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">
+                        @if (item.MatHangAnhs.Count() > 0)
+                        {
+                            <img onerror="this.src='images/duphong.webp'" src="~/@item.MatHangAnhs[1].Anh" width="250px" alt="">
+                        }
+                        else
+                        {
+                            <img onerror="this.src='images/duphong.webp'" src="" width="250px" alt="">
+                        }
+                    </a>
+                    <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+                    <button><ion-icon name="cart-outline"></ion-icon></button>
+                </div>
+
+            </div>
+            i++;
+        }
+
+    }
+
+</div>
+<div class="phukien">
+    <div class="tieude">
+        <h1>PHỤ KIỆN</h1>
+        <p>Tất cả phụ kiện có tại ND Shoes  </p>
+    </div>
+    <div class="lon">
+        <div class="trai">
+            <img src="~/images/phukien_1.webp" alt="">
+        </div>
+        <div class="phai">
+            <div class="anh_phai">
+                <img src="~/images/phukien_2.webp" alt="">
+            </div>
+            <div class="anh_phai">
+                <img src="~/images/p.webp" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("Notyf")
+

@@ -1,0 +1,332 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+<link href="~/css/2.css" rel="stylesheet" />
+<link href="~/css/3.css" rel="stylesheet" />
+<ul class="menu">
+    @{
+        if (ViewBag.Id != 0)
+        {
+            <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
+        }
+        else
+        {
+            <a asp-controller="Home" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
+            <li><a asp-controller="Home" asp-action="Loadsanpham">Trang chủ</a></li>
+        }
+    }
+
+    <li><a href="">Giới Thiệu</a></li>
+    <li>
+        <a href="">Sản phẩm<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
+        <ul class="sub-nav">
+        </ul>
+    </li>
+    <li><a href="">Tin tức</a></li>
+    <li><a href="">Liên hệ</a></li>
+    <a href="">
+        <ul class="sub-icon">
+            <li>
+                <a href="">
+                    <ion-icon name="search-outline"></ion-icon>
+                </a>
+                <div class="search">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm">
+                </div>
+            </li>
+            @{
+                if (ViewBag.Id == 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
+
+                            <li><a asp-controller="ChiTietNguoiDung" asp-action="ChiTietNG">Tài Khoản </a></li>
+                            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng Xuất </a></li>
+                        </ul>
+                    </li>
+                }
+            }
+            @{
+                if (ViewBag.Id != 0)
+                {
+                    <li>
+                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
+                        <ul class="dangnhap">
+
+                            <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
+                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
+                        </ul>
+                    </li>
+                }
+            }
+
+            <li>
+                <a href="">
+                    <ion-icon name="heart-outline"></ion-icon>
+                    <input class="after" id="trangyeuthich"></input>
+                </a>
+
+            </li>
+            <li>
+                <a href=""><ion-icon name="cart-outline"></ion-icon></a>
+                <section class="giohang">
+                    <form action="">
+                        <table>
+                            <thead>
+
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Tên</th>
+                                    <th>Giá</th>
+                                    <th>SL</th>
+                                    <th>Chọn</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img src="image/sp2_1.webp" alt=""></td>
+                                    <td>LeBron 19</td>
+                                    <td><p><span>19000</span><sup>đ</sup></p></td>
+                                    <td><input type="number" value="1" min="0"></td>
+                                    <td>xóa</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="tong">
+                            <p>Tổng:<span>19000</span><sup>đ</sup></p>
+                        </div>
+                    </form>
+                </section>
+            </li>
+            <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
+        </ul>
+    </a>
+
+</ul>
+@{
+    if (ViewBag.Id != 0)
+    {
+        <section class="bread-crumb">
+            <div class="container">
+                <div class="nd-main-title-breadcrumb text-center">CHI TIẾT SẢN PHẨM</div>
+                <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                    <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" asp-controller="NguoiDungs" asp-action="Loadsanpham" title="Trang chủ">
+                            <span itemprop="name">Trang chủ</span>
+                            <meta itemprop="position" content="1">
+                        </a>
+                    </li>
+
+                    <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <strong itemprop="name">@Model.MatHangs[0].listSPs.TenMatHang</strong>
+                        <meta itemprop="position" content="2">
+                    </li>
+
+                </ul>
+            </div>
+
+        </section>
+
+    }
+}
+@{
+    if (ViewBag.Id == 0)
+    {
+        <section class="bread-crumb">
+            <div class="container">
+                <div class="nd-main-title-breadcrumb text-center">CHI TIẾT SẢN PHẨM</div>
+                <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                    <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <a itemprop="item" asp-controller="Home" asp-action="Loadsanpham" title="Trang chủ">
+                            <span itemprop="name">Trang chủ</span>
+                            <meta itemprop="position" content="1">
+                        </a>
+                    </li>
+
+                    <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                        <strong itemprop="name">@Model.MatHangs[0].listSPs.TenMatHang</strong>
+                        <meta itemprop="position" content="2">
+                    </li>
+
+                </ul>
+            </div>
+
+        </section>
+
+    }
+}
+
+<div class="section">
+    <div class="anh_sp">
+        @{ if (Model.MatHangs[0].MatHangAnhs.Count > 0)
+            {
+                foreach (var item in Model.MatHangs[0].MatHangAnhs)
+                {
+                    <img onerror="this.src='~/images/duphong.webp'" src="~/@item.Anh " width="300" />
+                }
+            }
+            else
+            {
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp " width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+                <img onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" width="300" />
+            }
+        }
+    </div>
+    <div class="thongtin">
+        @{
+
+            if (@ViewBag.eror != null)
+            {
+                <div class="col">
+                    <div class="alert alert-danger col-lg-4" role="alert">
+                        @ViewBag.eror
+                    </div>
+                </div>
+            }
+        }
+        <div class="name">
+            <h2>@Model.MatHangs[0].listSPs.TenMatHang</h2>
+        </div>
+        <span class="thuonghieu1">
+            <p>Thương hiệu: <b>@Model.MatHangs[0].thuonghieu[0].TenThuongHieu</b></p>
+
+            <p>Mã: <b>@Model.MatHangs[0].listSPs.MaMatHang</b></p>
+        </span>
+        <div class="gia"><p id="gia">@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) </p><p>&nbsp;VND</p></div>
+
+        <div class="nhapdulieu">
+            <form asp-action="ChiTiet">
+                <div class="soluong">
+                    <p>Số Lượng:<b id="soluong">1</b></p>
+                    <button type="button" onclick="tru()">-</button>
+
+
+                    <input asp-for="SoLuong" onchange="nhap()" id="id1" type="number" value="0" min="0">
+
+
+
+
+                    <button type="button" onclick="cong()">+</button>
+                </div>
+                <div class="themgiohang">
+                    @{ if (ViewBag.Id == 0)
+                        {
+                            if (@Model.MatHangs[0].listSPs.SoLuong <= 0)
+                            {
+                                <button id="them">Hết Hàng</button>
+                            }
+                            else
+                            {
+                                <button id="them">Thêm Vào Giỏ Hàng</button>
+                                <a asp-controller="NguoiDungs" asp-action="dangky"> <button type="button" id="mua">Mua Ngay</button></a>
+                            }
+                        }
+                        else if (ViewBag.Id != 0)
+                        {
+                            if (@Model.MatHangs[0].listSPs.SoLuong <= 0)
+                            {
+                                <button id="them">Hết Hàng</button>
+                            }
+                            else
+                            {
+                                <button asp-route-id="them" id="them">Thêm Vào Giỏ Hàng</button>
+
+                                <button asp-route-id="mua" type="submit" id="mua">Mua Ngay</button>
+                            }
+
+                        }
+
+                    }
+
+                </div>
+            </form>
+
+        </div>
+        <div class="tong"><h3>Tổng tiền:</h3><p style="margin-bottom:4px" id="tong">0 </p></div>
+        <div class="mota"><h3>Mô Tả</h3>LeBron phát triển mạnh khi tiền cược cao và áp lực gia tăng. LeBron 19 khai thác năng lượng đó với một bộ đồ vừa vặn có khóa và hệ thống đệm được cập nhật. Ống tay áo bên trong vừa khít được kéo lại với nhau bằng một lớp phủ điêu khắc mà các dây buộc xuyên qua để giúp ngăn bàn chân di chuyển vào bên trong giày.</div>
+    </div>
+</div>
+<script>
+
+    function chonmau1() {
+        let x = "Trang";
+        document.getElementById("hiennthi").innerText = x;
+
+    } function chonmau2() {
+        let x = "Đen"
+        document.getElementById("hiennthi").innerHTML = x;
+
+    }
+    function nhap() {
+        let x = document.getElementById("id1").value;
+        document.getElementById("soluong").innerHTML = x;
+        Tong();
+
+    }
+    function tru() {
+        let x = Number(document.getElementById("id1").value);
+        if (x <= 0) { return x; }
+        else {
+            x -= 1;
+            document.getElementById("id1").value = x;
+            document.getElementById("soluong").innerHTML = x;
+        }
+        Tong();
+        loadMore();
+    }
+    function cong() {
+        let x = Number(document.getElementById("id1").value);
+        x += 1;
+        document.getElementById("id1").value = x;
+        document.getElementById("soluong").innerHTML = x;
+        Tong();
+        loadMore()
+    }
+    function Tong() {
+        let x = Number(document.getElementById("id1").value);
+        let y = Number(document.getElementById("gia").innerHTML.replace(/[,]+/g, ""));
+        let z = x * y;
+
+        document.getElementById("tong").innerHTML = z.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+
+        console.log(z)
+
+
+    }
+    function loadMore() {
+        console.log("load")
+        /* tạo viên amount để Gọi và đếm classname là product */
+        var sl = document.getElementById("soluong").value;
+        $.ajax({
+            url: "ChiTiet", //send to Controller
+            type: "get", //send it through get method
+            data: {
+                slsp: sl
+            },
+            success: function (data) {
+                $("#content").append(data);
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+    };
+
+</script>
