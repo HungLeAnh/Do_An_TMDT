@@ -363,3 +363,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Do an TMDT/wwwroot/images/products
+/Do an TMDT/appsettings.json
+/Do an TMDT/Do an TMDT.csproj

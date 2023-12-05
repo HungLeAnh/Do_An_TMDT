@@ -153,7 +153,7 @@ namespace Do_an_TMDT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult dangky([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 bool x = true;
                 string salt = Utilities.GetRandomKey();
@@ -211,7 +211,7 @@ namespace Do_an_TMDT.Controllers
                       
 
                         var mess = new MimeMessage();
-                        mess.From.Add(new MailboxAddress("Trần Bửu Quyến", "tranbuuquyen2002@gmail.com"));
+                        mess.From.Add(new MailboxAddress("ND Shoes", "20110675@student.hcmute.edu.vn"));
                         mess.To.Add(new MailboxAddress("Xác Thực", nguoiDung.Email));
                         mess.Subject = "Xác Thực Email";
                         mess.Body = new TextPart("plain")
@@ -222,8 +222,8 @@ namespace Do_an_TMDT.Controllers
                         using (var client = new SmtpClient())
                         {
 
-                            client.Connect("smtp.gmail.com", 587, false);
-                            client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                            client.Connect("smtp.elasticemail.com", 2525, false);
+                            client.Authenticate("20110675@student.hcmute.edu.vn", "9974367BB96ED623DDE5482064AB01BE47AE");
                             client.Send(mess);
                             client.Disconnect(true);
 
@@ -317,7 +317,7 @@ namespace Do_an_TMDT.Controllers
         public async Task<IActionResult> OTP([Bind("MaNguoiDung,MaLoaiNguoiDung,TenNguoiDung,AnhDaiDien,TenDangNhap,MatKhauHash,Salt,Email,Sdt,ViDienTu")] NguoiDung nguoiDung)
         {
             var otp =HttpContext.Session.GetInt32("OTP");
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
 
@@ -370,7 +370,7 @@ namespace Do_an_TMDT.Controllers
                 int rad = ran.Next(100000, 999999);
                 HttpContext.Session.SetInt32("OTP", rad);
                 var mess = new MimeMessage();
-                mess.From.Add(new MailboxAddress("Trần Bửu Quyến", "tranbuuquyen2002@gmail.com"));
+                mess.From.Add(new MailboxAddress("ND Shoes", "20110675@student.hcmute.edu.vn"));
                 mess.To.Add(new MailboxAddress("Xác Thực", nguoiDung.Email));
                 mess.Subject = "Xác Thực Email";
                 mess.Body = new TextPart("plain")
@@ -382,8 +382,8 @@ namespace Do_an_TMDT.Controllers
                 using (var client = new SmtpClient())
                 {
 
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                    client.Connect("smtp.elasticemail.com", 2525, false);
+                    client.Authenticate("20110675@student.hcmute.edu.vn", "9974367BB96ED623DDE5482064AB01BE47AE");
                     client.Send(mess);
                     client.Disconnect(true);
 

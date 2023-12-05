@@ -228,18 +228,18 @@ namespace Do_an_TMDT.Controllers
                 await _context.SaveChangesAsync();
 
                 var mess = new MimeMessage();
-                mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "tranbuuquyen2002@gmail.com"));
+                mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "20110675@student.hcmute.edu.vn"));
                 mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
                 mess.Subject = "Đơn hàng của bạn";
                 var bodyBuilder = new BodyBuilder();
-                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + model.MatHangs[0].listSPs.TenMatHang + "<br><h3>Số Lượng:<h3>" + sl1 + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + tong;
+                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + mathang + "<br><h3>Số Lượng:<h3>" + sl1 + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + tong;
                 mess.Body = bodyBuilder.ToMessageBody();
 
                 using (var client = new SmtpClient())
                 {
 
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("tranbuuquyen2002@gmail.com", "hgaictvgopbceprr");
+                    client.Connect("smtp.elasticemail.com", 2525, false);
+                    client.Authenticate("20110675@student.hcmute.edu.vn", "9974367BB96ED623DDE5482064AB01BE47AE");
                     client.Send(mess);
                     client.Disconnect(true);
 
