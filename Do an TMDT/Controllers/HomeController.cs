@@ -24,16 +24,27 @@ namespace Do_an_TMDT.Controllers
             _context = context;
 
         }
-        public IActionResult ThuongHieu(int MaTH)
+        public IActionResult ThuongHieu(int? MaTH)
         {
 
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
-            var listSP = _context.MatHangs.AsNoTracking()
-                .Where(x => x.DangDuocBan == true)
-                .Where(x=>x.MaThuongHieu==MaTH)
-                .ToList();
+            var listSP = new List<MatHang>();
+            if (MaTH != null)
+            {
+                listSP = _context.MatHangs.AsNoTracking()
+                    .Where(x => x.DangDuocBan == true)
+                    .Where(x => x.MaThuongHieu == MaTH)
+                    .ToList();
+
+            }
+            else
+            {
+                 listSP = _context.MatHangs.AsNoTracking()
+                       .Where(x => x.DangDuocBan == true)
+                       .ToList();
+            }
             List<MatHangHome> listSPW = new List<MatHangHome>();
             var listanh = _context.MatHangAnhs
                 .AsNoTracking()
@@ -72,7 +83,7 @@ namespace Do_an_TMDT.Controllers
 
             }
             
-            HttpContext.Session.SetInt32("IDSP", MaTH);
+            HttpContext.Session.SetInt32("IDSP", MaTH==null?0:0);
             return View(model);
 
         }
@@ -141,6 +152,10 @@ namespace Do_an_TMDT.Controllers
             {
                 timkiem.key = timkiem.key.ToLower();
                 listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(timkiem.key)).ToList();
+            }
+            else
+            {
+                listSP = _context.MatHangs.ToList();
             }
             List<MatHangHome> listSPW = new List<MatHangHome>();
             var listanh = _context.MatHangAnhs
