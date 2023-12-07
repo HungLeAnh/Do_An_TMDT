@@ -433,9 +433,17 @@ namespace Do_an_TMDT.Controllers
                     _context.Update(ctdonhang);
                     await _context.SaveChangesAsync();
 
-
+                    
 
                 }
+                string ctdh = "<table class=\"inventory\" style=\"border:1px solid black;\">\r\n\t\t\t\t<thead>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<th style=\"border:1px solid black;\"><span contenteditable>Sản phẩm</span></th>\r\n\t\t\t\t\t\t<th style=\"border:1px solid black;\"><span contenteditable>Số lượng</span></th>\r\n\t\t\t\t\t\t<th style=\"border:1px solid black;\"><span contenteditable>Giá</span></th>\r\n\t\t\t\t\t</tr>\r\n\t\t\t\t</thead>\r\n\t\t\t\t<tbody>";
+                List<ChiTietDonHang> temp = _context.ChiTietDonHangs.Where(x => x.MaDonHang.Equals(curdonhang.MaDonHang)).ToList();
+                temp.ForEach(x =>
+                {
+                    var temp = _context.MatHangs.Where(a => a.MaMatHang.Equals(x.MaMatHang)).FirstOrDefault();
+                    ctdh += "<tr><td style=\"border:1px solid black;\">" + temp.TenMatHang + "</td>" + "<td style=\"border:1px solid black;\">" + x.SoLuong + "</td>" + "<td style=\"border:1px solid black;\">" + x.Gia + "</td></tr>";
+                });
+                ctdh += "</tbody>\r\n\t\t\t</table>";
 
                 _notyfService.Success("Thanh toán thành công!");
                 var mess = new MimeMessage();
@@ -443,7 +451,7 @@ namespace Do_an_TMDT.Controllers
                 mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
                 mess.Subject = "Đơn hàng của bạn";
                 var bodyBuilder = new BodyBuilder();
-                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + thanhtien;
+                bodyBuilder.HtmlBody = "<h1>Đơn hàng:#" + donhang.MaDonHang + "</h1>" + "<br><h3>Tên Người dùng:</h3>" + khachhang[0].TenNguoiDung + "<br><h3>Số điện thoại:</h3>" + khachhang[0].Sdt + "<br><h3>Sản phẩm:<h3>" + ctdh + "<br><h3>Địa Chỉ:<h3>" + sl.DiaChi + "<br><h3>Tổng tiền:<h3>" + thanhtien;
                 mess.Body = bodyBuilder.ToMessageBody();
                 using (var client = new SmtpClient())
                 {
