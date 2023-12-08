@@ -5,13 +5,13 @@
 }
 
 <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+@*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>*@
 
-<ul class="menu">
+@*<ul class="menu">
     <a asp-controller="NguoiDungs" asp-action="Loadsanpham"><img src="~/images/logo.png" alt=""></a>
     <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
     <li><a href="">Giới Thiệu</a></li>
@@ -110,52 +110,145 @@
         </ul>
     </a>
 
-</ul>
+</ul>*@
 
-<section class="main-content clearfix">
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="category-title position-relative">
-                    <h2 class="text-center">GioHang</h2>
-                </div>
-                <form asp-action="ViewCart">
-                <table class="table table-bordered">
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                 <form asp-action="ViewCart">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Ảnh</th>
-                            <th> Thông tin sản phẩm</th>
-                            <th>Đơn giá</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                            <th></th>
-
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Đơn giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var cart in ViewBag.giohang.item)
                         {
-                        <tr>
-                            <td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
-                            <td>@cart.SanPham.TenMatHang</td>
-                            <td> @cart.CT_GH.Gia</td>
-                            <td><input asp-for="SoLuong" type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
-                            <td>@cart.tong</td>
-                            <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@cart.SanPham.TenMatHang</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><div style="display: flex"><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia)</h5><h5><sup>VND</sup></h5></div></td>
+                                <td>
+                                    <div class="product_count">
+                                    <input asp-for="SoLuong" id="id1" min="1" type="text" readonly value="@cart.CT_GH.SoLuong">
+                                        <button onclick="cong()"
+                                                class="increase items-count" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button onclick="tru()"
+                                                class="reduced items-count" type="button">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td><div style="display: flex"><h5 id="tong">@string.Format("{0:0,0}", @cart.tong)</h5><h5><sup>VND</sup></h5></div></td>
+                                <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
+                            </tr>
                         }
+                        
                         <tr>
-                            <td colspan="2">Tổng:@ViewBag.thanhtien</td>
-                            <td colspan="5">
-                                <button class="btn btn-primary" type="submit">Thanh Toán</button>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <h5>Tổng cộng</h5>
+                            </td>
+                            <td>
+                                <h5>@string.Format("{0:0,0}", @ViewBag.thanhtien)<sup>VND</sup></h5>
+                            </td>
+                            <td>
                             </td>
                         </tr>
-
+                        <tr class="out_button_area">
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <button style="border: none" class="primary-btn" type="submit">Thanh toán</button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 </form>
             </div>
         </div>
-        <div class="col-md-4"> </div>
     </div>
 </section>
+<!--================End Cart Area =================-->
+<script>
+    function tru() {
+        let x = Number(document.getElementById("id1").value);
+        if (x <= 1) { return x; }
+        else {
+            x -= 1;
+            document.getElementById("id1").value = x;
+        }
+        Tong();
+    }
+    function cong() {
+        let x = Number(document.getElementById("id1").value);
+        x += 1;
+        document.getElementById("id1").value = x;
+        Tong();
+    }
+    function Tong() {
+        let x = Number(document.getElementById("id1").value);
+        let y = Number(document.getElementById("gia").innerHTML.replace(/[,]+/g, ""));
+        let z = x * y;
+
+        document.getElementById("tong").innerHTML = z.toLocaleString('en-US');
+    }
+
+</script>
+
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="js/gmaps.min.js"></script>
+<script src="js/main.js"></script>
