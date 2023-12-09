@@ -1,8 +1,121 @@
-﻿
+﻿@model Do_an_TMDT.ViewModels.HomeVM
 @{
     ViewData["Title"] = "Giỏ hàng";
     Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a >Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cart in ViewBag.giohang.item)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                        <img onerror="this.src='images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@cart.SanPham.TenMatHang</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia) VND</h5></td>
+                                <td>
+                                    <div class="product_count">
+                                        <form accept-charset="utf-8" asp-area="User" asp-controller="Cart" asp-action="UpdateCart" method="post">
+                                            <input type="hidden" name="productID" value="@cart.SanPham.MaMatHang">
 
+                                            <input name="amount" id="id1" min="1" type="text" readonly value="@cart.CT_GH.SoLuong">
+                                            <button  name = "update" value="1" class="increase items-count" type="submit">
+                                                    <i class="lnr lnr-chevron-up"></i>
+                                                </button>
+                                            <button  name="update" value="-1" class="reduced items-count" type="submit">
+                                                <i class="lnr lnr-chevron-down"></i>
+                                            </button>
+
+                                        </form>
+                                    </div>
+                                </td>
+                                <td> <h5 id="tong">@string.Format("{0:0,0}", @cart.tong) VND</h5></td>
+                                <td >
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <a class="primary-btn" type="button" href="@Url.Action("DeleteCart", "Cart", new { Area = "User" ,id = cart.SanPham.MaMatHang,siteBackURL=@ViewContext.RouteData.Values["action"].ToString()})">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                            <h5>@string.Format("{0:0,0}", @ViewBag.thanhtien) VND</h5>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center justify-content-center">
+                                    <a class="gray_btn" asp-area="User" asp-controller="Home" asp-action="Index">Continue Shopping</a>
+                                    @if (ViewBag.giohang.item.Count > 0) 
+                                    { 
+                                        <a class="primary-btn" asp-area="User" asp-controller="Cart" asp-action="CheckOut">Proceed to checkout</a>
+                                    } 
+                                    else 
+                                    {
+                                        <a class="primary-btn" disable >Proceed to checkout</a>
+                                    }
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

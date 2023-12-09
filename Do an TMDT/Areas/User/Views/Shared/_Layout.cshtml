@@ -35,6 +35,9 @@
 	@await Html.PartialAsync("Header.cshtml")
 
 	@RenderBody()
+	
+	@await Html.PartialAsync("Footer.cshtml")
+
 
 	@await Component.InvokeAsync("Notyf")
 

@@ -1,0 +1,63 @@
+﻿@model Do_an_TMDT.Models.NguoiDung
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Login/Register</h1>
+                <nav class="d-flex align-items-center">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Loadsanpham">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Login/Register</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+@{
+
+    if (@ViewBag.mess != null)
+    {
+        <div class="col">
+            <div class="alert alert-danger col-lg-2 justify-content-center" role="alert">
+                @ViewBag.mess
+            </div>
+        </div>
+    }
+}
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container d-flex justify-content-center">
+        <div class="col-lg-6 align-content-center">
+            <div class="login_form_inner">
+                <h3>Recover Password</h3>
+              
+                <form accept-charset="utf-8" class="row login_form" asp-area="User" asp-controller="UserLogin" asp-action="QuenMK" id="customer_register" method="post" id="contactForm" novalidate="novalidate">
+                    <input name="FormType" type="hidden" value="customer_register">
+                    <input name="utf8" type="hidden" value="true">
+                    <input type="hidden" id="" name="Token" value="">
+
+                    <div class="col-md-12 form-group">
+                        <input required="" asp-for="Email" type="text" class="form-control" id="name" placeholder="Email*" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email*'">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <button type="submit" value="submit" class="primary-btn">Recover</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

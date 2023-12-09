@@ -1,0 +1,168 @@
+﻿@model Do_an_TMDT.ViewModels.HomeVM
+@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Checkout</h1>
+                <nav class="d-flex align-items-center">
+                    <a asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
+
+                    <a>Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <!-- End Banner Area -->
+        @{
+
+            if (@ViewBag.error != null)
+            {
+                <div class="col">
+                    <div class="alert alert-danger col-lg-4" role="alert">
+                        @ViewBag.error
+                    </div>
+                </div>
+            }
+        }
+        <form class="" asp-area="User" asp-controller="Cart" asp-action="Checkout" method="post" novalidate="novalidate">
+            <div class="billing_details">
+                <div class="col">
+                    <div class="row-lg-12">
+                        <h3>Billing Details</h3>
+                            <div class="col-lg-12">
+                                <div class="row">
+
+                                    <div class="col-md-12 form-group p_star">
+                                        <span class="" >Receiver Full Name</span>
+                                        <input asp-for="TenNguoiNhan" value="@ViewBag.TenND" type="text" class="form-control" id="first" >
+                                    </div>
+
+                                    <div class="col-md-6 form-group p_star">
+                                        <span>Phone number</span>
+                                        <input asp-for="SDT" value="@ViewBag.SDT" type="text" class="form-control" id="number" >
+                                    </div>
+
+                                    <div class="col-md-6 form-group p_star">
+                                        <span>Email Address</span>
+                                        <input value="@ViewBag.Email" type="text" class="form-control" id="email" name="email">
+                                    </div>
+                        
+                                    <div class="col-md-12 form-group p_star">
+                                        <span> Address</span>
+                                        <input asp-for="DiaChi" asp-items="@ViewBag.DiaChi" type="text" class="form-control" id="add1" >
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                    <h3></h3>
+                    <div class="row-lg-12 cart_inner">
+                        <div class="order_box table-responsive">
+                            <h3>Your Order</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col"></th>
+                            
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cart in ViewBag.giohang.item)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img onerror="this.src='images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                            <p style="align-self:center">@cart.SanPham.TenMatHang</p>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia) VND</h5></td>
+                                            <td>
+                                                <div class="product_count">
+                                                    <div>
+                                                        <input type="hidden" name="productID" value="@cart.SanPham.MaMatHang">
+
+                                                        <input name="amount" id="id1" min="1" type="text" readonly value="@cart.CT_GH.SoLuong">
+                                                        <button class="increase items-count" type="button">
+                                                            <a href="@Url.Action("UpdateCart","Cart",new {
+                                                                    Area="User",
+                                                                    productID=cart.SanPham.MaMatHang,
+                                                                    amount=cart.CT_GH.SoLuong,
+                                                                    update=1,
+                                                                    siteBackURL=@ViewContext.RouteData.Values["action"].ToString()
+                                                                })"><i class="lnr lnr-chevron-up"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button value="-1" class="reduced items-count" type="button">
+                                                            <a href="@Url.Action("UpdateCart","Cart",new {
+                                                                    Area="User",
+                                                                    productID=cart.SanPham.MaMatHang,
+                                                                    amount=cart.CT_GH.SoLuong,
+                                                                    update=-1,
+                                                                    siteBackURL=@ViewContext.RouteData.Values["action"].ToString()
+                                                                })"><i class="lnr lnr-chevron-down"></i>
+                                                            </a>
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td> <h5 id="tong">@string.Format("{0:0,0}", @cart.tong) VND</h5></td>
+                                            <td >
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <a class="primary-btn" type="button" href="@Url.Action("DeleteCart", "Cart", new { Area = "User" ,id = cart.SanPham.MaMatHang, siteBackURL = @ViewContext.RouteData.Values["action"].ToString()})">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>
+                                            <h5>Final total</h5>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            <h5>@string.Format("{0:0,0}", @ViewBag.thanhtien) VND</h5>
+                                        </td>
+                                        <td>
+                                            <button class="primary-btn" type="submit">Check Out</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!--================End Checkout Area =================-->

@@ -32,16 +32,16 @@
 						{
 							foreach (var item in Model.MatHangs[0].MatHangAnhs)
 							{
-								<div class="single-prd-item">
-									<img class="img-fluid" onerror="this.src='~/images/duphong.webp'" src="~/@item.Anh" alt="">
-								</div>
+										<div class="single-prd-item">
+											<img class="img-fluid" onerror="this.src='~/images/duphong.webp'" src="~/@item.Anh" alt="">
+										</div>
 							}
 						}
 						else
 						{
-							<div class="single-prd-item">
-								<img class="img-fluid" onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" alt="">
-							</div>
+									<div class="single-prd-item">
+										<img class="img-fluid" onerror="this.src='~/images/duphong.webp'" src="~/images/duphong.webp" alt="">
+									</div>
 						}
 					}
 					</div>
@@ -69,7 +69,7 @@
 								<a class="primary-btn" href="#">SOLD OUT</a>
 							}
 							else{
-								<a class="primary-btn" href="#">Add to Cart</a>
+							<a class="primary-btn" href="@Url.Action("AddCart","Cart", new { Area="User" , id = @Model.MatHangs[0].listSPs.MaMatHang})">Add to Cart</a>
 
 							}
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>

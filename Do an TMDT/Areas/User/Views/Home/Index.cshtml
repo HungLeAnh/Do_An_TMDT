@@ -139,7 +139,7 @@
 											<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) VND</h6>
 										</div>
 										<div class="prd-bottom">
-											<a href="@Url.Action("", "", new { id = item.listSPs.MaMatHang })" class="social-info">
+											<a href="@Url.Action("AddCart","Cart", new { Area="User" , id = @item.listSPs.MaMatHang})" class="social-info">
 												<span class="ti-bag"></span>
 												<p class="hover-text">add to bag</p>
 											</a>
