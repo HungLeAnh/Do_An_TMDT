@@ -11,6 +11,7 @@ namespace Do_an_TMDT.ViewModels
     {
         public List<MatHangHome> MatHangs { get; set; }
         public List<ThuongHieu> TH { get; set; }
+        public List<DanhMuc> DanhMucs { get; set; }
         public int SoLuong { get; set; }
         public string DiaChi { get; set; }
         public string key { get; set; }

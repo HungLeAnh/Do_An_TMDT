@@ -5,9 +5,9 @@
 		<nav class="navbar navbar-expand-lg navbar-light main_box">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<a class="navbar-brand logo_h" asp-area="" asp-controller="Home" asp-action="Loadsanpham"><img src="../Userassets/img/logo.png" alt=""></a>
+				<a class="navbar-brand logo_h" asp-area="User" asp-controller="Home" asp-action="Index"><img src="~/Userassets/img/logo.png" alt=""></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -15,13 +15,13 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 					<ul class="nav navbar-nav menu_nav ml-auto">
-						<li class="nav-item active"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Loadsanpham">Home</a></li>
+						<li class="nav-item active"><a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Home</a></li>
 
 						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Shop</a>
+							   aria-expanded="false">Shop</a>
 							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ThuongHieu">Shop Category</a></li>
+								<li class="nav-item"><a class="nav-link" href="@Url.Action("ThuongHieu", "Home")">Shop Category</a></li>
 								<li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
 								<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
 								<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
@@ -30,15 +30,15 @@
 						</li>
 						<li class="nav-item submenu dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Pages</a>
+							   aria-expanded="false">Pages</a>
 							<ul class="dropdown-menu">
-								<li class="nav-item"><a class="nav-link" asp-area="User" asp-controller="UserLogin" asp-action="Login">Login</a></li>
-								<li class="nav-item"><a class="nav-link" asp-area="User" asp-controller="NguoiDungs" asp-action="dangky">SignUp</a></li>
+								<li class="nav-item"><a class="nav-link" asp-area="" asp-controller="" asp-action="">My Account</a></li>
+								<li class="nav-item"><a class="nav-link" asp-area="User" asp-controller="UserLogin" asp-action="Logout">SignOut</a></li>
 							</ul>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a asp-area="User" asp-controller="UserLogin" asp-action="Login" class="cart"><span class="ti-bag"></span></a></li>
+						<li class="nav-item"><a asp-area="" asp-controller="" asp-action="" class="cart"><span class="ti-bag"></span></a></li>
 						<li class="nav-item">
 							<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 						</li>
@@ -49,7 +49,7 @@
 	</div>
 	<div class="search_input" id="search_input_box">
 		<div class="container">
-			<form class="d-flex justify-content-between" asp-area="" asp-controller = "Home" asp-action="Timkiem">
+			<form class="d-flex justify-content-between" asp-controller="Home" asp-action="Timkiem">
 				<input type="text" class="form-control" id="search_input" placeholder="Search Here" asp-for="key">
 				<button type="submit" class="btn"></button>
 				<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>

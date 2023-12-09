@@ -1,0 +1,126 @@
+﻿@model Do_an_TMDT.Models.NguoiDung
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+			<div class="col-first">
+				<h1>Login/Register</h1>
+				<nav class="d-flex align-items-center">
+				<a class="nav-link" asp-area ="" asp-controller="Home" asp-action="Loadsanpham">Home<span class="lnr lnr-arrow-right"></span></a>
+					<a >Login/Register</a>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Banner Area -->
+@{
+
+	if (@ViewBag.mess != null)
+	{
+		<div class="col">
+			<div class="alert alert-danger col-lg-2 justify-content-center" role="alert">
+				@ViewBag.mess
+			</div>
+		</div>
+	}
+}
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="login_box_img">
+					<img class="img-fluid" src="../Userassets/img/login.jpg" alt="">
+					<div class="hover">
+						<h4>New to our website?</h4>
+						<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+						<a class="primary-btn" asp-area="" asp-controller="NguoiDungs" asp-action="dangky">Create an Account</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="login_form_inner">
+					<h3>Log in to enter</h3>
+
+					<form accept-charset="utf-8" class="row login_form" asp-controller="UserLogin" id="customer_register" method="post" id="contactForm" novalidate="novalidate">
+						<input name="FormType" type="hidden" value="customer_register">
+						<input name="utf8" type="hidden" value="true">
+						<input type="hidden" id="" name="Token" value="">
+						<div class="col-md-12 form-group">
+							<input required="" asp-for="Email" type="text" class="form-control" id="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+							<span asp-validation-for="Email" class="text-danger"></span>
+
+						</div>
+						<div class="col-md-12 form-group">
+							<input type="password" asp-for="MatKhauHash" required="" class="form-control" id="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+							<span asp-validation-for="MatKhauHash" class="text-danger"></span>
+
+						</div>
+						<div class="col-md-12 form-group">
+							<button type="submit" value="submit" class="primary-btn">Log In</button>
+							<a asp-controller="NguoiDungs" asp-action="quenMK">Forgot Password?</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+@*
+<div id="recover-password" class="form-signup" style="display:none;">
+	<div class="fix-sblock text-center">
+		Bạn quên mật khẩu? Nhập địa chỉ email để lấy lại mật khẩu qua email.
+	</div>
+	<form accept-charset="utf-8" action="/account/recover" id="recover_customer_password"
+			method="post">
+		<input name="FormType" type="hidden" value="recover_customer_password">
+		<input name="utf8" type="hidden" value="true">
+		<div class="form-signup ">
+
+		</div>
+
+		<div class="form-signup clearfix">
+			<fieldset class="form-group">
+				<label>Email<span class="required">*</span></label>
+				<input type="email" class="form-control form-control-lg" value="" name="Email"
+						id="recover-email" placeholder="Nhập địa chỉ Email" data-validation="email"
+						data-validation-error-msg="Email sai định dạng" required="">
+			</fieldset>
+		</div>
+		<div class="action_bottom text-center">
+			<button class="btn-style btn-blues" style="margin-top: 10px;" type="submit"
+					value="Lấy lại mật khẩu">
+				Lấy lại mật khẩu
+			</button>
+		</div>
+		<div class="text-login text-center">
+			<p>
+				Quay lại <a href="javascript:;" class="btn-link-style btn-register"
+							onclick="hideRecoverPasswordForm();" title="Quay lại">tại đây.</a>
+			</p>
+		</div>
+		<input name="returnUrl" type="hidden" value="/account">
+	</form>
+</div>
+
+	<script type="text/javascript">
+		function showRecoverPasswordForm() {
+			document.getElementById('recover-password').style.display = 'block';
+			document.getElementById('nd-login').style.display = 'none';
+		}
+
+		function hideRecoverPasswordForm() {
+			document.getElementById('recover-password').style.display = 'none';
+			document.getElementById('nd-login').style.display = 'block';
+		}
+
+
+	</script>
+*@
+
+
+

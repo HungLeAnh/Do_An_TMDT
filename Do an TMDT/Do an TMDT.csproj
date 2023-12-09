@@ -166,6 +166,8 @@
   <ItemGroup>
     <Folder Include="Areas\Shipper\Data\" />
     <Folder Include="Areas\Shipper\Models\" />
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Areas\User\Models\" />
   </ItemGroup>
 
 </Project>

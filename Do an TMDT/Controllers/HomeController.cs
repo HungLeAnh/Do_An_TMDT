@@ -26,10 +26,16 @@ namespace Do_an_TMDT.Controllers
         }
         public IActionResult ThuongHieu(int? MaTH)
         {
-
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
+
+            var danhmuc = _context.DanhMucs.AsNoTracking().ToList();
+            ViewBag.danhmuc = danhmuc;
+
+            var mausac = _context.MauSacs.AsNoTracking().ToList();
+            ViewBag.mausac = mausac;
+
             var listSP = new List<MatHang>();
             if (MaTH != null)
             {
@@ -69,17 +75,6 @@ namespace Do_an_TMDT.Controllers
                 }
                 listSPW.Add(mh);
                 model.MatHangs = listSPW;
-
-                if (HttpContext.Session.GetInt32("Ten") != null)
-                {
-
-                    ViewBag.Id = HttpContext.Session.GetInt32("Ten");
-                }
-                else
-                {
-                    ViewBag.Id = 0;
-                }
-
 
             }
             
@@ -126,13 +121,6 @@ namespace Do_an_TMDT.Controllers
 
 
             }
-           
-     
-            int i = 0;
-            HttpContext.Session.SetInt32("Ten", i);
-            
-
-
  
            
             PagedList<MatHangHome> models = new PagedList<MatHangHome>(model.MatHangs.AsQueryable(), pageNumber, pageSize);
@@ -146,6 +134,13 @@ namespace Do_an_TMDT.Controllers
         {
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
+
+            var danhmuc = _context.DanhMucs.AsNoTracking().ToList();
+            ViewBag.danhmuc = danhmuc;
+
+            var mausac = _context.MauSacs.AsNoTracking().ToList();
+            ViewBag.mausac = mausac;
+
             HomeVM model = new HomeVM();
             List <MatHang> listSP=null;
             if (!String.IsNullOrEmpty(timkiem.key))
@@ -186,8 +181,6 @@ namespace Do_an_TMDT.Controllers
 
 
             }
-            int i = 0;
-            HttpContext.Session.SetInt32("Ten", i);
             return View(model);
         }
             [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,166 +1,404 @@
 ﻿@model Do_an_TMDT.Models.NguoiDung
 @{
-    ViewData["Title"] = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Home Page";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- start banner Area -->
+<section class="banner-area">
+	<div class="container">
+		<div class="row fullscreen align-items-center justify-content-start">
+			<div class="col-lg-12">
+				<div class="active-banner-slider owl-carousel">
+					<!-- single-slide -->
+					<div class="row single-slide align-items-center d-flex">
+						<div class="col-lg-5 col-md-6">
+							<div class="banner-content">
+								<h1>Nike New <br>Collection!</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+								<div class="add-bag d-flex align-items-center">
+									<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+									<span class="add-text text-uppercase">Add to Bag</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="banner-img">
+								<img class="img-fluid" src="Userassets/img/banner/banner-img.png" alt="">
+							</div>
+						</div>
+					</div>
+					<!-- single-slide -->
+					<div class="row single-slide">
+						<div class="col-lg-5">
+							<div class="banner-content">
+								<h1>Nike New <br>Collection!</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+								<div class="add-bag d-flex align-items-center">
+									<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+									<span class="add-text text-uppercase">Add to Bag</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="banner-img">
+								<img class="img-fluid" src="Userassets/img/banner/banner-img.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End banner Area -->
+
+<!-- start features Area -->
+<section class="features-area section_gap">
+	<div class="container">
+		<div class="row features-inner">
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="Userassets/img/features/f-icon1.png" alt="">
+					</div>
+					<h6>Free Delivery</h6>
+					<p>Free Shipping on all order</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="Userassets/img/features/f-icon2.png" alt="">
+					</div>
+					<h6>Return Policy</h6>
+					<p>Free Shipping on all order</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="Userassets/img/features/f-icon3.png" alt="">
+					</div>
+					<h6>24/7 Support</h6>
+					<p>Free Shipping on all order</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="Userassets/img/features/f-icon4.png" alt="">
+					</div>
+					<h6>Secure Payment</h6>
+					<p>Free Shipping on all order</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end features Area -->
+
+<!-- start product Area -->
+<section class="owl-carousel active-product-area section_gap">
+	<!-- single product slide -->
+	<div class="single-product-slider">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>Latest Products</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+							dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- single product -->
+				@{int i = 0;
+				}
+				@if (ViewBag.mathang != null)
+				{
+					@foreach (var item in ViewBag.mathang)
+					{
+						@if (i <8)
+						{
+							<div class="col-lg-3 col-md-6">
+								<div class="single-product">
+									<img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+								<div class="product-details">
+										<h6>@item.listSPs.TenMatHang</h6>
+										<div class="price">
+											<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) VND</h6>
+										</div>
+										<div class="prd-bottom">
+											<a href="@Url.Action("dangnhap", "NguoiDungs", new { id = item.listSPs.MaMatHang })" class="social-info">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to bag</p>
+											</a>
+											<a href="" class="social-info" id="id1" onclick="dolen(this)">
+												<span class="lnr lnr-heart"></span>
+												<p class="hover-text">Wishlist</p>
+											</a>
+											<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">
+												<span class="lnr lnr-move"></span>
+												<p class="hover-text">view more</p>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							i++;
+						}
+					}
+
+				}
+			
+			</div>
+		</div>
+	</div>
+	<!-- single product slide -->
+	<div class="single-product-slider">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>Coming Products</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+							dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- single product -->
+				<div class="col-lg-3 col-md-6">
+					<div class="single-product">
+						<img class="img-fluid" src="Userassets/img/product/p6.jpg" alt="">
+						<div class="product-details">
+							<h6>addidas New Hammer sole
+								for Sports person</h6>
+							<div class="price">
+								<h6>$150.00</h6>
+								<h6 class="l-through">$210.00</h6>
+							</div>
+							<div class="prd-bottom">
+
+								<a href="" class="social-info">
+									<span class="ti-bag"></span>
+									<p class="hover-text">add to bag</p>
+								</a>
+								<a href="" class="social-info">
+									<span class="lnr lnr-heart"></span>
+									<p class="hover-text">Wishlist</p>
+								</a>
+								<a href="" class="social-info">
+									<span class="lnr lnr-sync"></span>
+									<p class="hover-text">compare</p>
+								</a>
+								<a href="" class="social-info">
+									<span class="lnr lnr-move"></span>
+									<p class="hover-text">view more</p>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end product Area -->
+
+<!-- Start brand Area -->
+<section class="brand-area section_gap">
+	<div class="container">
+		<div class="row">
+			<a class="col single-img" >
+				<img class="img-fluid d-block mx-auto" src="Userassets/img/brand/1.png" alt="">
+			</a>
+			<a class="col single-img" >
+				<img class="img-fluid d-block mx-auto" src="Userassets/img/brand/2.png" alt="">
+			</a>
+			<a class="col single-img" >
+				<img class="img-fluid d-block mx-auto" src="Userassets/img/brand/3.png" alt="">
+			</a>
+			<a class="col single-img" >
+				<img class="img-fluid d-block mx-auto" src="Userassets/img/brand/4.png" alt="">
+			</a>
+			<a class="col single-img" >
+				<img class="img-fluid d-block mx-auto" src="Userassets/img/brand/5.png" alt="">
+			</a>
+		</div>
+	</div>
+</section>
+<!-- End brand Area -->
+
 <ul class="menu">
-    <a href=""><img src="images/logo.png" alt=""></a>
-    <li><a asp-controller="NguoiDungs" asp-action="Loadsanpham">Trang chủ</a></li>
-    <li>
-        <a href="">Thương Hiệu<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
-        <ul class="sub-nav">
-            @{if (ViewBag.listcate != null)
-                {
+	<a href=""><img src="images/logo.png" alt=""></a>
+	<li><a >Trang chủ</a></li>
+	<li>
+		<a href="">Thương Hiệu<ion-icon class="xoay" name="chevron-down-outline"></ion-icon></a>
+		<ul class="sub-nav">
+			@{if (ViewBag.listcate != null)
+				{
 
-                    @foreach (var item in ViewBag.listcate)
-                    {
-                        <li><a href="@Url.Action("ThuongHieu", "NguoiDungs", new { MaTH = item.MaThuongHieu })">@item.TenThuongHieu</a></li>
-                    }}
-                    
-                }
-        </ul>
-    </li>
+					@foreach (var item in ViewBag.listcate)
+					{
+						<li><a href="@Url.Action("ThuongHieu", "NguoiDungs", new { MaTH = item.MaThuongHieu })">@item.TenThuongHieu</a></li>
+					}}
+					
+				}
+		</ul>
+	</li>
 
-    <a href="">
-        <ul class="sub-icon">
-            <li>
-                <a href="">
-                    <ion-icon name="search-outline"></ion-icon>
-                </a>
-                <form asp-action="Timkiem">
-                    <div class="search">
+	<a href="">
+		<ul class="sub-icon">
+			<li>
+				<a href="">
+					<ion-icon name="search-outline"></ion-icon>
+				</a>
+				<form asp-action="Timkiem">
+					<div class="search">
 
-                        <input type="text" asp-for="TenNguoiDung" placeholder="Tìm kiếm sản phẩm">
+						<input type="text" asp-for="TenNguoiDung" placeholder="Tìm kiếm sản phẩm">
 
-                    </div>
-                </form>
-            </li>
-            @{
-                if (ViewBag.Id != 0)
-                {
-                    <li>
-                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
-                        <ul class="dangnhap">
+					</div>
+				</form>
+			</li>
+			@{
+				if (ViewBag.Id != 0)
+				{
+					<li>
+						<a href=""><ion-icon name="person-outline"></ion-icon></a>
+						<ul class="dangnhap">
 
-                            <li><a href="@Url.Action("ChiTietNG", "ChiTietNguoiDung", new { MaNd = ViewBag.Id})">Tài Khoản </a></li>
-                            <li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
-                        </ul>
-                    </li>
-                }
-            }
-            @{
-                if (ViewBag.Id == 0)
-                {
-                    <li>
-                        <a href=""><ion-icon name="person-outline"></ion-icon></a>
-                        <ul class="dangnhap">
+							<li><a href="@Url.Action("ChiTietNG", "ChiTietNguoiDung", new { MaNd = ViewBag.Id})">Tài Khoản </a></li>
+							<li><a asp-controller="Home" asp-action="Loadsanpham">Đăng xuất</a></li>
+						</ul>
+					</li>
+				}
+			}
+			@{
+				if (ViewBag.Id == 0)
+				{
+					<li>
+						<a href=""><ion-icon name="person-outline"></ion-icon></a>
+						<ul class="dangnhap">
 
-                            <li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
-                            <li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
-                        </ul>
-                    </li>
-                }
-            }
+							<li><a asp-controller="NguoiDungs" asp-action="dangnhap">Đăng Nhập</a></li>
+							<li><a asp-controller="NguoiDungs" asp-action="dangky">Đăng Ký</a></li>
+						</ul>
+					</li>
+				}
+			}
 
-            <li>
-                <a href="">
-                    <ion-icon name="heart-outline"></ion-icon>
-                    <input class="after" id="trangyeuthich"></input>
-                </a>
+			<li>
+				<a href="">
+					<ion-icon name="heart-outline"></ion-icon>
+					<input class="after" id="trangyeuthich"></input>
+				</a>
 
-            </li>
-            <li>
-                <a asp-controller="GioHang" asp-action="Viewcart"><ion-icon name="cart-outline"></ion-icon></a>
-                <section class="giohang">
-                    <form asp-action="ViewCart" asp-controller="GioHang">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Ảnh</th>
-                                    <th> Tên </th>
-                                    <th>Đơn giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                    <th></th>
+			</li>
+			<li>
+				<a asp-controller="GioHang" asp-action="Viewcart"><ion-icon name="cart-outline"></ion-icon></a>
+				<section class="giohang">
+					<form asp-action="ViewCart" asp-controller="GioHang">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Ảnh</th>
+									<th> Tên </th>
+									<th>Đơn giá</th>
+									<th>Số lượng</th>
+									<th>Thành tiền</th>
+									<th></th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var cart in ViewBag.giohang.item)
-                                {
-                                    <tr>
-                                        <td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
-                                        <td>@cart.SanPham.TenMatHang</td>
-                                        <td> @cart.CT_GH.Gia</td>
-                                        <td><input  type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
-                                        <td>@cart.tong</td>
-                                        <td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <td colspan="2">Tổng:@ViewBag.thanhtien</td>
-                                    <td colspan="5">
-                                        <button type="submit">Thanh Toán</button>
-                                    </td>
-                                </tr>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var cart in ViewBag.giohang.item)
+								{
+									<tr>
+										<td><img src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt=""></td>
+										<td>@cart.SanPham.TenMatHang</td>
+										<td> @cart.CT_GH.Gia</td>
+										<td><input  type="number" value="@cart.CT_GH.SoLuong" min="0" max="500">  </td>
+										<td>@cart.tong</td>
+										<td><a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})">Xóa</a></td>
+									</tr>
+								}
+								<tr>
+									<td colspan="2">Tổng:@ViewBag.thanhtien</td>
+									<td colspan="5">
+										<button type="submit">Thanh Toán</button>
+									</td>
+								</tr>
 
-                            </tbody>
-                        </table>
-                    </form>
-                </section>
-            </li>
-            <li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
-        </ul>
-    </a>
+							</tbody>
+						</table>
+					</form>
+				</section>
+			</li>
+			<li><a href=""><ion-icon name="menu-outline"></ion-icon></a></li>
+		</ul>
+	</a>
 
 </ul>
 @Html.AntiForgeryToken()
 <div class="than">
-    <img src="images/Chinh.webp" width="100%" alt="">
+	<img src="images/Chinh.webp" width="100%" alt="">
 </div>
 <div class="tieude">
-    <h1>SẢN PHẨM MỚI</h1>
+	<h1>SẢN PHẨM MỚI</h1>
 </div>
 <div class="menu_sp">
-    <div class="chua">
-    @{int i = 0;
-    }
-    @if (ViewBag.mathang != null )
-    {
-        @foreach (var item in @ViewBag.mathang)
-        {
-            @if (i < 8)
-            {
-            <div class="menu_sp-item">
+	<div class="chua">
+	@{ i = 0;
+	}
+	@if (ViewBag.mathang != null )
+	{
+		@foreach (var item in @ViewBag.mathang)
+		{
+			@if (i < 8)
+			{
+			<div class="menu_sp-item">
 
-                <img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
-                {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
-                <div class="item_text">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
-                </div>
-                <div class="item_daban">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
-                </div>
-                <br>
-                <div class="item_gia">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @string.Format("{0:0,0}", item.listSPs.GiaBan) VND</a>
-                </div>
+				<img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
+				{@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+				<div class="item_text">
+					<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"> @item.listSPs.TenMatHang</a> <br>
+				</div>
+				<div class="item_daban">
+					<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">@item.thuonghieu[0].TenThuongHieu</a>
+				</div>
+				<br>
+				<div class="item_gia">
+					<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })">  @string.Format("{0:0,0}", item.listSPs.GiaBan) VND</a>
+				</div>
 
-                <div class="layer2">
-                    <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
-                    {@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
-                    <div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
-                    <button><a href="@Url.Action("AddCart", "GioHang", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
-                </div>
+				<div class="layer2">
+					<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })"><img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0)
+					{@item.MatHangAnhs[1].Anh}" width="250px" alt=""></a>
+					<div id="id1" onclick="dolen(this)" class="tim"> <ion-icon name="heart-outline"></ion-icon></div>
+					<button><a href="@Url.Action("AddCart", "GioHang", new { id = item.listSPs.MaMatHang })"><ion-icon name="cart-outline"></ion-icon></a></button>
+				</div>
 
-            </div>
-                    i++;
-                }
-            }
+			</div>
+					i++;
+				}
+			}
 
-    }
-    </div>
+	}
+	</div>
 
 </div>
 <script src="~/Adminassets/summernote/summernote-bs4.js"></script>

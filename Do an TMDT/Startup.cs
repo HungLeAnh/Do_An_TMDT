@@ -18,6 +18,7 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Google;
 using AspNetCoreHero.ToastNotification.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Do_an_TMDT
 {
@@ -38,6 +39,8 @@ namespace Do_an_TMDT
             services.AddDbContext<WEBBANGIAYContext>(options => options.UseSqlServer(stringconn));
 
             services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddNotyf(config =>
@@ -75,8 +78,20 @@ namespace Do_an_TMDT
                     p.LoginPath = $"/Shipper/login";
                     p.LogoutPath = $"/Shipper/logout";
                     p.AccessDeniedPath = "/not-found.html";
-                });
-            
+                })
+
+                .AddCookie("UserLogin", p =>
+                    {
+                        p.Cookie.Name = "UserLoginCookie";
+                        p.ExpireTimeSpan = TimeSpan.FromDays(1);
+                        p.LoginPath = $"/User/login";
+                        p.LogoutPath = $"/User/logout";
+                        p.AccessDeniedPath = "/not-found.html";
+                }
+
+            );
+
+
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
         }
