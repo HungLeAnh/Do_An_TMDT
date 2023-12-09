@@ -4,13 +4,120 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-        crossorigin="anonymous"></script>
-<link href="~/css/4.css" rel="stylesheet" />
+@*<link href="~/css/4.css" rel="stylesheet" />*@
+@{
 
+    if (@ViewBag.error != null)
+    {
+        <div class="col">
+            <div class="alert alert-danger col-lg-4" role="alert">
+                @ViewBag.error
+            </div>
+        </div>
+    }
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Checkout</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    
+                    <a href="single-product.html">Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+ <form asp-action="ThanhToan" asp-controller="GioHang">
+        <a style="margin-bottom: 10px" asp-controller="NguoiDungs" asp-action="Loadsanpham">Thoát</a>
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-5">
+                    <span style="font-size: 1.5rem; color: black;">Chi tiết hóa đơn</span>
+                        <div class="col-md-12 form-group p_star">
+                            <span style="font-size: 1rem; color: black;">Họ tên người nhận</span>
+                            <input asp-for="TenNguoiNhan" class="form-control" value="@ViewBag.TenND">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <span style="font-size: 1rem; color: black;">Số điện thoại</span>
+                            <input asp-for ="SDT" class="form-control" value="@ViewBag.SDT">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <span style="font-size: 1rem; color: black;">Địa chỉ email</span>
+                            <input type="text" class="form-control" name="number" value="@ViewBag.Email" readonly>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <span style="font-size: 1rem; color: black;">Địa chỉ</span>
+                            <input asp-for="DiaChi" class="form-control" asp-items="@ViewBag.DiaChi">
+                        </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <div class="sanphamtrongDonHang">
+                            @foreach (var cart in ViewBag.giohang.item)
+                            {
+                                <div class="sp_1" style="display: flex">
+
+                                    @{
+                                        if (cart.MatHangAnhs.Count > 0)
+                                        {
+                                            /*<img onerror="this.src='~/images/duphong.webp'" src="~/images/sp1.webp" height="50" width="50">*/
+                                            <img onerror="this.src='~/images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" height="50" width="50">
+                                        }
+                                        else
+                                        {
+
+                                            <img src="~/images/duphong.webp" height="50" width="50">
+                                        }
+                                    }
+
+                                    <p class="ten_sp" style="line-height:50px; width:200px;">@cart.SanPham.TenMatHang</p>
+                                    <p class="ten_sp" style="line-height:25px; width:200px; padding-top:12px">Số lượng:@cart.CT_GH.SoLuong</p>
+
+                                    <p class="gia_sp" style="line-height:50px; width:150px;">Giá:@string.Format("{0:0,0}", cart.CT_GH.Gia) <sup>VND</sup></p>
+
+                                    <a href="@Url.Action("DeleteCart", "GioHang", new { id = cart.SanPham.MaMatHang})"><ion-icon name="close-outline"></ion-icon></a>
+                                </div>
+                            }
+                        </div>
+                        <div class="tinhTien">
+                                <div class="tongTienSp" style="display: flex; justify-content: flex-end">
+                                <p class="ten_phi">Tạm tính:</p>
+                                <p class="phi"> @string.Format("{0:0,0}", ViewBag.thanhtien)<sup>VND</sup></p>
+                            </div>
+
+                        </div>
+                        <div class="TongTien">
+                            <div class="Hang_chot_tien" style="display: flex; justify-content: flex-end; align-items: center">
+                                <p class="gia_cuoi">Tổng cộng:</p>
+                                <p class="phi"> @string.Format("{0:0,0}", ViewBag.thanhtien)<sup>VND</sup></p>
+                            </div>
+                            <div class="khung1_2_5_2" style="display: flex; justify-content: space-between">
+                                <div class="back_voHang">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                    <a asp-controller="GioHang" asp-action="ViewCart">Quay về giỏ hàng</a>
+                                </div>
+                                <div class="btn_datHang">
+                                    <button type="submit" class="primary-btn" style="border:none">Đặt hàng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+    </div>
+</section>
 
 <ul class="menu">
     <a asp-action="Loadsanpham" asp-controller="NguoiDungs"><img src="~/images/logo.png" alt=""></a>
@@ -231,14 +338,4 @@
 
         </section>
     </form>
-
-
-
-
-
-
-
-
-
-
 </div>
