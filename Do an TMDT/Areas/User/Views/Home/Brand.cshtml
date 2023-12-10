@@ -27,16 +27,21 @@
 				<div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
+						<li class="main-nav-list">
+							<a href="@Url.Action("Brand","Home", new { Area="User"})" aria-expanded="false" aria-controls="fruitsVegetable">
+								<span class="lnr lnr-arrow-right"></span>All
+							</a>
+						</li>
 					@{
 						if (ViewBag.danhmuc != null)
 						{
 							@foreach (var item in ViewBag.danhmuc)
 							{
-								<li class="main-nav-list">
-									<a data-toggle="collapse" asp-area="User" asp-controller="Home" asp-action="Brand" asp-route-id=item.MaDanhMuc aria-expanded="false" aria-controls="fruitsVegetable">
-										<span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
-									</a>
-								</li>
+										<li class="main-nav-list">
+											<a href="@Url.Action("Brand","Home", new { Area="User" , MaDM = @item.MaDanhMuc})" aria-expanded="false" aria-controls="fruitsVegetable">
+												<span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
+											</a>
+										</li>
 							}
 						}
 					}
@@ -47,13 +52,18 @@
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
 						<div class="head">Brands</div>
-						<form action="#">
+						<form asp-area="User" asp-controller="Home" asp-action="Brand" >
 							<ul>
+							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+
 								@if (ViewBag.listcate != null)
 								{
 									@foreach (var item in ViewBag.listcate)
 									{
-									<li class="filter-list"><input class="pixel-radio" type="radio" id="@item.MaThuongHieu" name="brand"><label for="apple">@item.TenThuongHieu</label></li>
+									<li class="filter-list">
+										@Html.RadioButton("MaTH",@item.MaThuongHieu,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+										<label for="apple">@item.TenThuongHieu</label>
+									</li>
 									}
 								}
 							</ul>
@@ -61,13 +71,18 @@
 					</div>
 					<div class="common-filter">
 						<div class="head">Color</div>
-						<form action="#">
+					<form asp-area="User" asp-controller="Home" asp-action="Brand">
 							<ul>
+							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+
 								@if (ViewBag.mausac != null)
 								{
 									@foreach (var item in ViewBag.mausac)
 									{
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="@item.MaMauSac" name="color"><label for="black">@item.TenMauSac</label></li>
+									<li class="filter-list">
+										@Html.RadioButton("MaMau",@item.MaMauSac,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+										<label for="apple">@item.TenMauSac</label>
+									</li>
 									}
 								}
 							</ul>
@@ -118,14 +133,14 @@
 							{
 								<div class="col-lg-4 col-md-6">
 									<div class="single-product">
-										<img onerror="this.src='../images/duphong.webp'" src="../@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+										<img onerror="this.src='~/images/duphong.webp'" src="~/@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
 										<div class="product-details">
 											<h6>@item.listSPs.TenMatHang</h6>
 											<div class="price">
 												<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) VND</h6>
 											</div>
 											<div class="prd-bottom">
-												<a asp-area="User" asp-controller="UserLogin" asp-action="Login" class="social-info">
+												<a href="@Url.Action("AddCart","Cart", new { Area="User" , id = @item.listSPs.MaMatHang})" class="social-info">
 													<span class="ti-bag"></span>
 													<p class="hover-text">add to bag</p>
 												</a>
@@ -133,7 +148,7 @@
 													<span class="lnr lnr-heart"></span>
 													<p class="hover-text">Wishlist</p>
 												</a>
-												<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">
+												<a asp-area ="User" asp-controller="ProductDetail" asp-action="Index" asp-route-id="@item.listSPs.MaMatHang" class="social-info">
 													<span class="lnr lnr-move"></span>
 													<p class="hover-text">view more</p>
 												</a>

@@ -25,7 +25,14 @@ namespace Do_an_TMDT.Controllers
         {
 
             HomeVM model = new HomeVM();
-            var listSP = _context.MatHangs.AsNoTracking()
+            var listSP = _context.MatHangs
+                .Include(m => m.MaDanhMucNavigation)
+                .Include(m => m.MaKichCoNavigation)
+                .Include(m => m.MaMauSacNavigation)
+                .Include(m => m.MaNhaCungCapNavigation)
+                .Include(m => m.MaThuongHieuNavigation)
+                .Include(m => m.MatHangAnhs)
+                .AsNoTracking()
                 .Where(x => x.DangDuocBan == true)
                 .ToList();
             List<MatHangHome> listSPW = new List<MatHangHome>();
@@ -79,7 +86,14 @@ namespace Do_an_TMDT.Controllers
         public async Task<IActionResult> ChiTiet( [Bind("SoLuong")] HomeVM sl, String id)
         {
             HomeVM model = new HomeVM();
-            var listSP = _context.MatHangs.AsNoTracking()
+            var listSP = _context.MatHangs
+                .Include(m => m.MaDanhMucNavigation)
+                .Include(m => m.MaKichCoNavigation)
+                .Include(m => m.MaMauSacNavigation)
+                .Include(m => m.MaNhaCungCapNavigation)
+                .Include(m => m.MaThuongHieuNavigation)
+                .Include(m => m.MatHangAnhs)
+                .AsNoTracking()
                 .Where(x => x.DangDuocBan == true)
                 .ToList();
             List<MatHangHome> listSPW = new List<MatHangHome>();

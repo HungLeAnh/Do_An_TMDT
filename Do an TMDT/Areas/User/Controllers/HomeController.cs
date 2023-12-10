@@ -73,7 +73,7 @@ namespace Do_an_TMDT.Areas.User.Controllers
             return View();
         }
 
-        public IActionResult ThuongHieu(int? MaTH)
+        public IActionResult Brand(string? key,int? MaDM,int? MaTH,int? MaMau)
         {
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
@@ -86,19 +86,26 @@ namespace Do_an_TMDT.Areas.User.Controllers
             ViewBag.mausac = mausac;
 
             var listSP = new List<MatHang>();
-            if (MaTH != null)
-            {
-                listSP = _context.MatHangs.AsNoTracking()
-                    .Where(x => x.DangDuocBan == true)
-                    .Where(x => x.MaThuongHieu == MaTH)
-                    .ToList();
-
-            }
-            else
-            {
-                listSP = _context.MatHangs.AsNoTracking()
+            listSP = _context.MatHangs.AsNoTracking()
                       .Where(x => x.DangDuocBan == true)
                       .ToList();
+            if (!String.IsNullOrEmpty(key))
+            {
+                key = key.Trim().ToLower();
+                listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(key)).ToList();
+            }
+            if (MaDM != null)
+            {
+                listSP = listSP.Where(x => x.MaDanhMuc == MaDM).ToList();
+
+            }
+            if(MaTH != null)
+            {
+                listSP = listSP.Where(x => x.MaThuongHieu == MaTH).ToList();
+            }
+            if(MaMau != null)
+            {
+                listSP = listSP.Where(x=> x.MaMauSac == MaMau).ToList();
             }
             List<MatHangHome> listSPW = new List<MatHangHome>();
             var listanh = _context.MatHangAnhs
@@ -127,60 +134,14 @@ namespace Do_an_TMDT.Areas.User.Controllers
 
             }
 
-            HttpContext.Session.SetInt32("IDSP", MaTH == null ? 0 : 0);
+            HttpContext.Session.SetInt32("IDSP", MaDM == null ? default(int) : MaDM.Value);
+            HttpContext.Session.SetInt32("MaDM", MaDM == null ? default(int) : MaDM.Value);
+            HttpContext.Session.SetInt32("MaTH", MaTH == null ? default(int) : MaTH.Value);
+            HttpContext.Session.SetInt32("MaMau", MaMau == null ? default(int) : MaMau.Value);
             return View(model);
 
         }
 
-
-        public IActionResult Timkiem(NguoiDung timkiem)
-        {
-            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
-            ViewBag.listcate = listcate;
-            HomeVM model = new HomeVM();
-            List<MatHang> listSP = null;
-            if (!String.IsNullOrEmpty(timkiem.TenNguoiDung))
-            {
-                timkiem.TenNguoiDung = timkiem.TenNguoiDung.ToLower();
-                listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(timkiem.TenNguoiDung)).ToList();
-            }
-            else
-            {
-                return View();
-            }
-            List<MatHangHome> listSPW = new List<MatHangHome>();
-            var listanh = _context.MatHangAnhs
-                .AsNoTracking()
-                .ToList();
-            var listTH = _context.ThuongHieus
-                .AsNoTracking()
-                .ToList();
-            foreach (var item_TH in listTH)
-            {
-                model.TH = listTH.Where(x => x.MaThuongHieu != null).ToList();
-            }
-            foreach (var item in listSP)
-            {
-
-                MatHangHome mh = new MatHangHome();
-                mh.listSPs = item;
-                foreach (var item_anh in listanh)
-                {
-                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
-                }
-                foreach (var item_TH in listTH)
-                {
-                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
-                }
-                listSPW.Add(mh);
-                model.MatHangs = listSPW;
-                ViewBag.mathang = listSPW;
-
-            }
-            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
-
-            return View();
-        }
     }
 
 }

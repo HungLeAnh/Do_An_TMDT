@@ -27,16 +27,21 @@
 				<div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
-					@{
+					<li class="main-nav-list">
+						<a href="@Url.Action("ThuongHieu","Home")" aria-expanded="false" aria-controls="fruitsVegetable">
+							<span class="lnr lnr-arrow-right"></span>All
+						</a>
+					</li>
+						@{
 						if (ViewBag.danhmuc != null)
 						{
 							@foreach (var item in ViewBag.danhmuc)
 							{
-								<li class="main-nav-list">
-									<a data-toggle="collapse" asp-area="" asp-controller="Home" asp-action="ThuongHieu" asp-route-id=item.MaDanhMuc aria-expanded="false" aria-controls="fruitsVegetable">
-										<span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
-									</a>
-								</li>
+										<li class="main-nav-list">
+											<a href="@Url.Action("ThuongHieu","Home", new {MaDM = @item.MaDanhMuc})" aria-expanded="false" aria-controls="fruitsVegetable">
+												<span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
+											</a>
+										</li>
 							}
 						}
 					}
@@ -47,31 +52,41 @@
 					<div class="top-filter-head">Product Filters</div>
 					<div class="common-filter">
 						<div class="head">Brands</div>
-						<form action="#">
-							<ul>
-								@if (ViewBag.listcate != null)
+					<form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
+						<ul>
+							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+
+							@if (ViewBag.listcate != null)
+							{
+								@foreach (var item in ViewBag.listcate)
 								{
-									@foreach (var item in ViewBag.listcate)
-									{
-									<li class="filter-list"><input class="pixel-radio" type="radio" id="@item.MaThuongHieu" name="brand"><label for="apple">@item.TenThuongHieu</label></li>
-									}
+									<li class="filter-list">
+										@Html.RadioButton("MaTH",@item.MaThuongHieu,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+										<label for="apple">@item.TenThuongHieu</label>
+									</li>
 								}
-							</ul>
-						</form>
+							}
+						</ul>
+					</form>
 					</div>
 					<div class="common-filter">
 						<div class="head">Color</div>
-						<form action="#">
-							<ul>
-								@if (ViewBag.mausac != null)
-								{
-									@foreach (var item in ViewBag.mausac)
+							<form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
+								<ul>
+									<li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+
+									@if (ViewBag.mausac != null)
 									{
-										<li class="filter-list"><input class="pixel-radio" type="radio" id="@item.MaMauSac" name="color"><label for="black">@item.TenMauSac</label></li>
+										@foreach (var item in ViewBag.mausac)
+										{
+											<li class="filter-list">
+												@Html.RadioButton("MaMau",@item.MaMauSac,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+												<label for="apple">@item.TenMauSac</label>
+											</li>
+										}
 									}
-								}
-							</ul>
-						</form>
+								</ul>
+							</form>
 					</div>					
 				</div>
 			</div>
@@ -118,7 +133,7 @@
 							{
 								<div class="col-lg-4 col-md-6">
 									<div class="single-product">
-										<img onerror="this.src='../images/duphong.webp'" src="../@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+										<img onerror="this.src='~/images/duphong.webp'" src="~/@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
 										<div class="product-details">
 											<h6>@item.listSPs.TenMatHang</h6>
 											<div class="price">

@@ -24,7 +24,7 @@ namespace Do_an_TMDT.Controllers
             _context = context;
 
         }
-        public IActionResult ThuongHieu(int? MaTH)
+        public IActionResult ThuongHieu(string? key,int? MaDM, int? MaTH, int? MaMau)
         {
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
@@ -34,22 +34,30 @@ namespace Do_an_TMDT.Controllers
             ViewBag.danhmuc = danhmuc;
 
             var mausac = _context.MauSacs.AsNoTracking().ToList();
+
             ViewBag.mausac = mausac;
 
             var listSP = new List<MatHang>();
+
+            listSP = _context.MatHangs.AsNoTracking()
+                      .Where(x => x.DangDuocBan == true)
+                      .ToList();
+            if (!String.IsNullOrEmpty(key))
+            {
+                key = key.Trim().ToLower();
+                listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(key)).ToList();
+            }
+            if (MaDM != null)
+            {
+                listSP = listSP.Where(x => x.MaDanhMuc == MaDM).ToList();
+            }
             if (MaTH != null)
             {
-                listSP = _context.MatHangs.AsNoTracking()
-                    .Where(x => x.DangDuocBan == true)
-                    .Where(x => x.MaThuongHieu == MaTH)
-                    .ToList();
-
+                listSP = listSP.Where(x => x.MaThuongHieu == MaTH).ToList();
             }
-            else
+            if (MaMau != null)
             {
-                 listSP = _context.MatHangs.AsNoTracking()
-                       .Where(x => x.DangDuocBan == true)
-                       .ToList();
+                listSP = listSP.Where(x => x.MaMauSac == MaMau).ToList();
             }
             List<MatHangHome> listSPW = new List<MatHangHome>();
             var listanh = _context.MatHangAnhs
@@ -78,7 +86,7 @@ namespace Do_an_TMDT.Controllers
 
             }
             
-            HttpContext.Session.SetInt32("IDSP", MaTH==null?0:0);
+            HttpContext.Session.SetInt32("IDSP", MaDM==null?0:0);
             return View(model);
 
         }
@@ -126,61 +134,6 @@ namespace Do_an_TMDT.Controllers
             PagedList<MatHangHome> models = new PagedList<MatHangHome>(model.MatHangs.AsQueryable(), pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             ViewBag.list = models;
-            return View(model);
-        }
-
-
-        public IActionResult Timkiem(HomeVM timkiem)
-        {
-            var listcate = _context.ThuongHieus.AsNoTracking().ToList();
-            ViewBag.listcate = listcate;
-
-            var danhmuc = _context.DanhMucs.AsNoTracking().ToList();
-            ViewBag.danhmuc = danhmuc;
-
-            var mausac = _context.MauSacs.AsNoTracking().ToList();
-            ViewBag.mausac = mausac;
-
-            HomeVM model = new HomeVM();
-            List <MatHang> listSP=null;
-            if (!String.IsNullOrEmpty(timkiem.key))
-            {
-                timkiem.key = timkiem.key.ToLower();
-                listSP = _context.MatHangs.Where(b => b.TenMatHang.ToLower().Contains(timkiem.key)).ToList();
-            }
-            else
-            {
-                listSP = _context.MatHangs.ToList();
-            }
-            List<MatHangHome> listSPW = new List<MatHangHome>();
-            var listanh = _context.MatHangAnhs
-                .AsNoTracking()
-                .ToList();
-            var listTH = _context.ThuongHieus
-                .AsNoTracking()
-                .ToList();
-            foreach (var item_TH in listTH)
-            {
-                model.TH = listTH.Where(x => x.MaThuongHieu != null).ToList();
-            }
-            foreach (var item in listSP)
-            {
-
-                MatHangHome mh = new MatHangHome();
-                mh.listSPs = item;
-                foreach (var item_anh in listanh)
-                {
-                    mh.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
-                }
-                foreach (var item_TH in listTH)
-                {
-                    mh.thuonghieu = listTH.Where(x => x.MaThuongHieu == item.MaThuongHieu).ToList();
-                }
-                listSPW.Add(mh);
-                model.MatHangs = listSPW;
-
-
-            }
             return View(model);
         }
             [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -467,7 +467,8 @@ namespace Do_an_TMDT.Areas.User.Controllers
 
                 return RedirectToAction("CheckOut");
             }
-            return RedirectToAction("Loadsanpham", "NguoiDungs");
+            HttpContext.Session.SetString("loi", "Thanh toán thành công");
+            return RedirectToAction("CheckOut");
 
 
         }
