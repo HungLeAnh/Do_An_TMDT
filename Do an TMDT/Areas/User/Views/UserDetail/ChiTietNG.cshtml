@@ -1,0 +1,91 @@
+﻿@model Do_an_TMDT.Models.NguoiDung
+@{
+    ViewData["Title"] = "ChiTietNG";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>User Profile</h1>
+                <nav class="d-flex align-items-center">
+                    <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a>My Profile</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================User Profile Area =================-->
+<section class="blog_area single-post-area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget author_widget">
+                        <img class="author_img rounded-circle" onerror="this.src='../../images/duphong.webp'" src="@if (ViewBag.khachhang.AnhDaiDien!=null){@ViewBag.khachhang.AnhDaiDien;}" alt="">
+                        <h4>@ViewBag.khachhang.TenNguoiDung</h4>
+                        <div class="br"></div>
+                    </aside>
+                    <aside class="single_sidebar_widget popular_post_widget">
+                        <h3 class="widget_title">Popular Posts</h3>
+                        <div class="media post_item">
+                            <div class="media-body">
+                                <a class="noidungInfo" asp-action="ChiTietNG">
+                                    <h3>Thông tin tài khoản</h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="media post_item">
+                            <div class="media-body">
+                                <a class="noidungInfo_active" asp-action="DonHang">
+                                    <h3>Đơn hàng của bạn</h3>
+                                </a>
+                            </div>
+                        </div>                        
+                        <div class="media post_item">
+                            <div class="media-body">
+                                <a href="@Url.Action("EditMK", new { id =@ViewBag.khachhang.MaNguoiDung })">
+                                    <h3>Đổi mật khẩu</h3>
+                                </a>
+                            </div>
+                        </div>                       
+                        <div class="media post_item">
+                            <div class="media-body">
+                                <a asp-action="SoDiaChi">
+                                    <h3>Số địa chỉ(@ViewBag.khachhang.NguoiDungDiaChis.Count)</h3>
+                                </a>
+                            </div>
+                        </div>                        
+                        <div class="media post_item">
+                            <div class="media-body">
+                                <a asp-controller="UserLogin" asp-action="Logout">
+                                    <h3>Đăng xuất</h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="br"></div>
+                    </aside>
+                    <aside class="single_sidebar_widget ads_widget">
+                        <a href="#"><img class="img-fluid" src="img/blog/add.jpg" alt=""></a>
+                    </aside>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="blog_right_sidebar">
+                    <h2 class="title_Chinh">Thông tin tài khoản</h2>
+                    <p><strong>Họ tên: </strong>@ViewBag.khachhang.TenNguoiDung</p>
+                    <p><strong>Số điện thoại: </strong>@ViewBag.khachhang.Sdt</p>
+                    <p><strong>Email: </strong> @ViewBag.khachhang.Email</p>
+
+                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id =@ViewBag.khachhang.MaNguoiDung })" role="button">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================User Profile Area =================-->
