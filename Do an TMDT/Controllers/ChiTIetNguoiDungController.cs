@@ -157,6 +157,8 @@ namespace Do_an_TMDT.Controllers
             nguoiDung.MaNguoiDung = khachhang[0].MaNguoiDung;
             nguoiDung.MatKhauHash = khachhang[0].MatKhauHash;
             nguoiDung.Salt = khachhang[0].Salt;
+            nguoiDung.Email = khachhang[0].Email;
+            nguoiDung.TenDangNhap = khachhang[0].TenDangNhap;
             if (!ModelState.IsValid)
             {
                 if (id != nguoiDung.MaNguoiDung)

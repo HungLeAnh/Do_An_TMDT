@@ -4,46 +4,28 @@
     ViewData["Title"] = "Delete";
 
 }
-<!-- page css -->
-<link href="~/adminassets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
-
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
 <!-- Core css -->
 <link href="~/adminassets/css/app.min.css" rel="stylesheet">
-<link href="~/css/4.css" rel="stylesheet" />
-<link href="~/css/3.css" rel="stylesheet" />
-<section class="bread-crumb">
+<section class="banner-area organic-breadcrumb">
     <div class="container">
-        <div class="nd-main-title-breadcrumb text-center">Thông Tin Khách Hàng</div>
-        <ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-            <li class="home" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                <a itemprop="item" asp-controller="NguoiDungs" asp-action="Loadsanpham" title="Trang chủ">
-                    <span itemprop="name">Trang chủ</span>
-                    <meta itemprop="position" content="1">
-                </a>
-            </li>
-
-            <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                <strong itemprop="name">Chi Tiết</strong>
-                <meta itemprop="position" content="2">
-            </li>
-
-        </ul>
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Customer Information</h1>
+                <nav class="d-flex align-items-center">
+                    <a asp-area="" asp-controller="Home" asp-action="Loadsanpham">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="">Customer</a>
+                </nav>
+            </div>
+        </div>
     </div>
-
 </section>
 
-<div class="container">
+<div class="container" style="margin-bottom: 100px">
     <div class="row clajustify-content-sm-center">
-        <div class="col-sm-4">
-            <h1>Xóa Đơn Hàng</h1>
-            <h3>Bạn có muốn xóa đơn hàng này không?</h3>
-            <h4> Đơn hàng</h4>
+        <div class="col-sm-8">
+            <h1>Delete order</h1>
+            <h3>Do you want to delete this order?</h3>
+            <h4>Order</h4>
         
             <hr />
             @{
@@ -63,7 +45,7 @@
                 <div class="col-sm-8">
                     <div class="row m-10 ">
                         <div class="col-sm-6 border border-dark ">
-                            Mã Đơn Hàng
+                            Order Id
                         </div>
                         <div class="col-sm-6 border border-dark ">
                             @ViewBag.xoa.MaDonHang
@@ -73,7 +55,7 @@
 
                     <div class="row m-10">
                         <div class="col-sm-6 border border-dark ">
-                            Mã Người dùng
+                            User Id
                         </div>
 
                         <div class="col-sm-6 border border-dark ">
@@ -83,7 +65,7 @@
                     </div>
                     <div class="row m-10">
                         <div class="col-sm-6 border border-dark ">
-                            Địa chỉ
+                            Address
                         </div>
 
                         <div class="col-sm-6 border border-dark ">
@@ -93,7 +75,7 @@
                     </div>
                     <div class="row m-10">
                         <div class="col-sm-6 border border-dark ">
-                            Tình Trạng
+                            Status
                         </div>
 
                         <div class="col-sm-6 border border-dark ">
@@ -103,7 +85,7 @@
                     </div>
                     <div class="row m-10">
                         <div class="col-sm-6 border border-dark ">
-                            Tổng Tiền
+                            Total
                         </div>
 
                         <div class="col-sm-6 border border-dark ">
@@ -115,8 +97,7 @@
             </div>
 
             <form asp-action="Delete">
-                <input type="submit" value="Delete" class="btn btn-danger" /> |
-
+                <input type="submit" value="Delete" class="genric-btn danger radius" />
             </form>
         </div>
     </div>
