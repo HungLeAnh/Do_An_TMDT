@@ -1,4 +1,5 @@
 ﻿using Do_an_TMDT.Models;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,7 @@ namespace Do_an_TMDT.ViewModels
         public string Email { get; set; }
         public string SDT { get; set; }
 
+        public IPagedList<DonHang> DonHangs { get; set; }
 
     }
 }
