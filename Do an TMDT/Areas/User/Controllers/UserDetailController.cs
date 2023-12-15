@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Do_an_TMDT.Models;
-using Do_an_TMDT.Extension;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.Extension;
+using Do_an_CCNPMM.ViewModels;
 using Microsoft.AspNetCore.Http;
 using PagedList.Core;
 
-namespace Do_an_TMDT.Areas.User.Controllers
+namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
     public class UserDetailController : Controller

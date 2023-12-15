@@ -1,12 +1,12 @@
-﻿using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
+﻿using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace Do_an_TMDT.Areas.User.Controllers
+namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
     public class ProductDetailController : Controller

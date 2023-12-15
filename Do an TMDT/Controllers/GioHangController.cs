@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.ViewModels;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.Controllers
+namespace Do_an_CCNPMM.Controllers
 {
     public class GioHangController : Controller
     {

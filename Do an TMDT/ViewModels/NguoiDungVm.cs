@@ -1,10 +1,10 @@
-﻿using Do_an_TMDT.Models;
+﻿using Do_an_CCNPMM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.ViewModels
+namespace Do_an_CCNPMM.ViewModels
 {
     public class NguoiDungVm
     {

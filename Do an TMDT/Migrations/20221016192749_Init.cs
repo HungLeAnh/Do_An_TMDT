@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Do_an_TMDT.Migrations
+namespace Do_an_CCNPMM.Migrations
 {
     public partial class Init : Migration
     {

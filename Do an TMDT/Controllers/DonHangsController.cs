@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Do_an_TMDT.Models;
+using Do_an_CCNPMM.Models;
 using Microsoft.AspNetCore.Http;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.ViewModels;
 using MimeKit;
 using System.Net;
 using MailKit.Net.Smtp;
 
-namespace Do_an_TMDT.Controllers
+namespace Do_an_CCNPMM.Controllers
 {
     public class DonHangsController : Controller
     {

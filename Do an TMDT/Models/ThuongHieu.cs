@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Do_an_TMDT.Models
+namespace Do_an_CCNPMM.Models
 {
     public partial class ThuongHieu
     {

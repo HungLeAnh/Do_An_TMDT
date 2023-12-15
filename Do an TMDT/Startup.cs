@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification;
-using Do_an_TMDT.Areas.Admin.Controllers;
-using Do_an_TMDT.Models;
+using Do_an_CCNPMM.Areas.Admin.Controllers;
+using Do_an_CCNPMM.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace Do_an_TMDT
+namespace Do_an_CCNPMM
 {
     public class Startup
     {

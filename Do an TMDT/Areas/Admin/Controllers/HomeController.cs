@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.ViewModels;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Do_an_TMDT.Areas.Admin.Controllers
+namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(AuthenticationSchemes = "AdminLogin")]

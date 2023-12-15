@@ -1,6 +1,6 @@
-﻿using Do_an_TMDT.Extension;
-using Do_an_TMDT.Helpper;
-using Do_an_TMDT.Models;
+﻿using Do_an_CCNPMM.Extension;
+using Do_an_CCNPMM.Helpper;
+using Do_an_CCNPMM.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using MimeKit;
 using System.Threading.Tasks;
 using System;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using Do_an_TMDT.Areas.Admin.Controllers;
+using Do_an_CCNPMM.Areas.Admin.Controllers;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using MailKit.Net.Smtp;
@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Do_an_TMDT.Areas.User.Controllers
+namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
     [AllowAnonymous]

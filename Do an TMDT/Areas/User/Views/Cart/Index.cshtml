@@ -1,4 +1,4 @@
-﻿@model Do_an_TMDT.ViewModels.HomeVM
+﻿@model Do_an_CCNPMM.ViewModels.HomeVM
 @{
     ViewData["Title"] = "Giỏ hàng";
     Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
@@ -41,7 +41,13 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                        <img onerror="this.src='images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt="">
+                                            @if (@cart.MatHangAnhs.Count>0)
+                                            {
+                                                <img onerror="this.src='images/duphong.webp'" src="~/@cart.MatHangAnhs[0].Anh" width="50px" height="50" alt="">
+                                            }
+                                            else{
+                                                <img onerror="this.src='images/duphong.webp'" src="~/images/duphong.webp" width="50px" height="50" alt="">
+                                            }
                                         </div>
                                         <div class="media-body">
                                             <p>@cart.SanPham.TenMatHang</p>

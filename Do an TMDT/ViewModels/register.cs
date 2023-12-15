@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.ViewModels
+namespace Do_an_CCNPMM.ViewModels
 {
     public class register
     { 

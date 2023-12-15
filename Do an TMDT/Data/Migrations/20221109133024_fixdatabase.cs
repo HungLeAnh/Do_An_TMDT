@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Do_an_TMDT.Data.Migrations
+namespace Do_an_CCNPMM.Data.Migrations
 {
     public partial class fixdatabase : Migration
     {

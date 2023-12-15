@@ -1,8 +1,8 @@
-﻿using Do_an_TMDT.Models;
+﻿using Do_an_CCNPMM.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Do_an_TMDT.ViewModels
+namespace Do_an_CCNPMM.ViewModels
 {
     public class ViewChiTietMatHangModel
     {

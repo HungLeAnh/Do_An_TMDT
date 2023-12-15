@@ -1,8 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Do_an_TMDT.Extension;
-using Do_an_TMDT.Helpper;
-using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.Extension;
+using Do_an_CCNPMM.Helpper;
+using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ using System.Linq;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.Areas.User.Controllers
+namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
     [Authorize(AuthenticationSchemes = "UserLogin")]

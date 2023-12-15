@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Do_an_TMDT.Models;
+using Do_an_CCNPMM.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
-using Do_an_TMDT.ViewModels;
-using Do_an_TMDT.Helpper;
-using Do_an_TMDT.Extension;
+using Do_an_CCNPMM.ViewModels;
+using Do_an_CCNPMM.Helpper;
+using Do_an_CCNPMM.Extension;
 using MimeKit;
 using MailKit.Net.Smtp;
 using AspNetCoreHero.ToastNotification.Abstractions;
@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System;
 
-namespace Do_an_TMDT.Areas.Shipper.Controllers
+namespace Do_an_CCNPMM.Areas.Shipper.Controllers
 {
     [Area("shipper")]
     [Authorize(AuthenticationSchemes = "ShipperLogin")]

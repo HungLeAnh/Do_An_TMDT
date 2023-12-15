@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.Extension
+namespace Do_an_CCNPMM.Extension
 {
     public static class HashMD5
     {

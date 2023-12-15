@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Do_an_TMDT.Models;
+using Do_an_CCNPMM.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
 
-namespace Do_an_TMDT.Areas.Admin.Controllers
+namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminShippersController : Controller

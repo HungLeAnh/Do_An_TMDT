@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Do_an_TMDT.Models;
-using Do_an_TMDT.ViewModels;
+using Do_an_CCNPMM.Models;
+using Do_an_CCNPMM.ViewModels;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Do_an_TMDT.Areas.User.Controllers
+namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
     public class CartController : Controller
@@ -25,7 +25,8 @@ namespace Do_an_TMDT.Areas.User.Controllers
             _context = context;
             _notyfService = notyfService;
         }
-        public async Task<IActionResult> AddCart(int id)
+        [HttpPost]
+        public async Task<IActionResult> AddCart(int id,int sl)
         {
             CartVM cart = new CartVM();
             List<itemcart> itemcarts = new List<itemcart>();
@@ -73,15 +74,6 @@ namespace Do_an_TMDT.Areas.User.Controllers
             var listCheck2 = listCheck.Where(x => x.MaMatHang == id).ToList();
             var list2 = listGH.Where(x => x.MaMatHang == id).ToList();
             var mathang = listSP.Where(x => x.MaMatHang == id).ToList();
-            int sl;
-            if (HttpContext.Session.GetInt32("sl") != null && HttpContext.Session.GetInt32("sl") != 0)
-            {
-                sl = (int)HttpContext.Session.GetInt32("sl");
-            }
-            else
-            {
-                sl = 1;
-            }
 
             if (listCheck2.Count == 0)
             {
@@ -234,46 +226,6 @@ namespace Do_an_TMDT.Areas.User.Controllers
                 return RedirectToAction("Index");
 
             }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCart([Bind("SoLuong")] HomeVM sl)
-        {
-            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
-            int idgh = (int)HttpContext.Session.GetInt32("GH");
-            var listSP = _context.MatHangs
-                .AsNoTracking().Where(x => x.DangDuocBan == true)
-                .ToList();
-            var listanh = _context.MatHangAnhs
-               .AsNoTracking()
-               .ToList();
-            var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
-                  .AsNoTracking()
-                  .ToList();
-            CartVM cartNew = new CartVM();
-            List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
-            foreach (var item in listGHNew)
-            {
-                itemcart it = new itemcart();
-                it.CT_GH = item;
-                var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
-                it.SanPham = SP[0];
-                foreach (var item_anh in listanh)
-                {
-                    it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
-                }
-                itemcartsNew.Add(it);
-                it.tong = (int)(SP[0].GiaBan * item.SoLuong);
-                thanhtien += it.tong;
-            }
-            cartNew.item = itemcartsNew;
-            ViewBag.thanhtien = thanhtien;
-            ViewBag.giohang = cartNew;
-            HttpContext.Session.SetInt32("thanhtien", thanhtien);
-            return RedirectToAction("CheckOut", "GioHang");
-
         }
         // GET: DonHangs
         public IActionResult CheckOut()

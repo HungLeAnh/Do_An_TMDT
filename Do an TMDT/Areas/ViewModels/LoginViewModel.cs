@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Do_an_TMDT.Areas.Admin.ViewModels { 
+namespace Do_an_CCNPMM.Areas.Admin.ViewModels { 
     public class LoginViewModel
     {
         [Key]
