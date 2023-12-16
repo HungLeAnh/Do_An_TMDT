@@ -25,8 +25,169 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             _context = context;
             _notyfService = notyfService;
         }
+        public async Task<IActionResult> AddCart(int? id)
+        {
+            int sl = 1;
+            CartVM cart = new CartVM();
+            List<itemcart> itemcarts = new List<itemcart>();
+            var listSP = _context.MatHangs
+                .AsNoTracking().Where(x => x.DangDuocBan == true)
+                .ToList();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+            int idgh = (int)HttpContext.Session.GetInt32("GH");
+            var listGH = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+            foreach (var item in listGH)
+            {
+                itemcart it = new itemcart();
+                it.CT_GH = item;
+                var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                it.SanPham = SP[0];
+                foreach (var item_anh in listanh)
+                {
+                    it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                itemcarts.Add(it);
+            }
+            cart.item = itemcarts;
+            int MaSp;
+            if (HttpContext.Session.GetInt32("IDSP") != null)
+            {
+                MaSp = (int)HttpContext.Session.GetInt32("IDSP");
+            }
+            else
+            {
+                MaSp = id.GetValueOrDefault();
+            }
+
+            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+            if (MaSp != 0) { id = MaSp; }
+            var list = listGH.Where(x => x.MaMatHang == id).ToList();
+            //kiểm tra mặt hàng và mã gio hàng có chưa
+            var listCheck = listGH.Where(x => x.MaGioHang == idgh).ToList();
+            var listCheck2 = listCheck.Where(x => x.MaMatHang == id).ToList();
+            var list2 = listGH.Where(x => x.MaMatHang == id).ToList();
+            var mathang = listSP.Where(x => x.MaMatHang == id).ToList();
+
+            if (listCheck2.Count == 0)
+            {
+                ChiTietGioHang tc = new ChiTietGioHang
+                {
+                    MaGioHang = idgh,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = sl,
+                    Gia = (int)mathang[0].GiaBan,
+                };
+
+                _context.Add(tc);
+                await _context.SaveChangesAsync();
+                CartVM cartNew = new CartVM();
+                List<itemcart> itemcartsNew = new List<itemcart>();
+                var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+                int thanhtien = 0;
+                foreach (var item in listGHNew)
+                {
+                    itemcart it = new itemcart();
+                    it.CT_GH = item;
+                    var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    it.SanPham = SP[0];
+                    foreach (var item_anh in listanh)
+                    {
+                        it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    }
+                    itemcartsNew.Add(it);
+                    it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                    thanhtien += it.tong;
+                }
+                cartNew.item = itemcartsNew;
+                ViewBag.thanhtien = thanhtien;
+                ViewBag.giohang = cartNew;
+                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetInt32("sl", 0);
+                HttpContext.Session.SetInt32("IDSP", 0);
+                _notyfService.Success("Thêm vào giỏ hàng thành công");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ChiTietGioHang tc = new ChiTietGioHang
+                {
+                    MaGioHang = idgh,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = list[0].SoLuong + sl,
+                    Gia = (int)mathang[0].GiaBan
+                };
+                ViewBag.giohang = listGH;
+                _context.Update(tc);
+                await _context.SaveChangesAsync();
+
+                CartVM cartNew = new CartVM();
+                List<itemcart> itemcartsNew = new List<itemcart>();
+                var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+                int thanhtien = 0;
+                foreach (var item in listGHNew)
+                {
+                    itemcart it = new itemcart();
+                    it.CT_GH = item;
+                    var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    it.SanPham = SP[0];
+                    foreach (var item_anh in listanh)
+                    {
+                        it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    }
+                    itemcartsNew.Add(it);
+                    it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                    thanhtien += it.tong;
+                }
+                cartNew.item = itemcartsNew;
+                ViewBag.thanhtien = thanhtien;
+                ViewBag.giohang = cartNew;
+                HttpContext.Session.SetInt32("sl", 0);
+                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetInt32("IDSP", 0);
+                _notyfService.Success("Thêm vào giỏ hàng thành công");
+                return RedirectToAction("Index");
+            }
+        }
+        public async Task<IActionResult> DeleteCart(int id, string siteBackURL="Index")
+        {
+            CartVM cart = new CartVM();
+            List<itemcart> itemcarts = new List<itemcart>();
+            var listSP = _context.MatHangs
+                .AsNoTracking().Where(x => x.DangDuocBan == true)
+                .ToList();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+            int idgh = (int)HttpContext.Session.GetInt32("GH");
+            var listGH = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+            ChiTietGioHang item = listGH.SingleOrDefault(p => p.MaMatHang == id);
+            if (item != null)
+            {
+                _context.Remove(item);
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(siteBackURL);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> AddCart(int id,int sl)
+        public async Task<IActionResult> AddCart(int? id, int? sl)
         {
             CartVM cart = new CartVM();
             List<itemcart> itemcarts = new List<itemcart>();
@@ -63,7 +224,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             }
             else
             {
-                MaSp = id;
+                MaSp = id.GetValueOrDefault();
             }
 
             ViewBag.Id = HttpContext.Session.GetInt32("Ten");
@@ -80,8 +241,8 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 ChiTietGioHang tc = new ChiTietGioHang
                 {
                     MaGioHang = idgh,
-                    MaMatHang = id,
-                    SoLuong = sl,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = sl.GetValueOrDefault(),
                     Gia = (int)mathang[0].GiaBan,
                 };
 
@@ -113,6 +274,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 HttpContext.Session.SetInt32("thanhtien", thanhtien);
                 HttpContext.Session.SetInt32("sl", 0);
                 HttpContext.Session.SetInt32("IDSP", 0);
+                _notyfService.Success("Thêm vào giỏ hàng thành công");
                 return RedirectToAction("Index");
             }
             else
@@ -120,8 +282,8 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 ChiTietGioHang tc = new ChiTietGioHang
                 {
                     MaGioHang = idgh,
-                    MaMatHang = id,
-                    SoLuong = list[0].SoLuong + sl,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = list[0].SoLuong + sl.GetValueOrDefault(),
                     Gia = (int)mathang[0].GiaBan
                 };
                 ViewBag.giohang = listGH;
@@ -154,36 +316,11 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 HttpContext.Session.SetInt32("sl", 0);
                 HttpContext.Session.SetInt32("thanhtien", thanhtien);
                 HttpContext.Session.SetInt32("IDSP", 0);
-                return RedirectToAction("Index");
+                _notyfService.Success("Thêm vào giỏ hàng thành công");
+
+                return RedirectToAction(nameof(Index));
             }
         }
-        public async Task<IActionResult> DeleteCart(int id, string siteBackURL="Index")
-        {
-            CartVM cart = new CartVM();
-            List<itemcart> itemcarts = new List<itemcart>();
-            var listSP = _context.MatHangs
-                .AsNoTracking().Where(x => x.DangDuocBan == true)
-                .ToList();
-            var listanh = _context.MatHangAnhs
-                .AsNoTracking()
-                .ToList();
-            var listTH = _context.ThuongHieus
-                .AsNoTracking()
-                .ToList();
-            int idgh = (int)HttpContext.Session.GetInt32("GH");
-            var listGH = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
-               .AsNoTracking()
-               .ToList();
-            ChiTietGioHang item = listGH.SingleOrDefault(p => p.MaMatHang == id);
-            if (item != null)
-            {
-                _context.Remove(item);
-            }
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(siteBackURL);
-        }
-
         public async Task<IActionResult> UpdateCart(int productID, int amount,int update, string siteBackURL="Index")
         {
             //Lay gio hang ra de xu ly
@@ -280,12 +417,6 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
             HttpContext.Session.SetInt32("thanhtien", thanhtien);
-            var loi = HttpContext.Session.GetString("loi");
-            if (loi != null)
-            {
-                ViewBag.error = loi;
-            }
-            HttpContext.Session.Remove("loi");
             return View();
         }
         [HttpPost]
@@ -345,6 +476,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
 
                         ViewData["DiaChi"] = new SelectList(_context.NguoiDungDiaChis, "DiaChi", "DiaChi");
                         ViewBag.thanhtien = thanhtien;
+                        _notyfService.Error(item.SanPham.TenMatHang + " Còn lại " + item.SanPham.SoLuong);
                         return View();
                     }
                     MatHang mathang = new MatHang
@@ -394,7 +526,6 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 });
                 ctdh += "</tbody>\r\n\t\t\t</table>";
 
-                _notyfService.Success("Thanh toán thành công!");
                 var mess = new MimeMessage();
                 mess.From.Add(new MailboxAddress("Đơn Hàng:#" + donhang.MaDonHang, "20110675@student.hcmute.edu.vn"));
                 mess.To.Add(new MailboxAddress("Đơn Hàng", khachhang[0].Email));
@@ -415,12 +546,11 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             else
             {
                 var loi = "Vui Lòng NHập Đầy Đủ Thông Tin !";
-                HttpContext.Session.SetString("loi", loi);
-
+                _notyfService.Error(loi);
                 return RedirectToAction("CheckOut");
             }
-            HttpContext.Session.SetString("loi", "Thanh toán thành công");
-            return RedirectToAction("CheckOut");
+            _notyfService.Success("Đặt hàng thành công");
+            return RedirectToAction("Index");
 
 
         }

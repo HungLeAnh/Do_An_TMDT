@@ -50,7 +50,9 @@
                                             }
                                         </div>
                                         <div class="media-body">
-                                            <p>@cart.SanPham.TenMatHang</p>
+                                            <a asp-area="User" asp-controller="ProductDetail" asp-action="Index" asp-route-id="@cart.SanPham.MaMatHang">
+                                                <p>@cart.SanPham.TenMatHang</p>
+                                            </a>
                                         </div>
                                     </div>
                                 </td>

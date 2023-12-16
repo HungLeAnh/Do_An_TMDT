@@ -9,21 +9,29 @@
     <Compile Remove="Areas\Admin\Data\**" />
     <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Areas\Admin\ViewModels\**" />
+    <Compile Remove="Areas\Shipper\Data\**" />
+    <Compile Remove="Areas\Shipper\Models\**" />
     <Compile Remove="DAO\**" />
     <Compile Remove="wwwroot\js\NewFolder\**" />
     <Content Remove="Areas\Admin\Data\**" />
     <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Areas\Admin\ViewModels\**" />
+    <Content Remove="Areas\Shipper\Data\**" />
+    <Content Remove="Areas\Shipper\Models\**" />
     <Content Remove="DAO\**" />
     <Content Remove="wwwroot\js\NewFolder\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Areas\Admin\ViewModels\**" />
+    <EmbeddedResource Remove="Areas\Shipper\Data\**" />
+    <EmbeddedResource Remove="Areas\Shipper\Models\**" />
     <EmbeddedResource Remove="DAO\**" />
     <EmbeddedResource Remove="wwwroot\js\NewFolder\**" />
     <None Remove="Areas\Admin\Data\**" />
     <None Remove="Areas\Admin\Models\**" />
     <None Remove="Areas\Admin\ViewModels\**" />
+    <None Remove="Areas\Shipper\Data\**" />
+    <None Remove="Areas\Shipper\Models\**" />
     <None Remove="DAO\**" />
     <None Remove="wwwroot\js\NewFolder\**" />
   </ItemGroup>
@@ -164,8 +172,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Shipper\Data\" />
-    <Folder Include="Areas\Shipper\Models\" />
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Models\" />
   </ItemGroup>
