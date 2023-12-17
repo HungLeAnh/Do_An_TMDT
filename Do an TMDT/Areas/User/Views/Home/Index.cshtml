@@ -66,8 +66,8 @@
 					<div class="f-icon">
 						<img src="Userassets/img/features/f-icon1.png" alt="">
 					</div>
-					<h6>Free Delivery</h6>
-					<p>Free Shipping on all order</p>
+					<h6>Giao hàng miễn phí</h6>
+					<p>Miễn phí cước vận chuyển mọi đơn hàng</p>
 				</div>
 			</div>
 			<!-- single features -->
@@ -76,8 +76,8 @@
 					<div class="f-icon">
 						<img src="Userassets/img/features/f-icon2.png" alt="">
 					</div>
-					<h6>Return Policy</h6>
-					<p>Free Shipping on all order</p>
+					<h6>Chính sách đổi trả</h6>
+					<p>Hỗ trợ đổi trả đơn hàng bị lỗi</p>
 				</div>
 			</div>
 			<!-- single features -->
@@ -86,8 +86,8 @@
 					<div class="f-icon">
 						<img src="Userassets/img/features/f-icon3.png" alt="">
 					</div>
-					<h6>24/7 Support</h6>
-					<p>Free Shipping on all order</p>
+					<h6>Hỗ trợ 24/7</h6>
+					<p>Nhân viên tư vấn túc trực mọi lúc</p>
 				</div>
 			</div>
 			<!-- single features -->
@@ -96,8 +96,8 @@
 					<div class="f-icon">
 						<img src="Userassets/img/features/f-icon4.png" alt="">
 					</div>
-					<h6>Secure Payment</h6>
-					<p>Free Shipping on all order</p>
+					<h6>Giao dịch bảo mật</h6>
+					<p>Mọi giao dịch đều kín đáo</p>
 				</div>
 			</div>
 		</div>
@@ -106,17 +106,15 @@
 <!-- end features Area -->
 
 <!-- start product Area -->
-<section class="owl-carousel active-product-area section_gap">
+@*<section class="owl-carousel active-product-area section_gap">*@
 	<!-- single product slide -->
 	<div class="single-product-slider">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-6 text-center">
 					<div class="section-title">
-						<h1>Latest Products</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-							dolore
-							magna aliqua.</p>
+						<h1>Sản phẩm mới nhất</h1>
+						<p>Tất cả các sản phẩm giày dép mới nhất trên thị trường.</p>
 					</div>
 				</div>
 			</div>
@@ -141,15 +139,15 @@
 										<div class="prd-bottom">
 											<a href="@Url.Action("AddCart","Cart", new { Area="User" , id = @item.listSPs.MaMatHang})" class="social-info">
 												<span class="ti-bag"></span>
-												<p class="hover-text">add to bag</p>
-											</a>
+												<p class="hover-text">Thêm</p>
+											</a>                      
 											<a href="" class="social-info" id="id1" onclick="dolen(this)">
 												<span class="lnr lnr-heart"></span>
-												<p class="hover-text">Wishlist</p>
+												<p class="hover-text">Ưa thích</p>
 											</a>
 											<a asp-area="User" asp-controller="ProductDetail" asp-action="Index" asp-route-id="@item.listSPs.MaMatHang" class="social-info">
 												<span class="lnr lnr-move"></span>
-												<p class="hover-text">view more</p>
+												<p class="hover-text">Chi tiết</p>
 											</a>
 										</div>
 									</div>
@@ -167,56 +165,7 @@
 		</div>
 	</div>
 	<!-- single product slide -->
-	<div class="single-product-slider">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Coming Products</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-							dolore
-							magna aliqua.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<!-- single product -->
-				<div class="col-lg-3 col-md-6">
-					<div class="single-product">
-						<img class="img-fluid" src="Userassets/img/product/p6.jpg" alt="">
-						<div class="product-details">
-							<h6>addidas New Hammer sole
-								for Sports person</h6>
-							<div class="price">
-								<h6>$150.00</h6>
-								<h6 class="l-through">$210.00</h6>
-							</div>
-							<div class="prd-bottom">
-
-								<a href="" class="social-info">
-									<span class="ti-bag"></span>
-									<p class="hover-text">add to bag</p>
-								</a>
-								<a href="" class="social-info">
-									<span class="lnr lnr-heart"></span>
-									<p class="hover-text">Wishlist</p>
-								</a>
-								<a href="" class="social-info">
-									<span class="lnr lnr-sync"></span>
-									<p class="hover-text">compare</p>
-								</a>
-								<a href="" class="social-info">
-									<span class="lnr lnr-move"></span>
-									<p class="hover-text">view more</p>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+@*</section>*@
 <!-- end product Area -->
 
 <!-- Start brand Area -->

@@ -9,11 +9,11 @@
 	<div class="container">
 		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 			<div class="col-first">
-				<h1>Shop Category page</h1>
+				<h1>Danh mục sản phẩm</h1>
 				<nav class="d-flex align-items-center">
 					<a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
 					<a href="">Shop<span class="lnr lnr-arrow-right"></span></a>
-					<a>Fashon Category</a>
+					<a>Giày</a>
 				</nav>
 			</div>
 		</div>
@@ -25,11 +25,11 @@
 		<div class="row">
 			<div class="col-xl-3 col-lg-4 col-md-5">
 				<div class="sidebar-categories">
-					<div class="head">Browse Categories</div>
+					<div class="head">Danh mục</div>
 					<ul class="main-categories">
 						<li class="main-nav-list">
 							<a href="@Url.Action("Brand","Home", new { Area="User"})" aria-expanded="false" aria-controls="fruitsVegetable">
-								<span class="lnr lnr-arrow-right"></span>All
+								<span class="lnr lnr-arrow-right"></span>Tất cả
 							</a>
 						</li>
 					@{
@@ -49,12 +49,12 @@
 				</div>
 				
 				<div class="sidebar-filter mt-50">
-					<div class="top-filter-head">Product Filters</div>
+					<div class="top-filter-head">Lọc sản phẩm</div>
 					<div class="common-filter">
-						<div class="head">Brands</div>
+						<div class="head">Thương hiệu</div>
 						<form asp-area="User" asp-controller="Home" asp-action="Brand" >
 							<ul>
-							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
 
 								@if (ViewBag.listcate != null)
 								{
@@ -70,10 +70,10 @@
 						</form>
 					</div>
 					<div class="common-filter">
-						<div class="head">Color</div>
+						<div class="head">Màu sắc</div>
 					<form asp-area="User" asp-controller="Home" asp-action="Brand">
 							<ul>
-							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">All</label></li>
+							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
 
 								@if (ViewBag.mausac != null)
 								{

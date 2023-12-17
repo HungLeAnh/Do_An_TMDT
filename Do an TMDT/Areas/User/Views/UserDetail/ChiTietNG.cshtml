@@ -9,10 +9,10 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>User Profile</h1>
+                <h1>Thông tin người dùng</h1>
                 <nav class="d-flex align-items-center">
-                    <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a>My Profile</a>
+                    <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Thông tin của bạn</a>
                 </nav>
             </div>
         </div>
@@ -32,7 +32,7 @@
                         <div class="br"></div>
                     </aside>
                     <aside class="single_sidebar_widget popular_post_widget">
-                        <h3 class="widget_title">Popular Posts</h3>
+                        <h3 class="widget_title">Tài khoản</h3>
                         <div class="media post_item">
                             <div class="media-body">
                                 <a class="noidungInfo" asp-action="ChiTietNG">
@@ -54,13 +54,13 @@
                                 </a>
                             </div>
                         </div>                       
-                        <div class="media post_item">
+                        @*<div class="media post_item">
                             <div class="media-body">
                                 <a asp-action="SoDiaChi">
                                     <h3>Số địa chỉ(@ViewBag.khachhang.NguoiDungDiaChis.Count)</h3>
                                 </a>
                             </div>
-                        </div>                        
+                        </div> *@                       
                         <div class="media post_item">
                             <div class="media-body">
                                 <a asp-controller="UserLogin" asp-action="Logout">
@@ -77,12 +77,12 @@
             </div>
             <div class="col-lg-8">
                 <div class="blog_right_sidebar">
-                    <h2 class="title_Chinh">Thông tin tài khoản</h2>
+                    <h2 class="title_Chinh" style="margin-bottom: 25px">Thông tin tài khoản</h2>
                     <p><strong>Họ tên: </strong>@ViewBag.khachhang.TenNguoiDung</p>
                     <p><strong>Số điện thoại: </strong>@ViewBag.khachhang.Sdt</p>
                     <p><strong>Email: </strong> @ViewBag.khachhang.Email</p>
 
-                    <a class="btn btn-primary" href="@Url.Action("Edit", new { id =@ViewBag.khachhang.MaNguoiDung })" role="button">Edit</a>
+                    <a class="genric-btn primary radius" href="@Url.Action("Edit", new { id =@ViewBag.khachhang.MaNguoiDung })" role="button">Edit</a>
                 </div>
             </div>
         </div>

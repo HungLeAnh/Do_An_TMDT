@@ -7,10 +7,10 @@
 	<div class="container">
 		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 			<div class="col-first">
-				<h1>Login/Register</h1>
+				<h1>Đăng ký/Đăng nhập</h1>
 				<nav class="d-flex align-items-center">
-					<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Loadsanpham">Home<span class="lnr lnr-arrow-right"></span></a>
-					<a >Login/Register</a>
+					<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Loadsanpham">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+					<a>Đăng ký/Đăng nhập</a>
 				</nav>
 			</div>
 		</div>
@@ -36,33 +36,32 @@
 				<div class="login_box_img">
 					<img class="img-fluid" src="../Userassets/img/login.jpg" alt="">
 					<div class="hover">
-						<h4>New to our website?</h4>
-						<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-						<a class="primary-btn" asp-area="User" asp-controller="UserLogin" asp-action="Register">Create an Account</a>
+						<h4>Mới đến trang web của chúng tôi?</h4>
+						<a class="primary-btn" asp-area="User" asp-controller="UserLogin" asp-action="Register">Tạo tài khoản</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<div class="login_form_inner">
-					<h3>Log in to enter</h3>
+					<h3>Đăng nhập để truy cập</h3>
 
 					<form accept-charset="utf-8" class="row login_form" asp-area="User" asp-controller="UserLogin" asp-action="Login" id="customer_register" method="post" id="contactForm" novalidate="novalidate">
 						<input name="FormType" type="hidden" value="customer_register">
 						<input name="utf8" type="hidden" value="true">
 						<input type="hidden" id="" name="Token" value="">
 						<div class="col-md-12 form-group">
-							<input required="" asp-for="Email" type="text" class="form-control" id="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+							<input required="" asp-for="Email" type="text" class="form-control" id="name" placeholder="Tên đăng nhập" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
 							<span asp-validation-for="Email" class="text-danger"></span>
 
 						</div>
 						<div class="col-md-12 form-group">
-							<input type="password" asp-for="MatKhauHash" required="" class="form-control" id="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+							<input type="password" asp-for="MatKhauHash" required="" class="form-control" id="name" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							<span asp-validation-for="MatKhauHash" class="text-danger"></span>
 
 						</div>
 						<div class="col-md-12 form-group">
-							<button type="submit" value="submit" class="primary-btn">Log In</button>
-							<a asp-area="User" asp-controller="UserLogin" asp-action="QuenMK">Forgot Password?</a>
+							<button type="submit" value="submit" class="primary-btn">Đăng nhập</button>
+							<a asp-area="User" asp-controller="UserLogin" asp-action="QuenMK">Quên mật khẩu?</a>
 						</div>
 					</form>
 				</div>

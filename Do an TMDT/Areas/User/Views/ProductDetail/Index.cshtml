@@ -9,10 +9,10 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Product Details Page</h1>
+					<h1>Chi tiết sản phẩm</h1>
 					<nav class="d-flex align-items-center">
-						<a asp-area="User" asp-controller="Home" asp-action="Index" >Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a asp-area="User" asp-controller="Home" asp-action="Index" >Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Cửa hàng<span class="lnr lnr-arrow-right"></span></a>
 						<a>@Model.MatHangs[0].listSPs.TenMatHang</a>
 					</nav>
 				</div>
@@ -52,12 +52,11 @@
 							<h3>@Model.MatHangs[0].listSPs.TenMatHang</h3>
 							<h2>@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) VND</h2>
 							<ul class="list">
-							<li><a class="active" href="#"><span>Brand</span> : @Model.MatHangs[0].thuonghieu[0].TenThuongHieu</a></li>
-								<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+							<li><a class="active" href="#"><span>Thương hiệu</span> : @Model.MatHangs[0].thuonghieu[0].TenThuongHieu</a></li>
 							</ul>
 							@Html.Raw(@Model.MatHangs[0].listSPs.MoTa)
 							<div class="product_count">
-								<label for="qty">Quantity:</label>
+								<label for="qty">Số lượng:</label>
 								<input for="sl" type="text" name="sl" id="sl" min="1" maxlength="12" value="1" title="Quantity:" class="input-text qty">
 								<button onclick="var result = document.getElementById('sl'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 								 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
@@ -67,10 +66,10 @@
 							<div class="card_area d-flex align-items-center">
 								@if (Model.MatHangs[0].listSPs.SoLuong <= 0)
 								{
-									<a class="primary-btn" href="#">SOLD OUT</a>
+									<a class="primary-btn" href="#">Hết hàng</a>
 								}
 								else{
-								<button class="primary-btn type="submit">Add to Cart</button>
+								<button class="primary-btn type="submit">Thêm vào giỏ hàng</button>
 
 								}
 								<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>

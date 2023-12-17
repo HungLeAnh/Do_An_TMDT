@@ -9,10 +9,10 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>User Profile</h1>
+                <h1>Thông tin người dùng</h1>
                 <nav class="d-flex align-items-center">
-                    <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a>My Profile</a>
+                    <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Thông tin của bạn</a>
                 </nav>
             </div>
         </div>
@@ -32,7 +32,7 @@
                         <div class="br"></div>
                     </aside>
                     <aside class="single_sidebar_widget popular_post_widget">
-                        <h3 class="widget_title">Popular Posts</h3>
+                        <h3 class="widget_title">Tài khoản</h3>
                         <div class="media post_item">
                             <div class="media-body">
                                 <a class="noidungInfo" asp-action="ChiTietNG">
@@ -54,13 +54,13 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="media post_item">
+                        @*<div class="media post_item">
                             <div class="media-body">
                                 <a asp-action="SoDiaChi">
                                     <h3>Số địa chỉ(@ViewBag.khachhang.NguoiDungDiaChis.Count)</h3>
                                 </a>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="media post_item">
                             <div class="media-body">
                                 <a asp-controller="UserLogin" asp-action="Logout">
@@ -82,38 +82,41 @@
                         <input type="hidden" asp-for="MaNguoiDung" />
 
                         <div class="form-group col-lg-6">
-                            <label asp-for="TenNguoiDung" class="control-label"></label>
+                            @*<label asp-for="TenNguoiDung" class="control-label"></label>*@
+                            <span>Họ và tên:</span>
                             <input required="" asp-for="TenNguoiDung" class="form-control" value="@ViewBag.khachhang.TenNguoiDung" />
                             <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
                         </div>
-                        <div class="form-group col-lg-6">
+                        @*<div class="form-group col-lg-6">
                             <label asp-for="AnhDaiDien" class="control-label"></label>
                             <input required="" asp-for="AnhDaiDien" class="form-control" value="@ViewBag.khachhang.AnhDaiDien" />
                             <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
-                        </div>
+                        </div>*@
                         <div class="form-group col-lg-6">
-                            <label asp-for="TenDangNhap" class="control-label"></label>
+                            @*<label asp-for="TenDangNhap" class="control-label"></label>*@
+                            <span>Tên đăng nhập</span>
                             <input required="" asp-for="TenDangNhap" class="form-control" value="@ViewBag.khachhang.TenDangNhap" />
                             <span asp-validation-for="TenDangNhap" class="text-danger"></span>
                         </div>
 
                         <div class="form-group col-lg-6">
                             <label asp-for="Email" class="control-label"></label>
-                            <input required="" asp-for="Email" class="form-control" value="@ViewBag.khachhang.Email" />
+                            <input required="" asp-for="Email" class="form-control" value="@ViewBag.khachhang.Email" readonly />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-6">
-                            <label asp-for="Sdt" class="control-label"></label>
+                            @*<label asp-for="Sdt" class="control-label"></label>*@
+                            <span>Số điện thoại: </span>
                             <input required="" asp-for="Sdt" class="form-control" value="@ViewBag.khachhang.Sdt" />
                             <span asp-validation-for="Sdt" class="text-danger"></span>
                         </div>
-                        <div class="form-group col-lg-6">
+                        @*<div class="form-group col-lg-6">
                             <label asp-for="ViDienTu" class="control-label"></label>
                             <input required="" asp-for="ViDienTu" class="form-control" value="@ViewBag.khachhang.ViDienTu" />
                             <span asp-validation-for="ViDienTu" class="text-danger"></span>
-                        </div>
+                        </div>*@
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary" />
+                            <input type="submit" class="genric-btn primary radius" />
 
                         </div>
                     </form>

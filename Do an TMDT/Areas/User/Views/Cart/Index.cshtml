@@ -9,10 +9,10 @@
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
             <div class="col-first">
-                <h1>Shopping Cart</h1>
+                <h1>Giỏ hàng</h1>
                 <nav class="d-flex align-items-center">
-                    <a asp-area="User" asp-controller="Home" asp-action="Index">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a >Cart</a>
+                    <a asp-area="User" asp-controller="Home" asp-action="Index">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Giỏ hàng</a>
                 </nav>
             </div>
         </div>
@@ -27,10 +27,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia) VND</h5></td>
+                                <td><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia) <sup>VND</sup></h5></td>
                                 <td>
                                     <div class="product_count">
                                         <form accept-charset="utf-8" asp-area="User" asp-controller="Cart" asp-action="UpdateCart" method="post">
@@ -73,7 +73,7 @@
                                         </form>
                                     </div>
                                 </td>
-                                <td> <h5 id="tong">@string.Format("{0:0,0}", @cart.tong) VND</h5></td>
+                                <td> <h5 id="tong">@string.Format("{0:0,0}", @cart.tong) <sup>VND</sup></h5></td>
                                 <td >
                                     <div class="d-flex justify-content-center align-items-center">
                                         <a class="primary-btn" type="button" href="@Url.Action("DeleteCart", "Cart", new { Area = "User" ,id = cart.SanPham.MaMatHang,siteBackURL=@ViewContext.RouteData.Values["action"].ToString()})">Delete</a>
@@ -89,10 +89,10 @@
 
                             </td>
                             <td>
-                                <h5>Subtotal</h5>
+                                <h5>Tổng cộng</h5>
                             </td>
                             <td>
-                            <h5>@string.Format("{0:0,0}", @ViewBag.thanhtien) VND</h5>
+                            <h5>@string.Format("{0:0,0}", @ViewBag.thanhtien) <sup>VND</sup></h5>
                             </td>
                             <td></td>
                         </tr>
