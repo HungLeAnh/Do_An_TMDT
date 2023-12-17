@@ -189,6 +189,12 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCart(int? id, int? sl)
         {
+            if (sl <= 0)
+            {
+                _notyfService.Error("Số lượng không được bé hơn 1");
+                return RedirectToAction("Index");
+            }
+
             CartVM cart = new CartVM();
             List<itemcart> itemcarts = new List<itemcart>();
             var listSP = _context.MatHangs
