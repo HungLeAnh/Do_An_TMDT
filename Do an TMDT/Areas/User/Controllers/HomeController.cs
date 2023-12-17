@@ -12,8 +12,7 @@ using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MailKit.Net.Smtp;
-using System.Threading.Tasks;
+
 
 namespace Do_an_CCNPMM.Areas.User.Controllers
 {
@@ -142,6 +141,142 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
 
         }
 
+        public IActionResult AddCart(int? id)
+        {
+            int sl = 1;
+            CartVM cart = new CartVM();
+            List<itemcart> itemcarts = new List<itemcart>();
+            var listSP = _context.MatHangs
+                .AsNoTracking().Where(x => x.DangDuocBan == true)
+                .ToList();
+            var listanh = _context.MatHangAnhs
+                .AsNoTracking()
+                .ToList();
+            var listTH = _context.ThuongHieus
+                .AsNoTracking()
+                .ToList();
+            int idgh = (int)HttpContext.Session.GetInt32("GH");
+            var listGH = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+            foreach (var item in listGH)
+            {
+                itemcart it = new itemcart();
+                it.CT_GH = item;
+                var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                it.SanPham = SP[0];
+                foreach (var item_anh in listanh)
+                {
+                    it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                }
+                itemcarts.Add(it);
+            }
+            cart.item = itemcarts;
+            int MaSp;
+            if (HttpContext.Session.GetInt32("IDSP") != null)
+            {
+                MaSp = (int)HttpContext.Session.GetInt32("IDSP");
+            }
+            else
+            {
+                MaSp = id.GetValueOrDefault();
+            }
+
+            ViewBag.Id = HttpContext.Session.GetInt32("Ten");
+            if (MaSp != 0) { id = MaSp; }
+            var list = listGH.Where(x => x.MaMatHang == id).ToList();
+            //kiểm tra mặt hàng và mã gio hàng có chưa
+            var listCheck = listGH.Where(x => x.MaGioHang == idgh).ToList();
+            var listCheck2 = listCheck.Where(x => x.MaMatHang == id).ToList();
+            var list2 = listGH.Where(x => x.MaMatHang == id).ToList();
+            var mathang = listSP.Where(x => x.MaMatHang == id).ToList();
+
+            if (listCheck2.Count == 0)
+            {
+                ChiTietGioHang tc = new ChiTietGioHang
+                {
+                    MaGioHang = idgh,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = sl,
+                    Gia = (int)mathang[0].GiaBan,
+                };
+
+                _context.Add(tc);
+                _context.SaveChanges();
+                CartVM cartNew = new CartVM();
+                List<itemcart> itemcartsNew = new List<itemcart>();
+                var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+                int thanhtien = 0;
+                foreach (var item in listGHNew)
+                {
+                    itemcart it = new itemcart();
+                    it.CT_GH = item;
+                    var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    it.SanPham = SP[0];
+                    foreach (var item_anh in listanh)
+                    {
+                        it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    }
+                    itemcartsNew.Add(it);
+                    it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                    thanhtien += it.tong;
+                }
+                cartNew.item = itemcartsNew;
+                ViewBag.thanhtien = thanhtien;
+                ViewBag.giohang = cartNew;
+                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetInt32("sl", 0);
+                HttpContext.Session.SetInt32("IDSP", 0);
+                string message = "Thêm vào giỏ hàng thành công";
+                return Json(new { Message = message}); 
+            }
+            else
+            {
+                ChiTietGioHang tc = new ChiTietGioHang
+                {
+                    MaGioHang = idgh,
+                    MaMatHang = id.GetValueOrDefault(),
+                    SoLuong = list[0].SoLuong + sl,
+                    Gia = (int)mathang[0].GiaBan
+                };
+                ViewBag.giohang = listGH;
+                _context.Update(tc);
+                _context.SaveChanges();
+
+                CartVM cartNew = new CartVM();
+                List<itemcart> itemcartsNew = new List<itemcart>();
+                var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
+               .AsNoTracking()
+               .ToList();
+                int thanhtien = 0;
+                foreach (var item in listGHNew)
+                {
+                    itemcart it = new itemcart();
+                    it.CT_GH = item;
+                    var SP = listSP.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    it.SanPham = SP[0];
+                    foreach (var item_anh in listanh)
+                    {
+                        it.MatHangAnhs = listanh.Where(x => x.MaMatHang == item.MaMatHang).ToList();
+                    }
+                    itemcartsNew.Add(it);
+                    it.tong = (int)(SP[0].GiaBan * item.SoLuong);
+                    thanhtien += it.tong;
+                }
+                cartNew.item = itemcartsNew;
+                ViewBag.thanhtien = thanhtien;
+                ViewBag.giohang = cartNew;
+                HttpContext.Session.SetInt32("sl", 0);
+                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetInt32("IDSP", 0);
+                _notyfService.Success("Thêm vào giỏ hàng thành công");
+
+                string message = "Thêm vào giỏ hàng thành công";
+                return Json(new { Message = message });
+            }
+        }
     }
 
 }

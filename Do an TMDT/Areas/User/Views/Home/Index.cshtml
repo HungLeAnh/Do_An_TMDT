@@ -132,12 +132,14 @@
 								<div class="single-product">
 									<img onerror="this.src='images/duphong.webp'" src="@if (item.MatHangAnhs.Count > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
 								<div class="product-details">
-										<h6>@item.listSPs.TenMatHang</h6>
+										<h6>
+											<a asp-area="User" asp-controller="ProductDetail" asp-action="Index" asp-route-id="@item.listSPs.MaMatHang" class="social-info">@item.listSPs.TenMatHang</a> 
+										</h6>
 										<div class="price">
 											<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) VND</h6>
 										</div>
 										<div class="prd-bottom">
-											<a href="@Url.Action("AddCart","Cart", new { Area="User" , id = @item.listSPs.MaMatHang})" class="social-info">
+											<a href="@Url.Action("AddCart","Home", new { Area="User" , id = @item.listSPs.MaMatHang})" class="social-info noreturnlink" method="post">
 												<span class="ti-bag"></span>
 												<p class="hover-text">Thêm</p>
 											</a>                      
