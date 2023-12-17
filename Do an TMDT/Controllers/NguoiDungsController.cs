@@ -117,7 +117,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -135,7 +135,7 @@ namespace Do_an_CCNPMM.Controllers
             cartNew.item = itemcartsNew;
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
-            HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
             HttpContext.Session.SetInt32("IDSP", 0);
             return View();
         }

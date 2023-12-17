@@ -89,7 +89,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -113,7 +113,7 @@ namespace Do_an_CCNPMM.Controllers
             {
                 ViewBag.error =loi;
             }    
-            HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
             HttpContext.Session.Remove("loi");
             return View(model);
         }

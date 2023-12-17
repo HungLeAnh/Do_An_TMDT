@@ -48,7 +48,8 @@
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-					<form asp-area="User" asp-action="AddCart" asp-controller="Cart" asp-route-id="@Model.MatHangs[0].listSPs.MaMatHang">
+					<form class="noreturnForm" asp-area="User" asp-action="AddCart" asp-controller="Cart">
+						<input for="id" type="hidden" name="id" value="@Model.MatHangs[0].listSPs.MaMatHang" />
 							<h3>@Model.MatHangs[0].listSPs.TenMatHang</h3>
 							<h2>@string.Format("{0:0,0}", Model.MatHangs[0].listSPs.GiaBan) VND</h2>
 							<ul class="list">
@@ -57,7 +58,7 @@
 							@Html.Raw(@Model.MatHangs[0].listSPs.MoTa)
 							<div class="product_count">
 								<label for="qty">Số lượng:</label>
-								<input for="sl" type="text" name="sl" id="sl" min="1" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+								<input for="sl" type="text" name="sl" id="sl" min="1" readonly maxlength="12" value="1" title="Quantity:" class="input-text qty">
 								<button onclick="var result = document.getElementById('sl'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 								 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
 								<button onclick="var result = document.getElementById('sl'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
@@ -69,7 +70,7 @@
 									<a class="primary-btn" href="#">Hết hàng</a>
 								}
 								else{
-								<button class="primary-btn type="submit">Thêm vào giỏ hàng</button>
+								<button class="primary-btn" type="submit">Thêm vào giỏ hàng</button>
 
 								}
 								<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>

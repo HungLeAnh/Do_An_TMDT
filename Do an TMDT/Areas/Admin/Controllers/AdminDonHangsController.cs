@@ -104,13 +104,21 @@ namespace Do_an_CCNPMM.Areas.Admin.Controllers
 
             var donhang = _context.DonHangs.Where(x => x.MaDonHang == id).FirstOrDefault();
             ViewBag.tinhtrang = donhang.TinhTrang;
-            if (donhang.TinhTrang == "Đã xác nhận")
+            if (donhang.TinhTrang == "Chưa xác nhận")
+            {
+
+                donhang.TinhTrang = "Đã xác nhận";
+                _context.Update(donhang);
+                await _context.SaveChangesAsync();
+                ViewBag.sus = "Đã xác nhận thành công";
+            }
+            else if (donhang.TinhTrang == "Đã xác nhận")
             {
 
                 donhang.TinhTrang = "Đã đóng gói";
                 _context.Update(donhang);
                 await _context.SaveChangesAsync();
-                 ViewBag.sus = "Đã xác nhận thành công";
+                 ViewBag.sus = "Đã đóng gói thành công";
             }
 
            
@@ -145,19 +153,37 @@ namespace Do_an_CCNPMM.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiGiaoHang")] DonHang donHang,String id)
+        public async Task<IActionResult> Update([Bind("MaDonHang, MaNguoiGiaoHang")] DonHang donHang)
         {
 
-           
-                int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
-                var DonHang = _context.DonHangs.Find(MaDH);
-                DonHang.MaNguoiGiaoHang = donHang.MaNguoiGiaoHang;
-                DonHang.TinhTrang = "Đang giao";
-                _context.Update(DonHang);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            int id = (int)HttpContext.Session.GetInt32("MaDH");
+
+
+            var donhang = _context.DonHangs.Where(x => x.MaDonHang == id).FirstOrDefault();
+            ViewBag.tinhtrang = donhang.TinhTrang;
+
+            int MaDH = (int)HttpContext.Session.GetInt32("MaDH");
+            var DonHang = _context.DonHangs.Find(MaDH);
+            DonHang.MaNguoiGiaoHang = donHang.MaNguoiGiaoHang;
+            DonHang.TinhTrang = "Đang giao";
+            _context.Update(DonHang);
+            await _context.SaveChangesAsync();
+
             
-            
+            if (donHang == null)
+            {
+                return NotFound();
+            }
+            ViewBag.tinhtrang = donHang.TinhTrang;
+
+            ViewData["MaNguoiGiaoHang"] = new SelectList(_context.NguoiDungs
+                                                        .Where(m => m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("người giao hàng") ||
+                                                               m.MaLoaiNguoiDungNavigation.TenLoaiNguoiDung.ToLower().Equals("shipper")),
+                                                     "MaNguoiDung", "TenNguoiDung");
+
+            return RedirectToAction(nameof(Details), new {id = id});
+
+
         }
         // POST: Admin/AdminDonHangs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

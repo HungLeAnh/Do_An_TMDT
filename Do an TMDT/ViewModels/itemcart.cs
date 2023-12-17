@@ -11,6 +11,6 @@ namespace Do_an_CCNPMM.ViewModels
         public ChiTietGioHang CT_GH { get; set; }
         public MatHang SanPham { get; set; }
         public List<MatHangAnh> MatHangAnhs { get; set; }
-        public int tong { get; set; }
+        public long tong { get; set; }
     }
 }

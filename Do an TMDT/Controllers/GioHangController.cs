@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Helpers;
 using Do_an_CCNPMM.Models;
 using Do_an_CCNPMM.ViewModels;
 using MailKit.Net.Smtp;
@@ -100,7 +101,7 @@ namespace Do_an_CCNPMM.Controllers
                 var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
                .AsNoTracking()
                .ToList();
-                int thanhtien = 0;
+                long thanhtien = 0;
                 foreach (var item in listGHNew)
                 {
                     itemcart it = new itemcart();
@@ -118,7 +119,7 @@ namespace Do_an_CCNPMM.Controllers
                 cartNew.item = itemcartsNew;
                 ViewBag.thanhtien = thanhtien;
                 ViewBag.giohang = cartNew;
-                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
                 HttpContext.Session.SetInt32("sl", 0);
                 HttpContext.Session.SetInt32("IDSP", 0);
                 return RedirectToAction("ViewCart");
@@ -141,7 +142,7 @@ namespace Do_an_CCNPMM.Controllers
                 var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
                .AsNoTracking()
                .ToList();
-                int thanhtien = 0;
+                long thanhtien = 0;
                 foreach (var item in listGHNew)
                 {
                     itemcart it = new itemcart();
@@ -160,7 +161,7 @@ namespace Do_an_CCNPMM.Controllers
                 ViewBag.thanhtien = thanhtien;
                 ViewBag.giohang = cartNew;
                 HttpContext.Session.SetInt32("sl", 0);
-                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
                 HttpContext.Session.SetInt32("IDSP", 0);
                 return RedirectToAction("ViewCart");
             }
@@ -255,7 +256,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -273,7 +274,7 @@ namespace Do_an_CCNPMM.Controllers
             cartNew.item = itemcartsNew;
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
-            HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
             return RedirectToAction("ThanhToan","GioHang");
 
         }
@@ -311,7 +312,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -329,7 +330,7 @@ namespace Do_an_CCNPMM.Controllers
             cartNew.item = itemcartsNew;
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
-            HttpContext.Session.SetInt32("thanhtien",thanhtien);
+            HttpContext.Session.SetString("thanhtien",thanhtien.ToString());
             var loi = HttpContext.Session.GetString("loi");
             if (loi != null)
             {
@@ -359,7 +360,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -490,7 +491,7 @@ namespace Do_an_CCNPMM.Controllers
                   .ToList();
             CartVM cartNew = new CartVM();
             List<itemcart> itemcartsNew = new List<itemcart>();
-            int thanhtien = 0;
+            long thanhtien = 0;
             foreach (var item in listGHNew)
             {
                 itemcart it = new itemcart();
@@ -508,7 +509,7 @@ namespace Do_an_CCNPMM.Controllers
             cartNew.item = itemcartsNew;
             ViewBag.thanhtien = thanhtien;
             ViewBag.giohang = cartNew;
-            HttpContext.Session.SetInt32("thanhtien", thanhtien);
+            HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
             return View();
         }
         [HttpPost]
