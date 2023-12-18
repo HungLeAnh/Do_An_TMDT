@@ -12,6 +12,8 @@ using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace Do_an_CCNPMM.Areas.User.Controllers
@@ -138,12 +140,12 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             HttpContext.Session.SetInt32("MaTH", MaTH == null ? default(int) : MaTH.Value);
             HttpContext.Session.SetInt32("MaMau", MaMau == null ? default(int) : MaMau.Value);
             return View(model);
-
         }
 
         public IActionResult AddCart(int? id)
         {
             int sl = 1;
+            string message;
             CartVM cart = new CartVM();
             List<itemcart> itemcarts = new List<itemcart>();
             var listSP = _context.MatHangs
@@ -191,8 +193,16 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             var list2 = listGH.Where(x => x.MaMatHang == id).ToList();
             var mathang = listSP.Where(x => x.MaMatHang == id).ToList();
 
+            var sanpham = _context.MatHangs.Where(x => x.MaMatHang == id).FirstOrDefault();
+
             if (listCheck2.Count == 0)
             {
+                if (sanpham.SoLuong <  sl)
+                {
+                    message = "Không đủ số lượng sản phẩm trong kho";
+                    return Json(new { Message = message });
+
+                }
                 ChiTietGioHang tc = new ChiTietGioHang
                 {
                     MaGioHang = idgh,
@@ -208,7 +218,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
                .AsNoTracking()
                .ToList();
-                int thanhtien = 0;
+                long thanhtien = 0;
                 foreach (var item in listGHNew)
                 {
                     itemcart it = new itemcart();
@@ -226,14 +236,19 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 cartNew.item = itemcartsNew;
                 ViewBag.thanhtien = thanhtien;
                 ViewBag.giohang = cartNew;
-                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
                 HttpContext.Session.SetInt32("sl", 0);
                 HttpContext.Session.SetInt32("IDSP", 0);
-                string message = "Thêm vào giỏ hàng thành công";
+                message = "Thêm vào giỏ hàng thành công";
                 return Json(new { Message = message}); 
             }
             else
             {
+                if (sanpham.SoLuong < list[0].SoLuong + sl)
+                {
+                    message = "Không đủ số lượng sản phẩm trong kho";
+                    return Json(new { Message = message });
+                }
                 ChiTietGioHang tc = new ChiTietGioHang
                 {
                     MaGioHang = idgh,
@@ -250,7 +265,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 var listGHNew = _context.ChiTietGioHangs.Where(x => x.MaGioHang == idgh)
                .AsNoTracking()
                .ToList();
-                int thanhtien = 0;
+                long thanhtien = 0;
                 foreach (var item in listGHNew)
                 {
                     itemcart it = new itemcart();
@@ -269,11 +284,11 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 ViewBag.thanhtien = thanhtien;
                 ViewBag.giohang = cartNew;
                 HttpContext.Session.SetInt32("sl", 0);
-                HttpContext.Session.SetInt32("thanhtien", thanhtien);
+                HttpContext.Session.SetString("thanhtien", thanhtien.ToString());
                 HttpContext.Session.SetInt32("IDSP", 0);
                 _notyfService.Success("Thêm vào giỏ hàng thành công");
 
-                string message = "Thêm vào giỏ hàng thành công";
+                message = "Thêm vào giỏ hàng thành công";
                 return Json(new { Message = message });
             }
         }

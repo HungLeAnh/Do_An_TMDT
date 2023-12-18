@@ -79,7 +79,7 @@
                 <div class="blog_right_sidebar">
                     <form asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="MaNguoiDung" />
+                        <input type="hidden" asp-for="MaNguoiDung" value="@ViewBag.khachhang.MaNguoiDung" />
 
                         <div class="form-group col-lg-6">
                             @*<label asp-for="TenNguoiDung" class="control-label"></label>*@
@@ -87,22 +87,11 @@
                             <input required="" asp-for="TenNguoiDung" class="form-control" value="@ViewBag.khachhang.TenNguoiDung" />
                             <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
                         </div>
-                        @*<div class="form-group col-lg-6">
-                            <label asp-for="AnhDaiDien" class="control-label"></label>
-                            <input required="" asp-for="AnhDaiDien" class="form-control" value="@ViewBag.khachhang.AnhDaiDien" />
-                            <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
-                        </div>*@
                         <div class="form-group col-lg-6">
                             @*<label asp-for="TenDangNhap" class="control-label"></label>*@
                             <span>Tên đăng nhập</span>
                             <input required="" asp-for="TenDangNhap" class="form-control" value="@ViewBag.khachhang.TenDangNhap" />
                             <span asp-validation-for="TenDangNhap" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group col-lg-6">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input required="" asp-for="Email" class="form-control" value="@ViewBag.khachhang.Email" readonly />
-                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group col-lg-6">
                             @*<label asp-for="Sdt" class="control-label"></label>*@
@@ -110,11 +99,6 @@
                             <input required="" asp-for="Sdt" class="form-control" value="@ViewBag.khachhang.Sdt" />
                             <span asp-validation-for="Sdt" class="text-danger"></span>
                         </div>
-                        @*<div class="form-group col-lg-6">
-                            <label asp-for="ViDienTu" class="control-label"></label>
-                            <input required="" asp-for="ViDienTu" class="form-control" value="@ViewBag.khachhang.ViDienTu" />
-                            <span asp-validation-for="ViDienTu" class="text-danger"></span>
-                        </div>*@
                         <div class="form-group">
                             <input type="submit" class="genric-btn primary radius" />
 

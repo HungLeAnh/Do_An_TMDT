@@ -108,15 +108,8 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 _context.Update(donhang);
                 await _context.SaveChangesAsync();
             }
-            if (donhang.TinhTrang == "Đã giao")
-            {
-
-                donhang.TinhTrang = "Đơn hàng thành công";
-                donhang.DaThanhToan = true;
-                _context.Update(donhang);
-                await _context.SaveChangesAsync();
-            }
-            ViewBag.sus = "Đã xác nhận thành công";
+            
+            ViewBag.sus = "Đã nhận hàng";
 
             var listsp_donhang = _context.ChiTietDonHangs.Where(x => x.MaDonHang == MaDH).ToList();
             List<CTDH> ct = new List<CTDH>();
@@ -135,7 +128,9 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            var taikhoanID = HttpContext.Session.GetInt32("Ten");
+
+            if (id == null||id != taikhoanID)
             {
                 return NotFound();
             }
@@ -148,7 +143,6 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             
             var khachhang = _context.NguoiDungs.Include(x=>x.NguoiDungDiaChis).AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(id)).FirstOrDefault();
             ViewBag.khachhang = khachhang;
-            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
             return View();
         }
         [HttpPost]
@@ -157,11 +151,10 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
         {
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             var khachhang = _context.NguoiDungs.Include(x=>x.NguoiDungDiaChis).AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-            nguoiDung.MaLoaiNguoiDung = khachhang[0].MaLoaiNguoiDung;
-            nguoiDung.MaNguoiDung = khachhang[0].MaNguoiDung;
-            nguoiDung.MatKhauHash = khachhang[0].MatKhauHash;
-            nguoiDung.Salt = khachhang[0].Salt;
-            if (!ModelState.IsValid)
+            khachhang[0].TenNguoiDung = nguoiDung.TenNguoiDung;
+            khachhang[0].TenDangNhap = nguoiDung.TenDangNhap;
+            khachhang[0].Sdt = nguoiDung.Sdt;
+            if (ModelState.IsValid)
             {
                 if (id != nguoiDung.MaNguoiDung)
                 {
@@ -169,7 +162,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 }
                 try
                 {
-                    _context.Update(nguoiDung);
+                    _context.Update(khachhang[0]);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -185,7 +178,6 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 }
                 return RedirectToAction(nameof(ChiTietNG));
             }
-            ViewData["MaLoaiNguoiDung"] = new SelectList(_context.LoaiNguoiDungs, "MaLoaiNguoiDung", "MaLoaiNguoiDung", nguoiDung.MaLoaiNguoiDung);
             return View();
         }
         public async Task<IActionResult> EditMK(int? id)
@@ -241,40 +233,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
 
         }
 
-
-        public IActionResult SoDiaChi()
-        {
-            var taikhoanID = HttpContext.Session.GetInt32("Ten");
-            var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-            ViewBag.diachi = listdiachi;
-
-            var khachhang = _context.NguoiDungs.Include(x=>x.NguoiDungDiaChis).AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).FirstOrDefault();
-            ViewBag.khachhang = khachhang;
-            return View();
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SoDiaChi(int id, [Bind("DiaChi")] HomeVM Home)
-        {
-            var taikhoanID = HttpContext.Session.GetInt32("Ten");
-            var khachhang = _context.NguoiDungs.Include(x=>x.NguoiDungDiaChis).AsNoTracking().Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-            NguoiDungDiaChi nd = new NguoiDungDiaChi
-            {
-                MaNguoiDung = Convert.ToInt32(taikhoanID),
-                DiaChi = Home.DiaChi,
-
-            };
-
-            _context.Add(nd);
-            await _context.SaveChangesAsync();
-            var listdiachi = _context.NguoiDungDiaChis.Where(x => x.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToList();
-            ViewBag.diachi = listdiachi;
-            ViewBag.khachhang = khachhang;
-            return RedirectToAction(nameof(SoDiaChi));
-
-
-        }
+       
         private bool NguoiDungExists(int id)
         {
             return _context.NguoiDungs.Any(e => e.MaNguoiDung == id);

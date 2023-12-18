@@ -103,18 +103,17 @@
 </div>
 <form asp-action="Details">
     @{if (ViewBag.tinhtrang == "Chưa xác nhận")
-
-        {
-
-            <div class="form-group">
-                <input type="button" value="Chưa xác nhận" class="btn btn-primary" />
-            </div>}
-        else if (ViewBag.tinhtrang == "Đã xác nhận")
-        {
-            <div class="form-group">
-                <input type="submit" value="Đóng gói" class="btn btn-primary" />
-            </div>
-        }
+    {
+        <div class="form-group">
+            <input type="submit" value="Xác nhận" class="btn btn-primary" />
+        </div>
+    }
+    else if (ViewBag.tinhtrang == "Đã xác nhận")
+    {
+        <div class="form-group">
+            <input type="submit" value="Đóng gói" class="btn btn-primary" />
+        </div>
+    }
     }
 
 </form>
@@ -124,20 +123,12 @@
         {
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="form-group">
                 <label asp-for="MaNguoiGiaoHang" class="control-label">Shipper giao đơn hàng</label>
                 <select asp-for="MaNguoiGiaoHang" class="form-control" id="MaNguoiGiaoHang" asp-items="ViewBag.MaNguoiGiaoHang"></select>
             </div>
             <div class="form-group">
-                <label asp-for="MaNguoiGiaoHang" class="control-label">
-                    Họ tên shipper giao đơn hàng:  @{if (ViewBag.Ten != null)
-                        {@ViewBag.Ten}}
-                </label>
-
-            </div>
-            <div class="form-group">
-                <input type="submit" id="giaoviec" value="Giao việc" class="btn btn-success" />
+                <input type="submit" id="giaoviec" value="Chọn nhân viên giao đơn" class="btn btn-success" />
             </div>
         }
     }

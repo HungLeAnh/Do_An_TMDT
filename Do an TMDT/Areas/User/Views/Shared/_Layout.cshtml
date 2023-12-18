@@ -70,7 +70,20 @@
 
         });
 
+        $(".noreturnForm").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
 
+                success: function (data) {
+                    $.notify(data.message, "success");
+                }
+
+            });
+
+        });
 
     </script>
     @RenderSection("Scripts", required: false)

@@ -96,33 +96,8 @@
                                             </td>
                                             <td><h5 id="gia">@string.Format("{0:0,0}", @cart.CT_GH.Gia) <sup>VND</sup></h5></td>
                                             <td>
-                                                <div class="product_count">
-                                                    <div>
-                                                        <input type="hidden" name="productID" value="@cart.SanPham.MaMatHang">
-
-                                                        <input name="amount" id="id1" min="1" type="text" readonly value="@cart.CT_GH.SoLuong">
-                                                        <button class="increase items-count" type="button">
-                                                            <a href="@Url.Action("UpdateCart","Cart",new {
-                                                                    Area="User",
-                                                                    productID=cart.SanPham.MaMatHang,
-                                                                    amount=cart.CT_GH.SoLuong,
-                                                                    update=1,
-                                                                    siteBackURL=@ViewContext.RouteData.Values["action"].ToString()
-                                                                })"><i class="lnr lnr-chevron-up"></i>
-                                                            </a>
-                                                        </button>
-                                                        <button value="-1" class="reduced items-count" type="button">
-                                                            <a href="@Url.Action("UpdateCart","Cart",new {
-                                                                    Area="User",
-                                                                    productID=cart.SanPham.MaMatHang,
-                                                                    amount=cart.CT_GH.SoLuong,
-                                                                    update=-1,
-                                                                    siteBackURL=@ViewContext.RouteData.Values["action"].ToString()
-                                                                })"><i class="lnr lnr-chevron-down"></i>
-                                                            </a>
-                                                        </button>
-
-                                                    </div>
+                                                <div>
+                                                    <h5 id="amount" >@cart.CT_GH.SoLuong</h5>
                                                 </div>
                                             </td>
                                             <td> <h5 id="tong">@string.Format("{0:0,0}", @cart.tong) <sup>VND</sup></h5></td>
