@@ -126,20 +126,16 @@
 												<h6>@item.listSPs.TenMatHang</h6>
 											</a>
 											<div class="price">
-												<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) VND</h6>
+												<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) <sup>VND</sup></h6>
 											</div>
 											<div class="prd-bottom">
 												<a asp-area="User" asp-controller="UserLogin" asp-action="Login" class="social-info">
 													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="" class="social-info" id="id1" onclick="dolen(this)">
-													<span class="lnr lnr-heart"></span>
-													<p class="hover-text">Wishlist</p>
+													<p class="hover-text">Thêm vô giỏ</p>
 												</a>
 												<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">
 													<span class="lnr lnr-move"></span>
-													<p class="hover-text">view more</p>
+													<p class="hover-text">Chi tiết</p>
 												</a>
 											</div>
 										</div>
@@ -161,5 +157,33 @@
 </div>
 
 @await Component.InvokeAsync("Notyf")
+<style>
+	.single-product .product-details .prd-bottom .social-info .hover-text {
+		position: absolute;
+		left: 0;
+		top: 3px;
+		width: 100px;
+		left: -40px;
+		text-transform: uppercase;
+		font-family: "Roboto", sans-serif;
+		font-weight: 500;
+		font-size: 12px;
+		color: #222222;
+		-webkit-transition: all 0.3s ease 0s;
+		-moz-transition: all 0.3s ease 0s;
+		-o-transition: all 0.3s ease 0s;
+		transition: all 0.3s ease 0s;
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	.social-info {
+		color: #000000;
+	}
+
+	.social-info:hover {
+		color: #fabb00;
+	}
+</style>
 
 
