@@ -7,10 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Do_an_CCNPMM.Models;
 using PagedList.Core;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminKhachHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;

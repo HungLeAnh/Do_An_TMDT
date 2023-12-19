@@ -43,7 +43,9 @@ namespace Do_an_CCNPMM.Areas.Shipper.Controllers
             lsDonHang = await _context.DonHangs
                     .Where(x => x.TinhTrang.Equals("Đang giao") && x.MaNguoiGiaoHang.Equals(nguoiDung.MaNguoiDung))
                     .Include(d => d.MaNguoiDungNavigation)
-                    .Include(d => d.MaNguoiGiaoHangNavigation).ToListAsync();
+                    .Include(d => d.MaNguoiGiaoHangNavigation)
+                    .OrderByDescending(x => x.MaDonHang)
+                    .ToListAsync();
             PagedList<DonHang> model = new PagedList<DonHang>(lsDonHang.AsQueryable(), pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             string tinhTrang = _context.DonHangs.Select(n => n.TinhTrang).ToString();

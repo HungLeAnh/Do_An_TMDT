@@ -2,6 +2,7 @@
 using Do_an_CCNPMM.Models;
 using Do_an_CCNPMM.ViewModels;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,8 @@ using System.Threading.Tasks;
 namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(AuthenticationSchemes = "UserLogin")]
+
     public class CartController : Controller
     {
         private readonly WEBBANGIAYContext _context;

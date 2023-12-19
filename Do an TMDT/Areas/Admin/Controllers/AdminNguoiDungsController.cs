@@ -13,10 +13,14 @@ using Do_an_CCNPMM.Extension;
 using Do_an_CCNPMM.Helpper;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Notyf;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminNguoiDungsController : Controller
     {
         private readonly WEBBANGIAYContext _context;

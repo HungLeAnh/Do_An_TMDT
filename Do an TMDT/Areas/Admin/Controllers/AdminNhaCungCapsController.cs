@@ -10,10 +10,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Notyf;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminNhaCungCapsController : Controller
     {
         private readonly WEBBANGIAYContext _context;

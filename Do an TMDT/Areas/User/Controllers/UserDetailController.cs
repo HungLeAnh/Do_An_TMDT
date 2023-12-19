@@ -10,10 +10,13 @@ using Do_an_CCNPMM.Extension;
 using Do_an_CCNPMM.ViewModels;
 using Microsoft.AspNetCore.Http;
 using PagedList.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(AuthenticationSchemes = "UserLogin")]
+
     public class UserDetailController : Controller
     {
         private readonly WEBBANGIAYContext _context;
@@ -42,7 +45,7 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             var taikhoanID = HttpContext.Session.GetInt32("Ten");
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 3;
-            var lsdonhang = await _context.DonHangs.Where(m => m.MaNguoiDung == Convert.ToInt32(taikhoanID)).ToListAsync();
+            var lsdonhang = await _context.DonHangs.Where(m => m.MaNguoiDung == Convert.ToInt32(taikhoanID)).OrderByDescending(x => x.MaDonHang).ToListAsync();
             PagedList<DonHang> model = new PagedList<DonHang>(lsdonhang.AsQueryable(), pageNumber, pageSize);
 
             ViewBag.CurrentPage = pageNumber;

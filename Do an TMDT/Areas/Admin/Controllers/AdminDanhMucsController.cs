@@ -9,10 +9,14 @@ using Do_an_CCNPMM.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminDanhMucsController : Controller
     {
         private readonly WEBBANGIAYContext _context;

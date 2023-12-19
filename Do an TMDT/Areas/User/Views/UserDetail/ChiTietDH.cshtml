@@ -116,33 +116,7 @@
                                     }
                                 }
                         </table>
-                        <form asp-action="ChiTietDH">
-                            @{
-                                if (ViewBag.tinhtrang == "Chưa xác nhận")
 
-                                {
-
-                                    <div class="form-group">
-                                        <input type="submit" value="Xác Nhận" class="genric-btn primary radius" />
-                                    </div>
-                                }
-                                else if (ViewBag.tinhtrang == "Đã giao")
-
-                                {
-
-                                    <div class="form-group">
-                                        <input type="submit" value="Xác Nhận đã nhận" class="genric-btn primary radius" />
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        <input type="button" value="Đã xác nhận" class="genric-btn primary radius" disabled />
-                                    </div>
-                                }
-                            }
-
-                        </form>
                     </div>
                     <div class="form-group">
                         <a asp-area="User" asp-controller="UserDetail" asp-action="DonHang" class="genric-btn primary radius">Quay Lại</a>

@@ -10,10 +10,14 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PagedList.Core;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminDonHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;
@@ -37,13 +41,17 @@ namespace Do_an_CCNPMM.Areas.Admin.Controllers
                 lsDonHang = await _context.DonHangs
                     .Where(x => x.TinhTrang == tinhTrang)
                     .Include(d => d.MaNguoiDungNavigation)
-                    .Include(d => d.MaNguoiGiaoHangNavigation).ToListAsync();
+                    .Include(d => d.MaNguoiGiaoHangNavigation)
+                    .OrderByDescending(x=>x.MaDonHang)
+                    .ToListAsync();
             }
             else
             {
                 lsDonHang = await _context.DonHangs
                     .Include(d => d.MaNguoiDungNavigation)
-                    .Include(d => d.MaNguoiGiaoHangNavigation).ToListAsync();
+                    .Include(d => d.MaNguoiGiaoHangNavigation)
+                    .OrderByDescending(x => x.MaDonHang)
+                    .ToListAsync();
             }
 
             PagedList<DonHang> model = new PagedList<DonHang>(lsDonHang.AsQueryable(), pageNumber, pageSize);

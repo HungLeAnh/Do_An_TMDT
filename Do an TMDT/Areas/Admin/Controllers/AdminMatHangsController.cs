@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace Do_an_CCNPMM.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(AuthenticationSchemes = "AdminLogin")]
+
     public class AdminMatHangsController : Controller
     {
         private readonly WEBBANGIAYContext _context;

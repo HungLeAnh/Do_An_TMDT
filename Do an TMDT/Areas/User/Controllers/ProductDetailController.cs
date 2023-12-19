@@ -1,5 +1,6 @@
 ﻿using Do_an_CCNPMM.Models;
 using Do_an_CCNPMM.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using System.Linq;
 namespace Do_an_CCNPMM.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(AuthenticationSchemes = "UserLogin")]
+
     public class ProductDetailController : Controller
     {
         private readonly WEBBANGIAYContext _context;
