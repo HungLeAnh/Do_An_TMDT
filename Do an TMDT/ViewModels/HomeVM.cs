@@ -20,7 +20,7 @@ namespace Do_an_CCNPMM.ViewModels
         public string Email { get; set; }
         public string SDT { get; set; }
 
-        public IPagedList<DonHang> DonHangs { get; set; }
+        public PagedList<MatHangHome> MatHangPaging { get; set; }
 
     }
 }

@@ -24,8 +24,11 @@ namespace Do_an_CCNPMM.Controllers
             _context = context;
 
         }
-        public IActionResult ThuongHieu(string? key,int? MaDM, int? MaTH, int? MaMau)
+        public IActionResult ThuongHieu(int? page, string? key,int? MaDM, int? MaTH, int? MaMau)
         {
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 6;
+
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
@@ -85,7 +88,14 @@ namespace Do_an_CCNPMM.Controllers
                 model.MatHangs = listSPW;
 
             }
-            
+            if (model.MatHangs != null)
+            {
+                PagedList<MatHangHome> mahangpaging = new PagedList<MatHangHome>(model.MatHangs.AsQueryable(), pageNumber, pageSize);
+                model.MatHangPaging = mahangpaging;
+
+            }
+            ViewBag.CurrentPage = pageNumber;
+
             HttpContext.Session.SetInt32("IDSP", MaDM==null?0:0);
             return View(model);
 

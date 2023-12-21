@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-
+using PagedList.Core;
 
 namespace Do_an_CCNPMM.Areas.User.Controllers
 {
@@ -74,8 +74,11 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
             return View();
         }
 
-        public IActionResult Brand(string? key,int? MaDM,int? MaTH,int? MaMau)
+        public IActionResult Brand(int? page, string? key,int? MaDM,int? MaTH,int? MaMau)
         {
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 6;
+
             HomeVM model = new HomeVM();
             var listcate = _context.ThuongHieus.AsNoTracking().ToList();
             ViewBag.listcate = listcate;
@@ -134,6 +137,14 @@ namespace Do_an_CCNPMM.Areas.User.Controllers
                 model.MatHangs = listSPW;
 
             }
+            if(model.MatHangs != null)
+            {
+                PagedList<MatHangHome> mahangpaging = new PagedList<MatHangHome>(model.MatHangs.AsQueryable(), pageNumber, pageSize);
+                model.MatHangPaging = mahangpaging;
+
+            }
+
+            ViewBag.CurrentPage = pageNumber;
 
             HttpContext.Session.SetInt32("IDSP", MaDM == null ? default(int) : MaDM.Value);
             HttpContext.Session.SetInt32("MaDM", MaDM == null ? default(int) : MaDM.Value);

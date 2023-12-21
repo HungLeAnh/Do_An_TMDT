@@ -1,200 +1,195 @@
-﻿@model Do_an_CCNPMM.ViewModels.HomeVM
-@{
-	ViewData["Title"] = "Home Page";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@using PagedList.Core.Mvc
+@model Do_an_CCNPMM.ViewModels.HomeVM
+@{    
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-	<!-- Start Banner Area -->
+    <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
-	<div class="container">
-		<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
-			<div class="col-first">
-				<h1>Danh mục sản phẩm</h1>
-				<nav class="d-flex align-items-center">
-					<a class="nav-link" asp-controller="Home" asp-action="Loadsanpham">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
-					<a href="">Cửa hàng<span class="lnr lnr-arrow-right"></span></a>
-					<a>Giày</a>
-				</nav>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Danh mục sản phẩm</h1>
+                <nav class="d-flex align-items-center">
+                    <a class="nav-link" asp-controller="Home" asp-action="Loadsanpham">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="">Cửa hàng<span class="lnr lnr-arrow-right"></span></a>
+                    <a>Giày</a>
+                </nav>
+            </div>
+        </div>
+    </div>
 </section>
-	<!-- End Banner Area -->
+    <!-- End Banner Area -->
 
 <div class="container section_gap">
-		<div class="row">
-			<div class="col-xl-3 col-lg-4 col-md-5">
-				<div class="sidebar-categories">
-					<div class="head">Danh mục</div>
-					<ul class="main-categories">
-					<li class="main-nav-list">
-						<a href="@Url.Action("ThuongHieu","Home")" aria-expanded="false" aria-controls="fruitsVegetable">
-							<span class="lnr lnr-arrow-right"></span>Tất cả
-						</a>
-					</li>
-						@{
-						if (ViewBag.danhmuc != null)
-						{
-							@foreach (var item in ViewBag.danhmuc)
-							{
-										<li class="main-nav-list">
-											<a href="@Url.Action("ThuongHieu","Home", new {MaDM = @item.MaDanhMuc})" aria-expanded="false" aria-controls="fruitsVegetable">
-												<span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
-											</a>
-										</li>
-							}
-						}
-					}
-					</ul>
-				</div>
-				
-				<div class="sidebar-filter mt-50">
-					<div class="top-filter-head">Product Filters</div>
-					<div class="common-filter">
-						<div class="head">Thương hiệu</div>
-					<form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
-						<ul>
-							<li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="sidebar-categories">
+                    <div class="head">Danh mục</div>
+                    <ul class="main-categories">
+                    <li class="main-nav-list">
+                        <a href="@Url.Action("ThuongHieu","Home")" aria-expanded="false" aria-controls="fruitsVegetable">
+                            <span class="lnr lnr-arrow-right"></span>Tất cả
+                        </a>
+                    </li>
+                        @{
+                        if (ViewBag.danhmuc != null)
+                        {
+                            @foreach (var item in ViewBag.danhmuc)
+                            {
+                                        <li class="main-nav-list">
+                                            <a href="@Url.Action("ThuongHieu","Home", new {MaDM = @item.MaDanhMuc})" aria-expanded="false" aria-controls="fruitsVegetable">
+                                                <span class="lnr lnr-arrow-right"></span>@item.TenDanhMuc
+                                            </a>
+                                        </li>
+                            }
+                        }
+                    }
+                    </ul>
+                </div>
+                
+                <div class="sidebar-filter mt-50">
+                    <div class="top-filter-head">Product Filters</div>
+                    <div class="common-filter">
+                        <div class="head">Thương hiệu</div>
+                    <form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
+                        <ul>
+                            <li class="filter-list"><input class="pixel-radio" type="radio" id="MaTH" name="MaTH" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
 
-							@if (ViewBag.listcate != null)
-							{
-								@foreach (var item in ViewBag.listcate)
-								{
-									<li class="filter-list">
-										@Html.RadioButton("MaTH",@item.MaThuongHieu,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
-										<label for="apple">@item.TenThuongHieu</label>
-									</li>
-								}
-							}
-						</ul>
-					</form>
-					</div>
-					<div class="common-filter">
-						<div class="head">Màu sắc</div>
-							<form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
-								<ul>
-									<li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
+                            @if (ViewBag.listcate != null)
+                            {
+                                @foreach (var item in ViewBag.listcate)
+                                {
+                                    <li class="filter-list">
+                                        @Html.RadioButton("MaTH",@item.MaThuongHieu,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+                                        <label for="apple">@item.TenThuongHieu</label>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </form>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Màu sắc</div>
+                            <form asp-area="" asp-controller="Home" asp-action="ThuongHieu">
+                                <ul>
+                                    <li class="filter-list"><input class="pixel-radio" type="radio" id="MaMau" name="MaMau" onchange="this.form.submit()" value="" checked><label for="">Tất cả</label></li>
 
-									@if (ViewBag.mausac != null)
-									{
-										@foreach (var item in ViewBag.mausac)
-										{
-											<li class="filter-list">
-												@Html.RadioButton("MaMau",@item.MaMauSac,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
-												<label for="apple">@item.TenMauSac</label>
-											</li>
-										}
-									}
-								</ul>
-							</form>
-					</div>					
-				</div>
-			</div>
-		<div class="col-xl-9 col-lg-8 col-md-7 ">
-			<!-- Start Filter Bar -->
-			<div class="filter-bar d-flex flex-wrap align-items-center">
-				<div class="sorting">
-					<select>
-						<option value="1">Default sorting</option>
-						<option value="1">Default sorting</option>
-						<option value="1">Default sorting</option>
-					</select>
-				</div>
-				<div class="sorting mr-auto">
-					<select>
-						<option value="1">Show 12</option>
-						<option value="1">Show 12</option>
-						<option value="1">Show 12</option>
-					</select>
-				</div>
-				<div class="pagination">
-					<a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-					<a href="#" class="active">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-					<a href="#">6</a>
-					<a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-				</div>
-			</div>
-			<!-- End Filter Bar -->
-			<!-- Start Best Seller -->
-			<section class="lattest-product-area pb-40 category-list">
-				<div class="row">
-					<!-- single product -->
-					@{
-						int i = 0;
-					}
-					@if (Model.MatHangs != null)
-					{
-						@foreach (var item in Model.MatHangs)
-						{
-							@if (i < 8)
-							{
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img onerror="this.src='~/images/duphong.webp'" src="~/@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
-										<div class="product-details">
-											<h6>
-												<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">@item.listSPs.TenMatHang</a>
-											</h6>
-											<div class="price">
-												<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) <sup>VND</sup></h6>
-											</div>
-											<div class="prd-bottom">
-												<a asp-area="User" asp-controller="UserLogin" asp-action="Login" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">Thêm vô giỏ</p>
-												</a>
-												<a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">
-													<span class="lnr lnr-move"></span>
-													<p class="hover-text">Chi tiết</p>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
+                                    @if (ViewBag.mausac != null)
+                                    {
+                                        @foreach (var item in ViewBag.mausac)
+                                        {
+                                            <li class="filter-list">
+                                                @Html.RadioButton("MaMau",@item.MaMauSac,false, new {  @class="pixel-radio" , @onChange="this.form.submit()" })
+                                                <label for="apple">@item.TenMauSac</label>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </form>
+                    </div>					
+                </div>
+            </div>
+        <div class="col-xl-9 col-lg-8 col-md-7 ">
 
+            <!-- Start Best Seller -->
+            <section class="lattest-product-area pb-40 category-list">
+                <div class="row">
+                    <!-- single product -->
 
-								i++;
-							}
-						}
+                    @if (Model.MatHangPaging != null)
+                    {
+                        @foreach (var item in Model.MatHangPaging)
+                        {
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="single-product">
+                                        <img onerror="this.src='~/images/duphong.webp'" src="~/@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
+                                        <div class="product-details">
+                                            <h6>
+                                                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">@item.listSPs.TenMatHang</a>
+                                            </h6>
+                                            <div class="price">
+                                                <h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) <sup>VND</sup></h6>
+                                            </div>
+                                            <div class="prd-bottom">
+                                                <a asp-area="User" asp-controller="UserLogin" asp-action="Login" class="social-info">
+                                                    <span class="ti-bag"></span>
+                                                    <p class="hover-text">Thêm vô giỏ</p>
+                                                </a>
+                                                <a href="@Url.Action("ChiTiet", "ChiTiet", new { MaSp = item.listSPs.MaMatHang })" class="social-info">
+                                                    <span class="lnr lnr-move"></span>
+                                                    <p class="hover-text">Chi tiết</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-					}
-				</div>
-			</section>
-			<!-- End Best Seller -->
-		</div>
+                        }
 
-		</div>
-	</div>
+                    }
+                </div>
+            </section>
+            <!-- End Best Seller -->
+            <pager class="pager-container" list="Model.MatHangPaging" asp-area="" asp-controller="Home" asp-action="ThuongHieu" />
+
+        </div>
+
+        </div>
+    </div>
 
 @await Component.InvokeAsync("Notyf")
 <style>
-	.single-product .product-details .prd-bottom .social-info .hover-text {
-		position: absolute;
-		left: 0;
-		top: 3px;
-		width: 100px;
-		left: -40px;
-		text-transform: uppercase;
-		font-family: "Roboto", sans-serif;
-		font-weight: 500;
-		font-size: 12px;
-		color: #222222;
-		-webkit-transition: all 0.3s ease 0s;
-		-moz-transition: all 0.3s ease 0s;
-		-o-transition: all 0.3s ease 0s;
-		transition: all 0.3s ease 0s;
-		opacity: 0;
-		visibility: hidden;
-	}
+    .single-product .product-details .prd-bottom .social-info .hover-text {
+        position: absolute;
+        left: 0;
+        top: 3px;
+        width: 100px;
+        left: -40px;
+        text-transform: uppercase;
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+        font-size: 12px;
+        color: #222222;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+        opacity: 0;
+        visibility: hidden;
+    }
 
-	.social-info {
-		color: #000000;
-	}
+    .social-info {
+        color: #000000;
+    }
 
-	.social-info:hover {
-		color: #fabb00;
-	}
+    .social-info:hover {
+        color: #fabb00;
+    }
+</style>
+<style>
+    .pagination a {
+        width: 100%;
+        line-height: normal;
+        text-align: center;
+        display: inline-block;
+        background: #ffffff;
+        color: #ffba00;
+        border-radius: 10px;
+    }
+
+    .page-item {
+        margin-right: 5px;
+    }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #fff;
+            background-color: #ffba00;
+            border-color: #ffba00;
+            border-radius: 10px;
+        }
+
 </style>
