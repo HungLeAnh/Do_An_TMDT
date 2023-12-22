@@ -104,7 +104,7 @@
 									<img onerror="this.src='~/images/duphong.webp'" src="~/@if (item.MatHangAnhs.Count() > 0) {@item.MatHangAnhs[0].Anh}" width="250px" alt="">
 									<div class="product-details">
 										<h6>
-											<a href="@Url.Action("ProductDetail", "Index", new { MaSp = item.listSPs.MaMatHang })" class="social-info">@item.listSPs.TenMatHang</a>
+											<a href="@Url.Action("Index", "ProductDetail", new { MaSp = item.listSPs.MaMatHang })" class="social-info">@item.listSPs.TenMatHang</a>
 										</h6>
 										<div class="price">
 											<h6>@string.Format("{0:0,0}", item.listSPs.GiaBan) <sup>VND</sup></h6>
